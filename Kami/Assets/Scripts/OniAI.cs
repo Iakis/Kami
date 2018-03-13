@@ -7,7 +7,7 @@ public class OniAI : MonoBehaviour
 {
     private bool dead = false;
 
-    int health;
+    public int health;
     Animator anim;
     Rigidbody m_rigidbody;
     bool canhit;
