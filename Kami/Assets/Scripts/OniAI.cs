@@ -27,6 +27,10 @@ public class OniAI : MonoBehaviour
     axe m_axe;
     AudioSource axeSound;
     AudioSource fallSound;
+    Rigidbody s_rigidBody;
+
+    static float globalGravity = -9.81f;
+    float gravityScale = 1.0f;
 
     public static int attackState = Animator.StringToHash("Base Layer.oattack");
     public static int deadState = Animator.StringToHash("Base Layer.odie");
@@ -44,11 +48,13 @@ public class OniAI : MonoBehaviour
         m_axe = axe.Get();
         axeSound = GameObject.Find("AxeSound").GetComponent<AudioSource>();
         fallSound = GameObject.Find("OniFallSound").GetComponent<AudioSource>();
+        //s_rigidBody = this.gameObject.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        gravity();
         currentBaseState = anim.GetCurrentAnimatorStateInfo(0);
         if (health > 0)
         {
@@ -106,6 +112,12 @@ public class OniAI : MonoBehaviour
     public void damage()
     {
         health -= 1;
+    }
+
+    void gravity()
+    {
+        //Vector3 gravity = globalGravity * gravityScale * Vector3.up;
+        //s_rigidBody.AddForce(gravity, ForceMode.Acceleration);
     }
 
     IEnumerator Cooldown()
