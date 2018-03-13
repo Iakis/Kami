@@ -147,10 +147,10 @@ public class Movement : MonoBehaviour {
         respawns = GameObject.FindGameObjectsWithTag("Respawn");
         foreach (GameObject respawn in respawns)
         {
-            //if (respawn.GetComponent<Respawn>().isActivated)
-            //{
-            //    transform.position = respawn.transform.position;
-            //}
+            if (respawn.GetComponent<Respawn>().isActivated)
+            {
+                transform.position = respawn.transform.position;
+            }
         }
         //animation for respawn
     }
