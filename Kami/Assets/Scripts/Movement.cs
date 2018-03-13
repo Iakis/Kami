@@ -19,6 +19,7 @@ public class Movement : MonoBehaviour {
     static Movement s_izanagi;
 
     bool grounded;
+    public bool inCombat;
 
     Movement()
     {
@@ -98,6 +99,16 @@ public class Movement : MonoBehaviour {
     {
         Vector3 gravity = globalGravity * gravityScale * Vector3.up;
         s_RigidBody.AddForce(gravity, ForceMode.Acceleration);
+    }
+
+    public void combat()
+    {
+        inCombat = true;
+    }
+
+    public void outCombat()
+    {
+        inCombat = false;
     }
 
     void OnCollisionEnter(Collision collide)

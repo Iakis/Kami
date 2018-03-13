@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - attack
+  - safeSpot
   layers:
   - Default
   - TransparentFX

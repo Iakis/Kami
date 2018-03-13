@@ -56,6 +56,7 @@ public class OniAI : MonoBehaviour
             if (currentBaseState.fullPathHash != deadState)
             {
                 anim.SetTrigger("die");
+                m_izanagi.GetComponent<Movement>().outCombat();
             } else
             {
                 return;
@@ -70,8 +71,9 @@ public class OniAI : MonoBehaviour
         if (currentBaseState.fullPathHash != attackState)
         {
             attacking = false;
-            if (dNagi < 20)
+            if (dNagi < 20 && health > 0)
             {
+                m_izanagi.GetComponent<Movement>().combat();
                 if (dNagi > 5.5)
                 {
                     anim.SetFloat("Speed", 1);
