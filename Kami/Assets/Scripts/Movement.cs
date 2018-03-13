@@ -12,6 +12,7 @@ public class Movement : MonoBehaviour {
     float jumpheight = 5f;
     private Animator anim;
     Vector3 forward, right, heading;
+    private GameObject[] respawns;
 
     static float globalGravity = -9.81f;
 
@@ -105,6 +106,40 @@ public class Movement : MonoBehaviour {
         if (collide.gameObject.layer == 8)
         {
             grounded = true;
+        } else if (collide.gameObject.layer == 4)
+        {
+            StartCoroutine("Die");
+        }
+    }
+
+    IEnumerator Die()
+    {
+        yield return new WaitForSeconds(3f);
+        StartCoroutine("Respawn");
+        //animation for death
+    }
+
+    public IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(1f);
+        anim.SetTrigger("revive");
+        respawns = GameObject.FindGameObjectsWithTag("Respawn");
+        foreach (GameObject respawn in respawns)
+        {
+            if (respawn.GetComponent<Respawn>().isActivated)
+            {
+                transform.position = respawn.transform.position;
+            }
+        }
+        //animation for respawn
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.name == "Axe")
+        {
+            anim.SetTrigger("die");
+            StartCoroutine("Die");
         }
     }
 }
