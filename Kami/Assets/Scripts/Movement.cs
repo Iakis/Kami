@@ -12,6 +12,9 @@ public class Movement : MonoBehaviour {
     float jumpheight = 5f;
     private Animator anim;
     Vector3 forward, right, heading;
+    private GameObject[] respawns;
+    AudioSource jumpSound;
+    AudioSource walkSound;
 
     static float globalGravity = -9.81f;
 
@@ -38,9 +41,16 @@ public class Movement : MonoBehaviour {
         right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
         s_RigidBody = GetComponent<Rigidbody>();
         grounded = true;
-	}
-	
-	void FixedUpdate () {
+        jumpSound = GameObject.Find("JumpSound").GetComponent<AudioSource>();
+        walkSound = GameObject.Find("WalkSound").GetComponent<AudioSource>();
+    }
+
+    void Update()
+    {
+        walkSound.mute = !(anim.GetFloat("Speed") != 0 && (!anim.GetBool("Jump")));
+    }
+
+    void FixedUpdate () {
         gravity();
         if (Input.GetAxis("NagiY") != 0 || Input.GetAxis("NagiX") != 0)
         {
@@ -87,6 +97,7 @@ public class Movement : MonoBehaviour {
             s_RigidBody.velocity = new Vector3(s_RigidBody.velocity.x, jumpheight, 0);
             grounded = false;
             anim.SetTrigger("jump");
+            jumpSound.Play();
         }
         else
         {
@@ -105,6 +116,40 @@ public class Movement : MonoBehaviour {
         if (collide.gameObject.layer == 8)
         {
             grounded = true;
+        } else if (collide.gameObject.layer == 4)
+        {
+            StartCoroutine("Die");
+        }
+    }
+
+    IEnumerator Die()
+    {
+        yield return new WaitForSeconds(1f);
+        StartCoroutine("Respawn");
+        //animation for death
+    }
+
+    public IEnumerator Respawn()
+    {
+        yield return new WaitForSeconds(1f);
+        anim.SetTrigger("revive");
+        respawns = GameObject.FindGameObjectsWithTag("Respawn");
+        foreach (GameObject respawn in respawns)
+        {
+            if (respawn.GetComponent<Respawn>().isActivated)
+            {
+                transform.position = respawn.transform.position;
+            }
+        }
+        //animation for respawn
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.name == "Axe")
+        {
+            anim.SetTrigger("die");
+            StartCoroutine("Die");
         }
     }
 }

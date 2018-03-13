@@ -25,6 +25,8 @@ public class OniAI : MonoBehaviour
     float dNagi;
     Vector3 dir;
     axe m_axe;
+    AudioSource axeSound;
+    AudioSource fallSound;
 
     public static int attackState = Animator.StringToHash("Base Layer.oattack");
     public static int deadState = Animator.StringToHash("Base Layer.odie");
@@ -40,6 +42,8 @@ public class OniAI : MonoBehaviour
         detected = false;
         attacking = false;
         m_axe = axe.Get();
+        axeSound = GameObject.Find("AxeSound").GetComponent<AudioSource>();
+        fallSound = GameObject.Find("OniFallSound").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -56,6 +60,7 @@ public class OniAI : MonoBehaviour
             if (currentBaseState.fullPathHash != deadState)
             {
                 anim.SetTrigger("die");
+                StartCoroutine("playFalling");
             } else
             {
                 return;
@@ -63,6 +68,12 @@ public class OniAI : MonoBehaviour
         }
         
         
+    }
+
+    IEnumerator playFalling()
+    {
+        yield return new WaitForSeconds(2f);
+        fallSound.Play();
     }
 
     void detect()
@@ -106,9 +117,10 @@ public class OniAI : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f);
         m_axe.GetComponent<BoxCollider>().enabled = true;
+        axeSound.Play();
         yield return new WaitForSeconds(0.7f);
         m_axe.GetComponent<BoxCollider>().enabled = false;
-        
+
     }
 
     IEnumerator DetectPlayer()
