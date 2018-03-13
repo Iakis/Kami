@@ -15,11 +15,12 @@ public class Slash : MonoBehaviour {
 
     Transform obj;
     ParticleSystem ps;
+    AudioSource swordSound;
 	void Start()
     {
         obj = transform.GetChild(0);
         ps = obj.gameObject.GetComponent<ParticleSystem>();
-        
+        swordSound = GameObject.Find("SwordSound").GetComponent<AudioSource>();
     }
 	// Update is called once per frame
 	void Update () {
@@ -39,6 +40,7 @@ public class Slash : MonoBehaviour {
 
     void attack()
     {
+        swordSound.Play();
         target.GetComponent<OniAI>().damage();
         ps.Emit(1);
         var heading = target.transform.position - gameObject.transform.position;
