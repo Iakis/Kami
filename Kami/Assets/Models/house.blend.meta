@@ -19,7 +19,42 @@ ModelImporter:
     4300000: Cube
     7400000: Default Take
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: bc76ba98df6b66642a234af0b90f2784, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_002
+    second: {fileID: 2100000, guid: 225d5d2295b29df41ba1de7edcb89f64, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: darker_board
+    second: {fileID: 2100000, guid: 33ae8ff80cc979043a83dd001d143376, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: normal_board
+    second: {fileID: 2100000, guid: f14705120dca94244acb1d632810ea2b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: stick
+    second: {fileID: 2100000, guid: 5ad2ff3386a0e33408c823d43666a495, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: thatch
+    second: {fileID: 2100000, guid: d7e0799a3df0ab346ba67391fcea7a80, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: white
+    second: {fileID: 2100000, guid: 9f936d23441761f4eb1a8207ae1c6827, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

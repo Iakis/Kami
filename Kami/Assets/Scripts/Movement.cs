@@ -22,6 +22,7 @@ public class Movement : MonoBehaviour {
     static Movement s_izanagi;
 
     bool grounded;
+    public bool inCombat;
 
     Movement()
     {
@@ -111,6 +112,16 @@ public class Movement : MonoBehaviour {
         s_RigidBody.AddForce(gravity, ForceMode.Acceleration);
     }
 
+    public void combat()
+    {
+        inCombat = true;
+    }
+
+    public void outCombat()
+    {
+        inCombat = false;
+    }
+
     void OnCollisionEnter(Collision collide)
     {
         if (collide.gameObject.layer == 8)
@@ -136,10 +147,10 @@ public class Movement : MonoBehaviour {
         respawns = GameObject.FindGameObjectsWithTag("Respawn");
         foreach (GameObject respawn in respawns)
         {
-            if (respawn.GetComponent<Respawn>().isActivated)
-            {
-                transform.position = respawn.transform.position;
-            }
+            //if (respawn.GetComponent<Respawn>().isActivated)
+            //{
+            //    transform.position = respawn.transform.position;
+            //}
         }
         //animation for respawn
     }
