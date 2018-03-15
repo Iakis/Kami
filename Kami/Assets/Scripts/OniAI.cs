@@ -24,13 +24,14 @@ public class OniAI : MonoBehaviour
     GameObject target;
     float dNagi;
     Vector3 dir;
-    axe m_axe;
     AudioSource axeSound;
     AudioSource fallSound;
     Rigidbody s_rigidBody;
 
     static float globalGravity = -9.81f;
     float gravityScale = 1.0f;
+
+    axe m_axe;
 
     public static int attackState = Animator.StringToHash("Base Layer.oattack");
     public static int deadState = Animator.StringToHash("Base Layer.odie");
@@ -45,7 +46,6 @@ public class OniAI : MonoBehaviour
         m_rigidbody = gameObject.GetComponent<Rigidbody>();
         detected = false;
         attacking = false;
-        m_axe = axe.Get();
         axeSound = GameObject.Find("AxeSound").GetComponent<AudioSource>();
         fallSound = GameObject.Find("OniFallSound").GetComponent<AudioSource>();
         //s_rigidBody = this.gameObject.GetComponent<Rigidbody>();
@@ -81,6 +81,11 @@ public class OniAI : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         fallSound.Play();
+    }
+
+    public void setAxe(axe myAxe)
+    {
+        m_axe = myAxe;
     }
 
     void detect()
@@ -120,13 +125,6 @@ public class OniAI : MonoBehaviour
         //s_rigidBody.AddForce(gravity, ForceMode.Acceleration);
     }
 
-    IEnumerator Cooldown()
-    {
-        CD = true;
-        yield return new WaitForSeconds(6f);
-        CD = false;
-    }
-
     IEnumerator smash()
     {
         yield return new WaitForSeconds(0.3f);
@@ -137,30 +135,6 @@ public class OniAI : MonoBehaviour
 
     }
 
-    IEnumerator DetectPlayer()
-    {
-        float dNagi = m_izanagi.transform.position.x - transform.position.x;
-        if (dNagi < range)
-        {
-            Vector3 offset;
-            if (dNagi > 0)
-            {
-                offset = Vector3.left * 5;
-            }
-            else
-            {
-                offset = Vector3.right * 5;
-            }
-            float step = 5f * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, m_izanagi.transform.position+offset, step);
-            anim.SetBool("walking", true);
-            float time = (Math.Abs(dNagi) - offset.x) / 5;
-            yield return new WaitForSeconds(time);
-            anim.SetBool("walking", false);
-            detected = true;
-        }
-    }
-
     IEnumerator die()
     {
         this.gameObject.layer = 10;
@@ -169,14 +143,6 @@ public class OniAI : MonoBehaviour
         yield return new WaitForSeconds(1f);
         dead = true;
         m_axe.GetComponent<BoxCollider>().enabled = false;
-    }
-
-    IEnumerator hit()
-    {
-        canhit = false;
-        anim.SetTrigger("hit");
-        yield return new WaitForSeconds(0.3f);
-        canhit = true;
     }
 
 }
