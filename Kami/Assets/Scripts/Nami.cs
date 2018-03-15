@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Nami : MonoBehaviour {
 
-    bool met;
     GameObject target;
-    GameObject safeSpot;
+    public GameObject possesse;
     static Movement m_izanagi;
     float dNagi;
     float movespeed = 10f;
+    bool met;
 
     public static Nami s_izanami;
 
@@ -25,21 +25,13 @@ public class Nami : MonoBehaviour {
     // Use this for initialization
     void Start () {
         m_izanagi = Movement.Get();
-        met = false;
         target = m_izanagi.gameObject;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        dNagi = Vector3.Distance(m_izanagi.transform.position, transform.position);
-        if (!m_izanagi.inCombat)
-        {
-            meet();
-            this.gameObject.GetComponent<SideChar>().enabled = false;
-        } else
-        {
-            this.gameObject.GetComponent<SideChar>().enabled = true;
-        }
+        //dNagi = Vector3.Distance(target.transform.position, transform.position);
+        //meet();
     }
 
     void meet()
@@ -58,6 +50,11 @@ public class Nami : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public void setPoss(GameObject p)
+    {
+        possesse = p;
     }
 
     
