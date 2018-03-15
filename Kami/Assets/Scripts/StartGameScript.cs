@@ -8,7 +8,8 @@ public class StartGameScript : MonoBehaviour {
 
 	Text startGame;
 	string blank = "";
-	string flashing = "Press start to play";
+	string flashing = "Press start to skip";
+	float timer = 0.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -30,7 +31,12 @@ public class StartGameScript : MonoBehaviour {
 	void Update () {
 		if (Input.GetButton("StartButton"))
 		{
-			SceneManager.LoadScene ("test", LoadSceneMode.Single);
+			SceneManager.LoadScene ("prompts", LoadSceneMode.Single);
+		}
+		timer += Time.deltaTime;
+		int seconds = (int)timer % 60;
+		if (seconds == 24) {
+			SceneManager.LoadScene ("prompts", LoadSceneMode.Single);
 		}
 	}
 }
