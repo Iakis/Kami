@@ -127,10 +127,15 @@ public class Movement : MonoBehaviour {
         if (collide.gameObject.layer == 8)
         {
             grounded = true;
-        } else if (collide.gameObject.layer == 4)
+        } else if (collide.gameObject.tag == "death")
         {
-            StartCoroutine("Die");
+            die();
         }
+    }
+
+    public void die()
+    {
+        StartCoroutine("Die");
     }
 
     IEnumerator Die()
@@ -153,14 +158,5 @@ public class Movement : MonoBehaviour {
             }
         }
         //animation for respawn
-    }
-
-    void OnTriggerEnter(Collider col)
-    {
-        if (col.gameObject.name == "Axe")
-        {
-            anim.SetTrigger("die");
-            StartCoroutine("Die");
-        }
     }
 }

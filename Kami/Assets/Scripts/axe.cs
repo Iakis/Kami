@@ -22,6 +22,7 @@ public class axe : MonoBehaviour {
     void Start () {
         parent = transform.root;
         oni = parent.GetComponent<OniAI>();
+        oni.setAxe(this);
 	}
 	
 	// Update is called once per frame
@@ -31,9 +32,9 @@ public class axe : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.name == "Nagi" && oni.currentBaseState.fullPathHash == OniAI.attackState)
+        if (col.gameObject.tag == "Player" && oni.currentBaseState.fullPathHash == OniAI.attackState)
         {
-            Debug.Log("HITTTTT");
+            col.gameObject.GetComponent<Movement>().die();
         }
     }
 }
