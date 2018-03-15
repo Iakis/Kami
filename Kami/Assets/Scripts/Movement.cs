@@ -44,6 +44,7 @@ public class Movement : MonoBehaviour {
         grounded = true;
         jumpSound = GameObject.Find("JumpSound").GetComponent<AudioSource>();
         walkSound = GameObject.Find("WalkSound").GetComponent<AudioSource>();
+        revive();
     }
 
     void Update()
@@ -136,6 +137,11 @@ public class Movement : MonoBehaviour {
     public void die()
     {
         StartCoroutine("Die");
+    }
+
+    public void revive()
+    {
+        anim.SetTrigger("revive");
     }
 
     IEnumerator Die()

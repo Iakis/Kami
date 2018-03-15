@@ -50,7 +50,7 @@ MonoBehaviour:
       ambientOnly: 0
       highPrecision: 0
   screenSpaceReflection:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       reflection:
         blendType: 0
@@ -109,7 +109,7 @@ MonoBehaviour:
         texture: {fileID: 0}
         intensity: 3
   colorGrading:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       tonemapping:
         tonemapper: 2
@@ -134,7 +134,7 @@ MonoBehaviour:
       colorWheels:
         mode: 1
         log:
-          slope: {r: 1, g: 0.67775255, b: 0, a: -0.061381076}
+          slope: {r: 1, g: 0.60800666, b: 0.06466216, a: -0.061381076}
           power: {r: 0.9851784, g: 0.95241654, b: 1, a: 0.000000002057961}
           offset: {r: 0.94572943, g: 0.9093115, b: 1, a: 0}
         linear:

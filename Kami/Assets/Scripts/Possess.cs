@@ -5,21 +5,24 @@ using UnityEngine;
 public class Possess : MonoBehaviour {
 
     GameObject target;
-    static Movement m_izanagi;
+    GameObject m_izanagi;
+    static Nami m_izanami;
 
     bool possed;
     // Use this for initialization
     void Start () {
-        m_izanagi = Movement.Get();
+        m_izanagi = Movement.Get().gameObject;
+        m_izanami = Nami.Get();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        targets();
+        
         if (Input.GetButtonUp("YButton"))
         {
             if (!possed)
             {
+                targets();
                 poss();
             } else
             {
@@ -46,27 +49,35 @@ public class Possess : MonoBehaviour {
                     target = hitColliders[i].gameObject;
                 }
             }
-            return;
+            i++;
         }
     }
 
     void poss()
     {
         m_izanagi.GetComponent<Movement>().enabled = false;
-        m_izanagi.GetComponent<SideChar>().enabled = true;
+        m_izanagi.GetComponent<Slash>().enabled = false;
+        //target.AddComponent<Rigidbody>();
         target.AddComponent<Movement>();
-        //target.GetComponent<OniAI>().enabled = false;
+        possed = true;
+        m_izanami.setPoss(target);
+        m_izanami.gameObject.GetComponent<SideChar>().swap();
         Debug.Log("poss");
-        this.gameObject.GetComponent<MeshRenderer>().enabled = false;
-
+        this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 
     void unposs()
     {
         m_izanagi.GetComponent<Movement>().enabled = true;
         m_izanagi.GetComponent<SideChar>().enabled = false;
+        m_izanagi.GetComponent<Slash>().enabled = true;
+        //Destroy(target.GetComponent<Rigidbody>());
         target.GetComponent<Movement>().enabled = false;
-        //target.GetComponent<OniAI>().enabled = false;
-        this.gameObject.GetComponent<MeshRenderer>().enabled = true;
+        target.GetComponent<OniAI>().die();
+        possed = false;
+        m_izanami.setPoss(null);
+        m_izanami.transform.position = target.transform.position;
+        m_izanami.gameObject.GetComponent<SideChar>().swap();
+        this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
     }
 }

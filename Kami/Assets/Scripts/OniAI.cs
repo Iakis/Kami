@@ -14,7 +14,6 @@ public class OniAI : MonoBehaviour
 
     public AnimatorStateInfo currentBaseState;
 
-    static Movement m_izanagi;
     public float range = 20f;
 
     bool detected;
@@ -39,9 +38,7 @@ public class OniAI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        health = 25;
-        m_izanagi = Movement.Get();
-        target = m_izanagi.gameObject;
+        health = 1;
         anim = gameObject.GetComponent<Animator>();
         m_rigidbody = gameObject.GetComponent<Rigidbody>();
         detected = false;
@@ -56,17 +53,18 @@ public class OniAI : MonoBehaviour
     {
         gravity();
         currentBaseState = anim.GetCurrentAnimatorStateInfo(0);
-        if (health > 0)
+        if (health > 0 && target != null)
         {
-            transform.LookAt(m_izanagi.transform);
-            dNagi = Vector3.Distance(m_izanagi.transform.position, transform.position);
+            transform.LookAt(target.transform);
+            dNagi = Vector3.Distance(target.transform.position, transform.position);
             detect();
-        } else
+        } else if (health == 0 && !dead)
         {
             if (currentBaseState.fullPathHash != deadState)
             {
+                dead = true;
                 anim.SetTrigger("die");
-                m_izanagi.GetComponent<Movement>().outCombat();
+                target.GetComponent<Movement>().outCombat();
                 StartCoroutine("playFalling");
             } else
             {
@@ -95,7 +93,7 @@ public class OniAI : MonoBehaviour
             attacking = false;
             if (dNagi < 20 && health > 0)
             {
-                m_izanagi.GetComponent<Movement>().combat();
+                target.GetComponent<Movement>().combat();
                 if (dNagi > 5.5)
                 {
                     anim.SetFloat("Speed", 1);
@@ -135,14 +133,21 @@ public class OniAI : MonoBehaviour
 
     }
 
-    IEnumerator die()
+    public void die()
     {
         this.gameObject.layer = 10;
         this.GetComponent<CapsuleCollider>().isTrigger = true;
         anim.SetTrigger("die");
-        yield return new WaitForSeconds(1f);
-        dead = true;
+        StartCoroutine("playFalling");
         m_axe.GetComponent<BoxCollider>().enabled = false;
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            target = col.gameObject;
+        }
     }
 
 }
