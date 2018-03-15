@@ -8,3 +8,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/test.unity
     guid: d0e227d665576b641a0d9d120b588ad6
+  - enabled: 1
+    path: Assets/_Scenes/IntroVideo.unity
+    guid: 7971b9a0e8523cc4e9e3e8da7158fe1d
+  - enabled: 1
+    path: Assets/_Scenes/TitleScreen.unity
+    guid: c5d3dd48b7bfbc74a9246075b44802c7
+  - enabled: 1
+    path: Assets/_Scenes/postCutscene.unity
+    guid: 5867b5bb21048e042b4edbb7bda2dd10
+  - enabled: 1
+    path: Assets/_Scenes/prompts.unity
+    guid: 165ffe0679e5fba4b8be0a534a983661
+  - enabled: 1
+    path: Assets/_Scenes/cutscene.unity
+    guid: 07055a8afff9e064088af24e6a3732fc
