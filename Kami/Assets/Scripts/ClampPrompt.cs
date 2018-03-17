@@ -15,30 +15,7 @@ public class ClampPrompt : MonoBehaviour {
 		currentPrompt.enabled = false;
 		oniScript = Oni.GetComponent<OniAI> ();
 	}
-
-	// Use this for initialization
-	// void OnTriggerEnter(Collider other){
-	// 	if (other.CompareTag ("Player")) {
-	// 		Debug.Log ("Enter prompt");
-	// 		if (oniScript.health > 0) {
-	// 			currentPrompt.enabled = true;
-	// 			currentPrompt.sprite = prompt;
-	// 		} else {
-	// 			currentPrompt.enabled = false;
-	// 		}
-	// 	} else {
-	// 		currentPrompt.enabled = currentPrompt.enabled;
-	// 	}
-	// }
-
-	// void OnTriggerExit(Collider other){
-	// 	if (other.CompareTag ("Player")) {
-	// 		Debug.Log ("Exit prompt");
-	// 		currentPrompt.enabled = false;
-	// 	} else {
-	// 		currentPrompt.enabled = true;
-	// 	}
-	// }
+		
 	 private bool IsInView(GameObject toCheck)
      {
 		Vector3 pointOnScreen = Camera.main.WorldToScreenPoint(toCheck.GetComponentInChildren<Renderer>().bounds.center);
@@ -76,7 +53,10 @@ public class ClampPrompt : MonoBehaviour {
      
 	void Update(){
 		// If Oni is visible and alive, show prompt
-		if (IsInView(Sphere) && oniScript.health > 0) {
+		Debug.Log(IsInView(Oni));
+		Debug.Log (oniScript.health);
+		if (IsInView(Oni) && oniScript.health > 0) {
+			Debug.Log ("Is in view and Oni health > 0");
 			currentPrompt.enabled = true;
 			currentPrompt.sprite = prompt;
 			Vector3 PromptPos = Camera.main.WorldToScreenPoint (this.transform.position);
