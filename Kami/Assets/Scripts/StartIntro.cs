@@ -10,6 +10,9 @@ public class StartIntro : MonoBehaviour {
 	string blank = "";
 	string flashing = "Press start to play";
 
+	public Image fade;
+	public Animator anim;
+
 	public AudioSource source;
 	public AudioClip start;
 
@@ -33,7 +36,25 @@ public class StartIntro : MonoBehaviour {
 	void Update () {
 		if (Input.GetButton("StartButton"))
 		{
-			SceneManager.LoadScene ("IntroVideo", LoadSceneMode.Single);
+			StartCoroutine (Fading ());
+			StartCoroutine (FadeVolume ());
 		}
+	}
+
+	IEnumerator Fading(){
+		anim.SetBool ("Fade", true);
+		yield return new WaitUntil (() => fade.color.a == 1);
+		SceneManager.LoadScene ("postCutscene", LoadSceneMode.Single);
+	}
+
+	IEnumerator FadeVolume(){
+		float startVolume = source.volume;
+		while (source.volume > 0) {
+			source.volume -= startVolume * Time.deltaTime / 6.0f;
+
+			yield return null;
+		}
+
+		source.Stop ();
 	}
 }

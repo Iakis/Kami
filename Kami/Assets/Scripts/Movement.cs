@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Movement : MonoBehaviour {
 
@@ -15,6 +16,9 @@ public class Movement : MonoBehaviour {
     private GameObject[] respawns;
     AudioSource jumpSound;
     AudioSource walkSound;
+
+	public Image fade;
+	public Animator fadeAnim;
 
     static float globalGravity = -9.81f;
 
@@ -148,6 +152,7 @@ public class Movement : MonoBehaviour {
     {
         yield return new WaitForSeconds(1f);
         StartCoroutine("Respawn");
+		StartCoroutine (FadeOut());
         //animation for death
     }
 
@@ -163,6 +168,18 @@ public class Movement : MonoBehaviour {
                 transform.position = respawn.transform.position;
             }
         }
+		StartCoroutine (FadeIn ());
         //animation for respawn
     }
+
+	IEnumerator FadeIn(){
+		fadeAnim.SetBool ("Fade", false);
+		yield return new WaitUntil (() => fade.color.a == 0);
+	}
+
+	IEnumerator FadeOut(){
+		fadeAnim.SetBool ("Fade", true);
+		yield return new WaitUntil (() => fade.color.a == 1);
+	}
+
 }
