@@ -58,6 +58,7 @@ ModelImporter:
     400048: mixamorig:Spine2
     400050: //RootNode
     7400000: orevive
+    7400002: orevive2
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -89,7 +90,7 @@ ModelImporter:
     - serializedVersion: 16
       name: orevive
       takeName: mixamo.com
-      firstFrame: 99
+      firstFrame: 92
       lastFrame: 508
       wrapMode: 0
       orientationOffsetY: 0
@@ -100,15 +101,34 @@ ModelImporter:
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
+      keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
-      heightFromFeet: 0
+      heightFromFeet: 1
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
+      curves:
+      - name: Curve
+        curve:
+          serializedVersion: 2
+          curve:
+          - serializedVersion: 2
+            time: 0
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+          - serializedVersion: 2
+            time: 1
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+          preInfinity: 3
+          postInfinity: 3
+          rotationOrder: 0
       events: []
       transformMask: []
       maskType: 3

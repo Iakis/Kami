@@ -19,6 +19,8 @@ public class OniAI : MonoBehaviour
     AudioSource axeSound;
     AudioSource fallSound;
 
+    static SideChar c;
+
     //For gravity
     static float globalGravity = -9.81f;
     float gravityScale = 1.0f;
@@ -33,11 +35,12 @@ public class OniAI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        health = 25;
+        health = 1;
         anim = gameObject.GetComponent<Animator>();
         attacking = false;
         axeSound = GameObject.Find("AxeSound").GetComponent<AudioSource>();
         fallSound = GameObject.Find("OniFallSound").GetComponent<AudioSource>();
+        c = SideChar.Get();
     }
 
     // Update is called once per frame
@@ -63,7 +66,7 @@ public class OniAI : MonoBehaviour
                 dead = true;
                 anim.SetTrigger("die");
                 //Set the player to out of combat
-                target.GetComponent<Movement>().outCombat();
+                c.outCombat();
                 StartCoroutine("playFalling");
             } else
             {
@@ -92,7 +95,7 @@ public class OniAI : MonoBehaviour
             if (dNagi < 20 && health > 0)
             {
                 //Set player to in combat
-                target.GetComponent<Movement>().combat();
+                c.combat();
                 if (dNagi > 5.5)
                 {
                     //This enables the walk animation
