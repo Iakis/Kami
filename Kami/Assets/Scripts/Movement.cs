@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Movement : MonoBehaviour {
 
     [SerializeField]
-    float movespeed = 4f;
+    private float movespeed = 4f;
     [SerializeField]
     float gravityScale = 1.0f;
     [SerializeField]
@@ -14,19 +14,18 @@ public class Movement : MonoBehaviour {
     private Animator anim;
     Vector3 forward, right, heading;
     private GameObject[] respawns;
-    AudioSource jumpSound;
-    AudioSource walkSound;
+    private AudioSource jumpSound;
+    private AudioSource walkSound;
 
 	public Image fade;
 	public Animator fadeAnim;
 
     static float globalGravity = -9.81f;
 
-    Rigidbody s_RigidBody;
+    private Rigidbody s_RigidBody;
     static Movement s_izanagi;
 
     bool grounded;
-    public bool inCombat;
 
     Movement()
     {
@@ -60,7 +59,7 @@ public class Movement : MonoBehaviour {
         gravity();
         if (Input.GetAxis("NagiY") != 0 || Input.GetAxis("NagiX") != 0)
         {
-            move();
+            move(movespeed);
             anim.SetFloat("Speed", (System.Math.Abs(Input.GetAxis("NagiY"))) + (System.Math.Abs(Input.GetAxis("NagiX"))));
             anim.SetFloat("Direction", Input.GetAxis("NagiX"));
             if (Input.GetButton("AButton"))
@@ -82,7 +81,7 @@ public class Movement : MonoBehaviour {
         
     }
 
-    void move()
+    protected void move(float movespeed)
     {
         Vector3 upMovement = forward * movespeed * Time.deltaTime * -(Input.GetAxis("NagiY"));
         Vector3 rightMovement = right * movespeed * Time.deltaTime * Input.GetAxis("NagiX");
@@ -111,20 +110,10 @@ public class Movement : MonoBehaviour {
         }
     }
 
-    void gravity()
+    protected void gravity()
     {
         Vector3 gravity = globalGravity * gravityScale * Vector3.up;
         s_RigidBody.AddForce(gravity, ForceMode.Acceleration);
-    }
-
-    public void combat()
-    {
-        inCombat = true;
-    }
-
-    public void outCombat()
-    {
-        inCombat = false;
     }
 
     void OnCollisionEnter(Collision collide)

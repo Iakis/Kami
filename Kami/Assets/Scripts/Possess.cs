@@ -57,12 +57,10 @@ public class Possess : MonoBehaviour {
     {
         m_izanagi.GetComponent<Movement>().enabled = false;
         m_izanagi.GetComponent<Slash>().enabled = false;
-        //target.AddComponent<Rigidbody>();
-        target.AddComponent<Movement>();
+        target.GetComponent<IzaOni>().enabled = true;
         possed = true;
         m_izanami.setPoss(target);
         m_izanami.gameObject.GetComponent<SideChar>().swap();
-        Debug.Log("poss");
         this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 
@@ -71,8 +69,7 @@ public class Possess : MonoBehaviour {
         m_izanagi.GetComponent<Movement>().enabled = true;
         m_izanagi.GetComponent<SideChar>().enabled = false;
         m_izanagi.GetComponent<Slash>().enabled = true;
-        //Destroy(target.GetComponent<Rigidbody>());
-        target.GetComponent<Movement>().enabled = false;
+        target.GetComponent<IzaOni>().enabled = false;
         target.GetComponent<OniAI>().die();
         possed = false;
         m_izanami.setPoss(null);
