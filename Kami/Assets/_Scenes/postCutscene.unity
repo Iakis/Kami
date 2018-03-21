@@ -1463,7 +1463,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh217932
+  m_Name: pb_Mesh67524
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -1591,7 +1591,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh217510
+  m_Name: pb_Mesh67096
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -1810,7 +1810,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 294801798}
   m_LocalRotation: {x: -0.23911756, y: -0.3696437, z: 0.09904579, w: 0.89239913}
-  m_LocalPosition: {x: 377.36667, y: 323.56604, z: 441.43307}
+  m_LocalPosition: {x: 415.55045, y: 305.4188, z: 496.00122}
   m_LocalScale: {x: 0.99999964, y: 1.0000006, z: 0.9999996}
   m_Children:
   - {fileID: 398068075}
@@ -2702,7 +2702,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh217750
+  m_Name: pb_Mesh67344
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -9022,7 +9022,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh217734
+  m_Name: pb_Mesh67328
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -18866,6 +18866,16 @@ Prefab:
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 114893022736264762, guid: 09e5005115f5649498a703285cea9a35,
+        type: 2}
+      propertyPath: fade
+      value: 
+      objectReference: {fileID: 1843223543}
+    - target: {fileID: 114893022736264762, guid: 09e5005115f5649498a703285cea9a35,
+        type: 2}
+      propertyPath: fadeAnim
+      value: 
+      objectReference: {fileID: 1843223542}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 09e5005115f5649498a703285cea9a35, type: 2}
   m_IsPrefabParent: 0
@@ -18895,7 +18905,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh217868
+  m_Name: pb_Mesh67462
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -33769,12 +33779,12 @@ GameObject:
   - component: {fileID: 1843223543}
   - component: {fileID: 1843223542}
   m_Layer: 5
-  m_Name: Image
+  m_Name: FadeImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1843223541
 RectTransform:
   m_ObjectHideFlags: 0
