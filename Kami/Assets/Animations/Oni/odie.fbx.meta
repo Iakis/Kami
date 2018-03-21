@@ -58,6 +58,7 @@ ModelImporter:
     400048: mixamorig:Spine2
     400050: //RootNode
     7400000: odie
+    7400002: odie2
     9500000: //RootNode
   externalObjects: {}
   materials:
@@ -93,19 +94,19 @@ ModelImporter:
       lastFrame: 275
       wrapMode: 0
       orientationOffsetY: 0
-      level: -0.19
+      level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
+      keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
-      heightFromFeet: 0
+      heightFromFeet: 1
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []

@@ -6,27 +6,28 @@ using UnityEngine.UI;
 public class Movement : MonoBehaviour {
 
     [SerializeField]
-    float movespeed = 4f;
+    private float movespeed = 4f;
     [SerializeField]
     float gravityScale = 1.0f;
     [SerializeField]
     float jumpheight = 5f;
     private Animator anim;
-    Vector3 forward, right, heading;
+    Vector3 forward, right, heading, upMovement, rightMovement;
     private GameObject[] respawns;
-    AudioSource jumpSound;
-    AudioSource walkSound;
+    private AudioSource jumpSound;
+    private AudioSource walkSound;
 
 	public Image fade;
 	public Animator fadeAnim;
+    static SideChar c;
 
     static float globalGravity = -9.81f;
 
-    Rigidbody s_RigidBody;
+    private Rigidbody s_RigidBody;
     static Movement s_izanagi;
 
     bool grounded;
-    public bool inCombat;
+    public bool rolling;
 
     Movement()
     {
@@ -45,6 +46,7 @@ public class Movement : MonoBehaviour {
         forward = Vector3.Normalize(forward);
         right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
         s_RigidBody = GetComponent<Rigidbody>();
+        c = SideChar.Get();
         grounded = true;
         jumpSound = GameObject.Find("JumpSound").GetComponent<AudioSource>();
         walkSound = GameObject.Find("WalkSound").GetComponent<AudioSource>();
@@ -53,21 +55,31 @@ public class Movement : MonoBehaviour {
 
     void Update()
     {
+        
         walkSound.mute = !(anim.GetFloat("Speed") != 0 && (!anim.GetBool("Jump")));
+    }
+
+    void LateUpdate()
+    {
+        c.grounded = grounded;
     }
 
     void FixedUpdate () {
         gravity();
+        if (rolling)
+        {
+            Roll(heading, upMovement, rightMovement);
+            return;
+        }
+        if (Input.GetButton("AButton"))
+        {
+            jump();
+        }
         if (Input.GetAxis("NagiY") != 0 || Input.GetAxis("NagiX") != 0)
         {
-            move();
+            move(movespeed);
             anim.SetFloat("Speed", (System.Math.Abs(Input.GetAxis("NagiY"))) + (System.Math.Abs(Input.GetAxis("NagiX"))));
             anim.SetFloat("Direction", Input.GetAxis("NagiX"));
-            if (Input.GetButton("AButton"))
-            {
-                anim.SetTrigger("Jump");
-                jump();
-            }
             if (Input.GetAxis("NagiX") < 0.1)
             {
                 anim.SetBool("NegativeDirection", true);
@@ -82,14 +94,17 @@ public class Movement : MonoBehaviour {
         
     }
 
-    void move()
+    protected void move(float movespeed)
     {
-        Vector3 upMovement = forward * movespeed * Time.deltaTime * -(Input.GetAxis("NagiY"));
-        Vector3 rightMovement = right * movespeed * Time.deltaTime * Input.GetAxis("NagiX");
-
-        
-
+        upMovement = forward * movespeed * Time.deltaTime * -(Input.GetAxis("NagiY"));
+        rightMovement = right * movespeed * Time.deltaTime * Input.GetAxis("NagiX");
         heading = Vector3.Normalize(rightMovement + upMovement);
+
+        if (Input.GetButton("BButton"))
+        {
+            anim.SetTrigger("Roll");
+            StartCoroutine("roll");
+        }
 
         transform.forward = heading;
         transform.position += upMovement;
@@ -102,7 +117,7 @@ public class Movement : MonoBehaviour {
         {
             s_RigidBody.velocity = new Vector3(s_RigidBody.velocity.x, jumpheight, 0);
             grounded = false;
-            anim.SetTrigger("jump");
+            anim.SetTrigger("Jump");
             jumpSound.Play();
         }
         else
@@ -111,20 +126,25 @@ public class Movement : MonoBehaviour {
         }
     }
 
-    void gravity()
+    void Roll(Vector3 h, Vector3 u, Vector3 r)
+    {
+        transform.forward = h;
+        transform.position += u*1.5f;
+        transform.position += r*1.5f;
+    }
+
+    IEnumerator roll()
+    {
+        rolling = true;
+        yield return new WaitForSeconds(0.5f);
+        rolling = false;
+        
+    }
+
+    protected void gravity()
     {
         Vector3 gravity = globalGravity * gravityScale * Vector3.up;
         s_RigidBody.AddForce(gravity, ForceMode.Acceleration);
-    }
-
-    public void combat()
-    {
-        inCombat = true;
-    }
-
-    public void outCombat()
-    {
-        inCombat = false;
     }
 
     void OnCollisionEnter(Collision collide)
@@ -140,7 +160,10 @@ public class Movement : MonoBehaviour {
 
     public void die()
     {
-        StartCoroutine("Die");
+        if (!rolling)
+        {
+            StartCoroutine("Die");
+        }
     }
 
     public void revive()
