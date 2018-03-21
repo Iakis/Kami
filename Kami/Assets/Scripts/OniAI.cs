@@ -46,6 +46,10 @@ public class OniAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (health <= 0 && dead)
+        {
+            return;
+        }
         //Apply Gravity
         gravity();
         //Get the current animation state
@@ -58,7 +62,7 @@ public class OniAI : MonoBehaviour
             //Distance between me and the player
             dNagi = Vector3.Distance(target.transform.position, transform.position);
             detect();
-        } else if (health == 0 && !dead)
+        } else if (health <= 0 && !dead)
         {
             //If the animator is not in dead state...else let the state play
             if (currentBaseState.fullPathHash != deadState)
@@ -110,6 +114,7 @@ public class OniAI : MonoBehaviour
                     anim.SetFloat("Speed", 0);
                     transform.position = transform.position;
                     anim.SetTrigger("Attack");
+                    StopCoroutine("smash");
                     StartCoroutine("smash");
                     attacking = true;
                 }
@@ -118,9 +123,9 @@ public class OniAI : MonoBehaviour
     }
 
     //Called when player attacks
-    public void damage()
+    public void damage(int x)
     {
-        health -= 1;
+        health -= x;
     }
 
     void gravity()
@@ -133,12 +138,11 @@ public class OniAI : MonoBehaviour
     IEnumerator smash()
     {
         //Enable/disable weapon collider depending on animation
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
         m_axe.GetComponent<BoxCollider>().enabled = true;
         axeSound.Play();
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.6f);
         m_axe.GetComponent<BoxCollider>().enabled = false;
-
     }
 
     public void die()

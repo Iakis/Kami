@@ -13,20 +13,53 @@ public class IzaOni : MonoBehaviour {
     Animator anim;
     Vector3 forward, right, heading;
     static float globalGravity = -9.81f;
+
+    public AnimatorStateInfo currentBaseState;
+
+    public static int reviveState = Animator.StringToHash("Base Layer.orevive");
+    public static int attackState = Animator.StringToHash("Base Layer.oattack");
+    public static int deadState = Animator.StringToHash("Base Layer.odie");
+
+    public GameObject m_axe;
+
     // Use this for initialization
-    void Start () {
+    void Start() {
         forward = Camera.main.transform.forward;
         forward.y = 0;
         forward = Vector3.Normalize(forward);
         right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
-		anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         revive();
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    void OnEnable()
+    {
+        forward = Camera.main.transform.forward;
+        forward.y = 0;
+        forward = Vector3.Normalize(forward);
+        right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
+        anim = GetComponent<Animator>();
+        revive();
+    }
+
+    void Update()
     {
         gravity();
+        
+        currentBaseState = anim.GetCurrentAnimatorStateInfo(0);
+    }
+
+    void FixedUpdate()
+    {
+        if (currentBaseState.fullPathHash == reviveState || currentBaseState.fullPathHash == attackState || currentBaseState.fullPathHash == deadState)
+        {
+            return;
+        }
+        if (Input.GetButtonUp("XButton"))
+        {
+            attack();
+            return;
+        }
         if (Input.GetAxis("NagiY") != 0 || Input.GetAxis("NagiX") != 0)
         {
             move(movespeed);
@@ -58,6 +91,24 @@ public class IzaOni : MonoBehaviour {
     public void revive()
     {
         anim.SetTrigger("revive");
+    }
+
+    void attack()
+    {
+        anim.SetFloat("Speed", 0);
+        transform.position = transform.position;
+        anim.SetTrigger("Attack");
+        StartCoroutine("smash");
+    }
+
+    IEnumerator smash()
+    {
+        //Enable/disable weapon collider depending on animation
+        yield return new WaitForSeconds(0.5f);
+        m_axe.GetComponent<BoxCollider>().enabled = true;
+        //axeSound.Play();
+        yield return new WaitForSeconds(0.7f);
+        m_axe.GetComponent<BoxCollider>().enabled = false;
     }
 
 }

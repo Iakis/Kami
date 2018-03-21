@@ -8,14 +8,22 @@ public class SideChar : MonoBehaviour {
     float movespeed = 10f;
     float pmovespeed = 4f;
     float dis;
-    GameObject mainChar;
-    GameObject sideChar;
+    public GameObject mainChar;
+    public GameObject sideChar;
     GameObject safeSpot;
     static Movement m_izanagi;
     static Nami m_izanami;
+    static CameraFollow cam;
     bool poss;
     public bool inCombat;
+    Rigidbody s_RigidBody;
 
+    [SerializeField]
+    float jumpheight = 5f;
+
+    float gravityScale = 5f;
+    static float globalGravity = -9.81f;
+    public bool grounded;
     Animator anim;
 
     SideChar()
@@ -33,12 +41,16 @@ public class SideChar : MonoBehaviour {
         //Gets and setsinitial character objects
         m_izanagi = Movement.Get();
         m_izanami = Nami.Get();
+        cam = CameraFollow.Get();
         poss = false;
         mainChar = m_izanagi.gameObject;
         sideChar = m_izanami.gameObject;
+        anim = sideChar.GetComponent<Animator>();
         //Find safe spot
         safeSpots();
         inCombat = false;
+        s_RigidBody = sideChar.GetComponent<Rigidbody>();
+        grounded = true;
     }
 
     //Swap main character and side character (when izanami possesses)
@@ -48,20 +60,26 @@ public class SideChar : MonoBehaviour {
         {
             mainChar = m_izanami.possesse;
             sideChar = m_izanagi.gameObject;
+            mainChar.tag = "Player";
+            sideChar.tag = "Untagged";
             anim = sideChar.GetComponent<Animator>();
             poss = true;
+            cam.setTarget(mainChar);
         } else
         {
             mainChar = m_izanagi.gameObject;
             sideChar = m_izanami.gameObject;
+            mainChar.tag = "Player";
+            sideChar.tag = "Untagged";
             poss = false;
-            anim = null;
+            anim = sideChar.GetComponent<Animator>();
+            cam.setTarget(mainChar);
         }
     }
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(inCombat);
+        gravity();
         //Distance between main and side character
         dis = Vector3.Distance(mainChar.transform.position, sideChar.transform.position);
         dis = (float)System.Math.Round(dis);
@@ -69,6 +87,13 @@ public class SideChar : MonoBehaviour {
         if (!inCombat)
         {
             meet();
+            if (Input.GetButton("AButton"))
+            {
+                if (grounded)
+                {
+                    StartCoroutine("Jump");
+                }
+            }
         }
         else
         {
@@ -81,7 +106,7 @@ public class SideChar : MonoBehaviour {
     {
         if (dis < 15)
         {
-            sideChar.transform.LookAt(mainChar.transform);
+            look(mainChar.transform);
             if (dis > 5)
             {
                 if (anim)
@@ -111,13 +136,11 @@ public class SideChar : MonoBehaviour {
 
     public void combat()
     {
-        Debug.Log("combat");
         inCombat = true;
     }
 
     public void outCombat()
     {
-        Debug.Log("out");
         inCombat = false;
     }
 
@@ -128,9 +151,11 @@ public class SideChar : MonoBehaviour {
         if (safeSpot != null)
         {
             sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, safeSpot.transform.position, movespeed * Time.deltaTime);
+            look(safeSpot.transform);
             if (sideChar.transform.position == safeSpot.transform.position)
             {
-                sideChar.transform.LookAt(mainChar.transform);
+                look(mainChar.transform);
+                anim.SetFloat("Speed", 0f);
             }
         }
         
@@ -150,5 +175,33 @@ public class SideChar : MonoBehaviour {
             }
             i++;
         }
+    }
+
+    void jump()
+    {
+        s_RigidBody.velocity = new Vector3(s_RigidBody.velocity.x, jumpheight, 0);
+        anim.SetTrigger("Jump");
+    }
+
+    IEnumerator Jump()
+    {
+        yield return new WaitForSeconds(0.3f);
+        jump();
+    }
+
+    protected void gravity()
+    {
+        Vector3 gravity = globalGravity * gravityScale * Vector3.up;
+        s_RigidBody.AddForce(gravity, ForceMode.Acceleration);
+    }
+
+    void look(Transform obj)
+    {
+        Quaternion rot;
+        Vector3 a = new Vector3(sideChar.transform.position.x, 0, sideChar.transform.position.z);
+        Vector3 b = new Vector3(obj.position.x, 0, obj.position.z);
+        Vector3 relativePos = b - a;
+        rot = Quaternion.LookRotation(relativePos);
+        sideChar.transform.rotation = rot;
     }
 }
