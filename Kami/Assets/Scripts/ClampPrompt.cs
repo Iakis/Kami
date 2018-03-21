@@ -53,8 +53,6 @@ public class ClampPrompt : MonoBehaviour {
      
 	void Update(){
 		// If Oni is visible and alive, show prompt
-		Debug.Log(IsInView(Oni));
-		Debug.Log (oniScript.health);
 		if (IsInView(Oni) && oniScript.health > 0) {
 			Debug.Log ("Is in view and Oni health > 0");
 			currentPrompt.enabled = true;

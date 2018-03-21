@@ -11,6 +11,18 @@ public class CameraFollow : MonoBehaviour {
     private Vector3 velocity = Vector3.zero;
     private Vector3 noY;
 
+    static CameraFollow cam;
+
+    CameraFollow()
+    {
+        cam = this;
+    }
+
+    public static CameraFollow Get()
+    {
+        return cam;
+    }
+
     void Start () {
         //noY = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z); 
 	}
@@ -30,4 +42,9 @@ public class CameraFollow : MonoBehaviour {
         transform.position = smoothPosition;
 		
 	}
+
+    public void setTarget(GameObject o)
+    {
+        target = o.transform;
+    }
 }

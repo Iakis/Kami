@@ -41,7 +41,7 @@ public class Slash : MonoBehaviour {
     void attack()
     {
         swordSound.Play();
-        target.GetComponent<OniAI>().damage();
+        target.GetComponent<OniAI>().damage(1);
         ps.Emit(1);
         var heading = target.transform.position - gameObject.transform.position;
         heading.y = 0;

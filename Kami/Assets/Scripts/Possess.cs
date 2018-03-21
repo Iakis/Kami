@@ -8,25 +8,51 @@ public class Possess : MonoBehaviour {
     GameObject m_izanagi;
     static Nami m_izanami;
 
+    public AnimatorStateInfo mainState;
+    public AnimatorStateInfo sideState;
+
+    static SideChar c;
+
     bool possed;
+
+    public static int reviveState = Animator.StringToHash("Base Layer.orevive");
+    public static int attackState = Animator.StringToHash("Base Layer.oattack");
+    public static int deadState = Animator.StringToHash("Base Layer.odie");
+    public static int idleState = Animator.StringToHash("Base Layer.idle");
+    public static int locomotion = Animator.StringToHash("Base Layer.Locomotion");
     // Use this for initialization
     void Start () {
+        c = SideChar.Get();
         m_izanagi = Movement.Get().gameObject;
         m_izanami = Nami.Get();
     }
 	
 	// Update is called once per frame
-	void Update () {
-        
+    void Update()
+    {
+        mainState = c.mainChar.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
+        sideState = c.sideChar.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
+    }
+
+	void LateUpdate () {
         if (Input.GetButtonUp("YButton"))
         {
             if (!possed)
             {
                 targets();
-                poss();
+                if (target != null)
+                {
+                    poss();
+                }
             } else
             {
-                unposs();
+                if (mainState.fullPathHash == locomotion || mainState.fullPathHash == idleState)
+                {
+                    unposs();
+                } else
+                {
+                    return;
+                }
             }
             
         }
@@ -60,21 +86,20 @@ public class Possess : MonoBehaviour {
         target.GetComponent<IzaOni>().enabled = true;
         possed = true;
         m_izanami.setPoss(target);
-        m_izanami.gameObject.GetComponent<SideChar>().swap();
+        c.swap();
         this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
     }
 
     void unposs()
     {
         m_izanagi.GetComponent<Movement>().enabled = true;
-        m_izanagi.GetComponent<SideChar>().enabled = false;
         m_izanagi.GetComponent<Slash>().enabled = true;
         target.GetComponent<IzaOni>().enabled = false;
         target.GetComponent<OniAI>().die();
         possed = false;
         m_izanami.setPoss(null);
         m_izanami.transform.position = target.transform.position;
-        m_izanami.gameObject.GetComponent<SideChar>().swap();
+        c.swap();
         this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
     }
 }
