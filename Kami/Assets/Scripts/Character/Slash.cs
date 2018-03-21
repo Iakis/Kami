@@ -41,7 +41,15 @@ public class Slash : MonoBehaviour {
     void attack()
     {
         swordSound.Play();
-        target.GetComponent<OniAI>().damage();
+        Debug.Log("Izanagi attacked!!!!!!!!!!!!!!!!!!!!");
+        Debug.Log(target.name);
+        if (target.name.Contains("Oni"))
+        {
+            target.GetComponent<OniAI>().damage("Izanagi");
+        } else if (target.name.Contains("Tengu"))
+        {
+            target.GetComponent<TenguAI>().damage("Izanagi");
+        }
         ps.Emit(1);
         var heading = target.transform.position - gameObject.transform.position;
         heading.y = 0;

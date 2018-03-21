@@ -35,7 +35,7 @@ public class OniAI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        health = 1;
+        health = 10;
         anim = gameObject.GetComponent<Animator>();
         attacking = false;
         axeSound = GameObject.Find("AxeSound").GetComponent<AudioSource>();
@@ -118,9 +118,15 @@ public class OniAI : MonoBehaviour
     }
 
     //Called when player attacks
-    public void damage()
+    public void damage(string attacker)
     {
-        health -= 1;
+        if (attacker == "Yukiona")
+        {
+            health -= 2;
+        } else
+        {
+            health -= 1;
+        }
     }
 
     void gravity()
