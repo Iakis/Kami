@@ -51,7 +51,7 @@ public class Movement : MonoBehaviour {
         grounded = true;
         jumpSound = GameObject.Find("JumpSound").GetComponent<AudioSource>();
         walkSound = GameObject.Find("WalkSound").GetComponent<AudioSource>();
-        rollSound = GameObject.Find("RollSound").GetComponent<AudioSource>();
+        //rollSound = GameObject.Find("RollSound").GetComponent<AudioSource>();
         revive();
     }
 
@@ -175,10 +175,11 @@ public class Movement : MonoBehaviour {
 
     IEnumerator Die()
     {
+        anim.SetTrigger("Die");
         yield return new WaitForSeconds(1f);
         StartCoroutine("Respawn");
 		StartCoroutine (FadeOut());
-        //animation for death
+        
     }
 
     public IEnumerator Respawn()
