@@ -5,11 +5,14 @@ using UnityEngine;
 public class Respawn : MonoBehaviour {
 
     public bool isActivated;
+	public GameObject lightObject;
+	Light light;
     private GameObject[] respawns;
 
 	// Use this for initialization
 	void Start () {
         isActivated = false;
+		light = lightObject.GetComponent<Light>();
 	}
 	
 	// Update is called once per frame
@@ -22,6 +25,7 @@ public class Respawn : MonoBehaviour {
         if (col.gameObject.layer == 12 || col.gameObject.layer == 13)
         {
             isActivated = true;
+			light.enabled = true;
             respawns = GameObject.FindGameObjectsWithTag("Respawn");
             foreach (GameObject respawn in respawns)
             {
