@@ -8,6 +8,8 @@ public class TenguAI : MonoBehaviour {
     public int health;
     float dNagi;
     bool attacking;
+    bool CD;
+    bool dashing;
 
     GameObject target;
     Vector3 dir;
@@ -17,6 +19,8 @@ public class TenguAI : MonoBehaviour {
 
     //AudioSource axeSound;
     //AudioSource fallSound;
+    AudioSource startingMusic;
+    AudioSource combatMusic;
 
     static SideChar c;
 
@@ -26,35 +30,40 @@ public class TenguAI : MonoBehaviour {
 
     //Get the weapon
     spear m_spear;
+    Vector3 tar;
 
     //Animation states we want to keep track of for scripting
     public static int attackState = Animator.StringToHash("Base Layer.tattack");
     public static int deadState = Animator.StringToHash("Base Layer.tdie");
-    
 
+    
     // Use this for initialization
     void Start()
     {
-        health = 10;
+        health = 30;
         anim = gameObject.GetComponent<Animator>();
         attacking = false;
         //axeSound = GameObject.Find("AxeSound").GetComponent<AudioSource>();
         //fallSound = GameObject.Find("OniFallSound").GetComponent<AudioSource>();
+        startingMusic = GameObject.Find("StartingMusic").GetComponent<AudioSource>();
+        combatMusic = GameObject.Find("CombatMusic").GetComponent<AudioSource>();
         c = SideChar.Get();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Apply Gravity
         gravity();
-        //Get the current animation state
         currentBaseState = anim.GetCurrentAnimatorStateInfo(0);
-        //If alive and has detected the player (target)
+        if (dashing)
+        {
+            dash(tar);
+            return;
+        }
         if (health > 0 && target != null)
         {
             //Look at player
-            //transform.LookAt(target.transform);
+            transform.LookAt(target.transform);
             //Distance between me and the player
             dNagi = Vector3.Distance(target.transform.position, transform.position);
             detect();
@@ -96,9 +105,11 @@ public class TenguAI : MonoBehaviour {
             attacking = false;
             if (dNagi < 20 && health > 0)
             {
+                startingMusic.mute = true;
+                combatMusic.mute = false;
                 //Set player to in combat
                 c.combat();
-                if (dNagi > 7.5)
+                if (dNagi > 10)
                 {
                     transform.LookAt(target.transform);
                     //This enables the walk animation
@@ -107,14 +118,21 @@ public class TenguAI : MonoBehaviour {
                     float step = 4f * Time.deltaTime;
                     transform.position = Vector3.MoveTowards(transform.position, target.transform.position, step);
                 }
-                else
+                else if (CD == false && dNagi <= 10)
                 {
                     //Do attack animation, trigger axe collider etc.
                     anim.SetFloat("Speed", 0);
                     transform.position = transform.position;
                     anim.SetTrigger("Attack");
+                    StopCoroutine("stab");
                     StartCoroutine("stab");
+                    
                     attacking = true;
+                } else if(CD == true && dNagi <= 10)
+                {
+                    transform.LookAt(target.transform);
+                    anim.SetFloat("Speed", 0);
+                    transform.position = transform.position;
                 }
             }
         }
@@ -144,27 +162,27 @@ public class TenguAI : MonoBehaviour {
         //s_rigidBody.AddForce(gravity, ForceMode.Acceleration);
     }
 
-    //IEnumerator smash()
-    //{
-    //    //Enable/disable weapon collider depending on animation
-    //    yield return new WaitForSeconds(0.3f);
-    //    m_axe.GetComponent<BoxCollider>().enabled = true;
-    //    axeSound.Play();
-    //    yield return new WaitForSeconds(0.7f);
-    //    m_axe.GetComponent<BoxCollider>().enabled = false;
-
-    //}
-
     IEnumerator stab()
     {
-        yield return new WaitForSeconds(1f);
-        // dash toward
-        transform.position = Vector3.MoveTowards(transform.position, transform.position+transform.rotation * Vector3.forward, 1f);
-        m_spear.GetComponent<BoxCollider>().enabled = true;
-        yield return new WaitForSeconds(0.4f);
-        m_spear.GetComponent<BoxCollider>().enabled = false;
-        StartCoroutine("stop");
-        // animation for stab
+        CD = true;
+        yield return new WaitForSeconds(0.8f);
+        tar = target.transform.position;
+        dashing = true;
+        yield return new WaitForSeconds(2f);
+        dashing = false;
+        yield return new WaitForSeconds(2.5f);
+        CD = false;
+    }
+
+    void dash(Vector3 tar)
+    {
+        float step = 40f * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, tar, step);
+
+        if (transform.position == tar)
+        {
+            transform.position = transform.position;
+        }
     }
 
     public void die()
@@ -188,4 +206,6 @@ public class TenguAI : MonoBehaviour {
             target = col.gameObject;
         }
     }
+
+    
 }

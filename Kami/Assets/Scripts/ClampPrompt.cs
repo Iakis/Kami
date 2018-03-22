@@ -72,9 +72,10 @@ public class ClampPrompt : MonoBehaviour {
 			timemanager.DoSlowMotion ();
 			Vector3 PromptPos = Camera.main.WorldToScreenPoint (this.transform.position);
 			currentPrompt.GetComponent<RectTransform> ().position = PromptPos;
-			if (Input.GetButton ("BButton")) {
+			if (Input.GetButtonUp ("BButton")) {
 				timemanager.NormalSpeed ();
-			}
+                oniScript.isAttacking = false;
+            }
 		}
 		else if (IsInView (Oni) && oniScript.health <= 0 && !Nami.GetComponent<Possess>().possed) {
 			Debug.Log ("Is in view and Oni dead");

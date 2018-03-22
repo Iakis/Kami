@@ -74,10 +74,6 @@ public class Possess : MonoBehaviour {
                 {
                     target = hitColliders[i].gameObject;
                 }
-                if (hitColliders[i].gameObject.GetComponent<TenguAI>().health <= 0)
-                {
-                    target = hitColliders[i].gameObject;
-                }
             }
             i++;
         }
@@ -87,14 +83,7 @@ public class Possess : MonoBehaviour {
     {
         m_izanagi.GetComponent<Movement>().enabled = false;
         m_izanagi.GetComponent<Slash>().enabled = false;
-        if (target.GetComponent<GameObject>().name.Contains("Oni"))
-        {
-            target.GetComponent<IzaOni>().enabled = true;
-        }
-        else if (target.GetComponent<GameObject>().name.Contains("Tengu"))
-        {
-            target.GetComponent<IzaTengu>().enabled = true;
-        }
+        target.GetComponent<IzaOni>().enabled = true;
         possed = true;
         m_izanami.setPoss(target);
         c.swap();
@@ -105,22 +94,8 @@ public class Possess : MonoBehaviour {
     {
         m_izanagi.GetComponent<Movement>().enabled = true;
         m_izanagi.GetComponent<Slash>().enabled = true;
-        if (target.GetComponent<GameObject>().name.Contains("Oni"))
-        {
-            target.GetComponent<IzaOni>().enabled = false;
-        }
-        else if (target.GetComponent<GameObject>().name.Contains("Tengu"))
-        {
-            target.GetComponent<IzaTengu>().enabled = false;
-        }
-        if (target.GetComponent<GameObject>().name.Contains("Oni"))
-        {
-            target.GetComponent<OniAI>().die();
-        }
-        else if (target.GetComponent<GameObject>().name.Contains("Tengu"))
-        {
-            target.GetComponent<TenguAI>().die();
-        }
+        target.GetComponent<IzaOni>().enabled = false;
+        target.GetComponent<OniAI>().die();
         possed = false;
         m_izanami.setPoss(null);
         m_izanami.transform.position = target.transform.position;

@@ -40,7 +40,7 @@ public class OniAI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        health = 10;
+        health = 30;
         anim = gameObject.GetComponent<Animator>();
         attacking = false;
         axeSound = GameObject.Find("AxeSound").GetComponent<AudioSource>();
