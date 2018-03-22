@@ -149,9 +149,15 @@ public class OniAI : MonoBehaviour
         //Enable/disable weapon collider depending on animation
         yield return new WaitForSeconds(0.5f);
         m_axe.GetComponent<BoxCollider>().enabled = true;
-        axeSound.Play();
+        StartCoroutine("playAxe");
         yield return new WaitForSeconds(0.6f);
         m_axe.GetComponent<BoxCollider>().enabled = false;
+    }
+
+    IEnumerator playAxe()
+    {
+        yield return new WaitForSeconds(0.2f);
+        axeSound.Play();
     }
 
     public void die()
