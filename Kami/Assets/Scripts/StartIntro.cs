@@ -44,7 +44,7 @@ public class StartIntro : MonoBehaviour {
 	IEnumerator Fading(){
 		anim.SetBool ("Fade", true);
 		yield return new WaitUntil (() => fade.color.a == 1);
-		SceneManager.LoadScene ("postCutscene", LoadSceneMode.Single);
+		SceneManager.LoadScene ("test", LoadSceneMode.Single);
 	}
 
 	IEnumerator FadeVolume(){

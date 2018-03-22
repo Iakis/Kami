@@ -18,6 +18,9 @@ public class OniAI : MonoBehaviour
 
     AudioSource axeSound;
     AudioSource fallSound;
+    AudioSource startingMusic;
+    AudioSource combatMusic;
+    AudioSource sheathSound;
 
     static SideChar c;
 
@@ -42,6 +45,9 @@ public class OniAI : MonoBehaviour
         attacking = false;
         axeSound = GameObject.Find("AxeSound").GetComponent<AudioSource>();
         fallSound = GameObject.Find("OniFallSound").GetComponent<AudioSource>();
+        startingMusic = GameObject.Find("StartingMusic").GetComponent<AudioSource>();
+        combatMusic = GameObject.Find("CombatMusic").GetComponent<AudioSource>();
+        sheathSound = GameObject.Find("SheathSound").GetComponent<AudioSource>();
         c = SideChar.Get();
     }
 
@@ -85,6 +91,9 @@ public class OniAI : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         fallSound.Play();
+        sheathSound.Play();
+        startingMusic.mute = false;
+        combatMusic.mute = true;
     }
 
     public void setAxe(axe myAxe)
@@ -100,6 +109,8 @@ public class OniAI : MonoBehaviour
             attacking = false;
             if (dNagi < 20 && health > 0)
             {
+                startingMusic.mute = true;
+                combatMusic.mute = false;
                 //Set player to in combat
                 c.combat();
                 if (dNagi > 5.5)
@@ -153,11 +164,17 @@ public class OniAI : MonoBehaviour
 		// For tutorial
 		isAttacking = true;
         m_axe.GetComponent<BoxCollider>().enabled = true;
-        axeSound.Play();
+        StartCoroutine("playAxe");
         yield return new WaitForSeconds(0.6f);
 		// For tutorial
 		isAttacking = false;
         m_axe.GetComponent<BoxCollider>().enabled = false;
+    }
+
+    IEnumerator playAxe()
+    {
+        yield return new WaitForSeconds(0.2f);
+        axeSound.Play();
     }
 
     public void die()

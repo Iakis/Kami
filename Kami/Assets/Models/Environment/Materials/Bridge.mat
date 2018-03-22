@@ -63,9 +63,11 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _Gloss: 0.5
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _Maxdistance: 143.48
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -77,6 +79,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
+    - _Vertexpower: -100.3
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0.4188531, g: 0.043176845, b: 0.01000033, a: 1}

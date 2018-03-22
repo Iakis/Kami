@@ -85,6 +85,7 @@ public class ClampPrompt : MonoBehaviour {
 			currentPrompt.GetComponent<RectTransform> ().position = PromptPos;
 		}
 		else {
+			timemanager.NormalSpeed ();
 			currentPrompt.enabled = false;
 		}
 	}
