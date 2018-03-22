@@ -42,7 +42,7 @@ public class axe : MonoBehaviour {
             if (col.gameObject.tag == "Enemy" && currentBaseState.fullPathHash == attackState)
             {
                 Debug.Log("hit");
-                col.gameObject.GetComponent<OniAI>().damage(10);
+                col.gameObject.GetComponent<OniAI>().damage(10, "Izanagi");
                 col.GetComponent<Animator>().SetTrigger("hit");
             }
         }

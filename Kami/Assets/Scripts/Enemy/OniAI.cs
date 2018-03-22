@@ -125,16 +125,15 @@ public class OniAI : MonoBehaviour
     //Called when player attacks
     public void damage(int x, string attacker)
     {
-        health -= x;
         if (attacker == "Yukiona")
         {
-            health -= 2*x;
+            health -= 4*x;
         } else if (attacker == "Tengu")
         {
-            health -= 0.5*x;
+            health -= 1*x;
         } else if (attacker == "Izanagi")
         {
-            health -= 1*x;
+            health -= 2*x;
         }
     }
 
