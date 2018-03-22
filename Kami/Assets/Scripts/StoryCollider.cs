@@ -32,10 +32,6 @@ public class StoryCollider : MonoBehaviour {
 					StartCoroutine(story.GetComponent<StoryText> ().FadeText ("She's nearby, I can feel it"));
 					storyActivated = true;
 				}
-				if(this.gameObject.name == "StoryCollider2"){
-					StartCoroutine(story.GetComponent<StoryText> ().FadeText ("I see a house over there"));
-					storyActivated = true;
-				}
 				if(this.gameObject.name == "StoryCollider3"){
 					StartCoroutine(story.GetComponent<StoryText> ().FadeText ("Is that her over there?"));
 					storyActivated = true;
