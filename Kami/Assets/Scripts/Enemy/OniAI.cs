@@ -122,10 +122,13 @@ public class OniAI : MonoBehaviour
     {
         if (attacker == "Yukiona")
         {
-            health -= 2;
-        } else
+            health -= 4;
+        } else if (attacker == "Tengu")
         {
             health -= 1;
+        } else if (attacker == "Izanagi")
+        {
+            health -= 2;
         }
     }
 

@@ -30,6 +30,7 @@ public class TenguAI : MonoBehaviour {
     //Animation states we want to keep track of for scripting
     public static int attackState = Animator.StringToHash("Base Layer.tattack");
     public static int deadState = Animator.StringToHash("Base Layer.tdie");
+    
 
     // Use this for initialization
     void Start()
@@ -53,7 +54,7 @@ public class TenguAI : MonoBehaviour {
         if (health > 0 && target != null)
         {
             //Look at player
-            transform.LookAt(target.transform);
+            //transform.LookAt(target.transform);
             //Distance between me and the player
             dNagi = Vector3.Distance(target.transform.position, transform.position);
             detect();
@@ -97,8 +98,9 @@ public class TenguAI : MonoBehaviour {
             {
                 //Set player to in combat
                 c.combat();
-                if (dNagi > 5.5)
+                if (dNagi > 7.5)
                 {
+                    transform.LookAt(target.transform);
                     //This enables the walk animation
                     anim.SetFloat("Speed", 1);
                     //Set speed and walk towards palyer
@@ -123,11 +125,15 @@ public class TenguAI : MonoBehaviour {
     {
         if (attacker == "Oni")
         {
-            health -= 2;
+            health -= 4;
         }
-        else
+        else if (attacker == "Yukiona")
         {
             health -= 1;
+        }
+        else if (attacker == "Izanagi")
+        {
+            health -= 2;
         }
     }
 
@@ -151,10 +157,14 @@ public class TenguAI : MonoBehaviour {
 
     IEnumerator stab()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(1f);
+        // dash toward
+        transform.position = Vector3.MoveTowards(transform.position, transform.position+transform.rotation * Vector3.forward, 1f);
         m_spear.GetComponent<BoxCollider>().enabled = true;
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.4f);
         m_spear.GetComponent<BoxCollider>().enabled = false;
+        StartCoroutine("stop");
+        // animation for stab
     }
 
     public void die()
