@@ -16,9 +16,8 @@ public class PromptAppear : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
 		if (other.CompareTag ("Player")) {
 			Debug.Log("Enter prompt");
-			currentPrompt.sprite = prompt;
 			currentPrompt.enabled = true;
-
+			currentPrompt.sprite = prompt;
 		}
 	}
 

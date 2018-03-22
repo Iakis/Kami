@@ -31,12 +31,12 @@ public class StartGameScript : MonoBehaviour {
 	void Update () {
 		if (Input.GetButton("StartButton"))
 		{
-			SceneManager.LoadScene ("prompts", LoadSceneMode.Single);
+			SceneManager.LoadScene ("StoryLantern", LoadSceneMode.Single);
 		}
 		timer += Time.deltaTime;
 		int seconds = (int)timer % 60;
 		if (seconds == 24) {
-			SceneManager.LoadScene ("prompts", LoadSceneMode.Single);
+			SceneManager.LoadScene ("StoryLantern", LoadSceneMode.Single);
 		}
 	}
 }
