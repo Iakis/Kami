@@ -70,7 +70,7 @@ public class Movement : MonoBehaviour {
         if (rolling)
         {
             Roll(heading, upMovement, rightMovement);
-            rollSound.Play();
+            ///rollSound.Play();
             return;
         }
         if (Input.GetButton("AButton"))
@@ -140,7 +140,6 @@ public class Movement : MonoBehaviour {
         rolling = true;
         yield return new WaitForSeconds(0.5f);
         rolling = false;
-        
     }
 
     protected void gravity()
