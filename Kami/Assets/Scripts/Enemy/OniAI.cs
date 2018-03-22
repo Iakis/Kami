@@ -31,6 +31,8 @@ public class OniAI : MonoBehaviour
     //Get the weapon
     axe m_axe;
 
+	public bool isAttacking = false;
+
     //Animation states we want to keep track of for scripting
     public static int attackState = Animator.StringToHash("Base Layer.oattack");
     public static int deadState = Animator.StringToHash("Base Layer.odie");
@@ -159,9 +161,13 @@ public class OniAI : MonoBehaviour
     {
         //Enable/disable weapon collider depending on animation
         yield return new WaitForSeconds(0.5f);
+		// For tutorial
+		isAttacking = true;
         m_axe.GetComponent<BoxCollider>().enabled = true;
         StartCoroutine("playAxe");
         yield return new WaitForSeconds(0.6f);
+		// For tutorial
+		isAttacking = false;
         m_axe.GetComponent<BoxCollider>().enabled = false;
     }
 

@@ -13,7 +13,7 @@ public class Possess : MonoBehaviour {
 
     static SideChar c;
 
-    bool possed;
+	public bool possed;
 
     public static int reviveState = Animator.StringToHash("Base Layer.orevive");
     public static int attackState = Animator.StringToHash("Base Layer.oattack");
