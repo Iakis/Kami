@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Waterfall4
+  m_Shader: {fileID: 4800000, guid: 40a87a7cc1d620948b89ad583f52c498, type: 3}
+  m_ShaderKeywords: _USEGRADIENT_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Gradient:
+        m_Texture: {fileID: 2800000, guid: cdf6be1339519f0439cb4de2e35ca53e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Noise:
+        m_Texture: {fileID: 2800000, guid: a2d34dcd5d0214d4c9863665e20e652e, type: 3}
+        m_Scale: {x: 2, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WaterTex:
+        m_Texture: {fileID: 2800000, guid: a2d34dcd5d0214d4c9863665e20e652e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _WaveNoise:
+        m_Texture: {fileID: 2800000, guid: 28c7aad1372ff114b90d330f8a2dd938, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Centerglow: 2
+    - _Cutoff: 0
+    - _Splash: 0
+    - _Splashvertex: 0
+    - _Stepsposterize: 3
+    - _TransmissionandLightWrapping: 0.88
+    - _Usegradient: 1
+    - _Uspeed2waves: 0.2
+    - _Uspeedwaves: 0.2
+    - _Usppedwaves: 0
+    - _Vertexpower: 1
+    - _Vspeed2waves: 0
+    - _Vspeedwaves: 0
+    m_Colors:
+    - _Color: {r: 0.58823526, g: 0.72738343, b: 1, a: 1}

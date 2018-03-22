@@ -28,7 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NoiseTex:
-        m_Texture: {fileID: 2800000, guid: 6a1c221a7d11eaa4e875ae74a888d906, type: 3}
+        m_Texture: {fileID: 2800000, guid: 45c7add56102d734b9338d29d98f52aa, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ReflectionTex:
@@ -81,7 +81,7 @@ Material:
     - _Speed_: 0.50000006
     - _Steepness: 0.15
     - _Stretch: 10
-    - _TexSize_: 64.00001
+    - _TexSize_: 512.00006
     - _Time_: 0
     - _TransformScale_: 1.0000001
     - _Waves: 2
