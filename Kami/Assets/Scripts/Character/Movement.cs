@@ -55,7 +55,6 @@ public class Movement : MonoBehaviour {
 
     void Update()
     {
-        
         walkSound.mute = !(anim.GetFloat("Speed") != 0 && (!anim.GetBool("Jump")));
     }
 
