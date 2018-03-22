@@ -16,6 +16,7 @@ public class Movement : MonoBehaviour {
     private GameObject[] respawns;
     private AudioSource jumpSound;
     private AudioSource walkSound;
+    private AudioSource rollSound;
 
 	public Image fade;
 	public Animator fadeAnim;
@@ -50,12 +51,13 @@ public class Movement : MonoBehaviour {
         grounded = true;
         jumpSound = GameObject.Find("JumpSound").GetComponent<AudioSource>();
         walkSound = GameObject.Find("WalkSound").GetComponent<AudioSource>();
+        rollSound = GameObject.Find("RollSound").GetComponent<AudioSource>();
         revive();
     }
 
     void Update()
     {
-        walkSound.mute = !(anim.GetFloat("Speed") != 0 && (!anim.GetBool("Jump")));
+        walkSound.mute = !(anim.GetFloat("Speed") != 0 && (!anim.GetBool("Jump")) && (!rolling));
     }
 
     void LateUpdate()
@@ -68,6 +70,7 @@ public class Movement : MonoBehaviour {
         if (rolling)
         {
             Roll(heading, upMovement, rightMovement);
+            rollSound.Play();
             return;
         }
         if (Input.GetButton("AButton"))
