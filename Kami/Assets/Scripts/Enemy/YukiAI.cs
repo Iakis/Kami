@@ -61,7 +61,7 @@ public class YukiAI : MonoBehaviour
         {
             dead = true;
             //Set the player to out of combat
-            c.outCombat();
+            SideChar.outCombat();
         }
     }
 
@@ -75,7 +75,7 @@ public class YukiAI : MonoBehaviour
                 startingMusic.mute = true;
                 combatMusic.mute = false;
                 //Set player to in combat
-                c.combat();
+                SideChar.combat();
                 if (dNagi > 12)
                 {
                     transform.LookAt(target.transform);
