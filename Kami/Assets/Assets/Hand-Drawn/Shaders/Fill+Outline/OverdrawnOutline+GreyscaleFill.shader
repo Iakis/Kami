@@ -43,7 +43,8 @@ Shader "Hand-Drawn/Fill+Outline/Overdrawn Outline + bumped" {
         }
         // Outline Pass
         //UsePass "Hand-Drawn/Outline/Simple/INTERIORMASK"
-		UsePass "Bumped Diffuse/FORWARD"
+		UsePass "Toon/Lit/FORWARD"
+
         
         // Fill Passes
         UsePass "Hand-Drawn/Outline/Overdrawn/OUTLINE1"
@@ -52,6 +53,6 @@ Shader "Hand-Drawn/Fill+Outline/Overdrawn Outline + bumped" {
         UsePass "Hand-Drawn/Outline/Overdrawn/OUTLINE4"
 		
 	}
-		FallBack "Legacy Shaders/Diffuse"
+		Fallback "Toon/Lit"
 }
 

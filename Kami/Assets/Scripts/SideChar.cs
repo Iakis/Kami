@@ -15,7 +15,7 @@ public class SideChar : MonoBehaviour {
     static Nami m_izanami;
     static CameraFollow cam;
     bool poss;
-    public bool inCombat;
+    public static bool inCombat;
     Rigidbody s_RigidBody;
 
     [SerializeField]
@@ -25,6 +25,9 @@ public class SideChar : MonoBehaviour {
     static float globalGravity = -9.81f;
     public bool grounded;
     Animator anim;
+
+    static AudioSource startingMusic;
+    static AudioSource combatMusic;
 
     SideChar()
     {
@@ -51,6 +54,8 @@ public class SideChar : MonoBehaviour {
         inCombat = false;
         s_RigidBody = sideChar.GetComponent<Rigidbody>();
         grounded = true;
+        startingMusic = GameObject.Find("StartingMusic").GetComponent<AudioSource>();
+        combatMusic = GameObject.Find("CombatMusic").GetComponent<AudioSource>();
     }
 
     //Swap main character and side character (when izanami possesses)
@@ -134,13 +139,17 @@ public class SideChar : MonoBehaviour {
         }
     }
 
-    public void combat()
+    public static void combat()
     {
+        startingMusic.mute = true;
+        combatMusic.mute = false;
         inCombat = true;
     }
 
-    public void outCombat()
+    public static void outCombat()
     {
+        startingMusic.mute = false;
+        combatMusic.mute = true;
         inCombat = false;
     }
 

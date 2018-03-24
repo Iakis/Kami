@@ -76,7 +76,7 @@ public class TenguAI : MonoBehaviour {
                 dead = true;
                 anim.SetTrigger("die");
                 //Set the player to out of combat
-                c.outCombat();
+                SideChar.outCombat();
                 StartCoroutine("playFalling");
             }
             else
@@ -108,7 +108,7 @@ public class TenguAI : MonoBehaviour {
                 startingMusic.mute = true;
                 combatMusic.mute = false;
                 //Set player to in combat
-                c.combat();
+                SideChar.combat();
                 if (dNagi > 10)
                 {
                     transform.LookAt(target.transform);
