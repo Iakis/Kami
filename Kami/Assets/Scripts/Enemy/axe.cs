@@ -35,7 +35,7 @@ public class axe : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Player" && currentBaseState.fullPathHash == attackState)
+        if (col.gameObject.tag == "Player" && currentBaseState.fullPathHash == attackState && SideChar.dead == false)
         {
             col.gameObject.GetComponent<Movement>().die();
         }

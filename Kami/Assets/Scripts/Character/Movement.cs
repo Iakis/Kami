@@ -20,6 +20,7 @@ public class Movement : MonoBehaviour {
 
 	public Image fade;
 	public Animator fadeAnim;
+    public bool dead;
     static SideChar c;
 
     static float globalGravity = -9.81f;
@@ -27,7 +28,7 @@ public class Movement : MonoBehaviour {
     private Rigidbody s_RigidBody;
     static Movement s_izanagi;
 
-    bool grounded;
+    public bool grounded;
     public bool rolling;
 
     Movement()
@@ -53,46 +54,54 @@ public class Movement : MonoBehaviour {
         walkSound = GameObject.Find("WalkSound").GetComponent<AudioSource>();
         //rollSound = GameObject.Find("RollSound").GetComponent<AudioSource>();
         revive();
+        dead = false;
     }
 
     void Update()
     {
+        
         walkSound.mute = !(anim.GetFloat("Speed") != 0 && (!anim.GetBool("Jump")) && (!rolling));
-    }
-
-    void LateUpdate()
-    {
-        c.grounded = grounded;
     }
 
     void FixedUpdate () {
         gravity();
-        if (rolling)
+        if (!dead)
         {
-            Roll(heading, upMovement, rightMovement);
-            ///rollSound.Play();
-            return;
-        }
-        if (Input.GetButton("AButton"))
-        {
-            jump();
-        }
-        if (Input.GetAxis("NagiY") != 0 || Input.GetAxis("NagiX") != 0)
-        {
-            move(movespeed);
-            anim.SetFloat("Speed", (System.Math.Abs(Input.GetAxis("NagiY"))) + (System.Math.Abs(Input.GetAxis("NagiX"))));
-            anim.SetFloat("Direction", Input.GetAxis("NagiX"));
-            if (Input.GetAxis("NagiX") < 0.1)
+            if (Input.GetButtonUp("BButton"))
             {
-                anim.SetBool("NegativeDirection", true);
-            } else
-            {
-                anim.SetBool("NegativeDirection", false);
+                anim.SetTrigger("Roll");
+                StartCoroutine("roll");
             }
-        } else
-        {
-            anim.SetFloat("Speed", 0);
+            if (rolling)
+            {
+                Roll(heading, upMovement, rightMovement);
+                ///rollSound.Play();
+                return;
+            }
+            if (Input.GetButton("AButton"))
+            {
+                jump();
+            }
+            if (Input.GetAxis("NagiY") != 0 || Input.GetAxis("NagiX") != 0)
+            {
+                move(movespeed);
+                anim.SetFloat("Speed", (System.Math.Abs(Input.GetAxis("NagiY"))) + (System.Math.Abs(Input.GetAxis("NagiX"))));
+                anim.SetFloat("Direction", Input.GetAxis("NagiX"));
+                if (Input.GetAxis("NagiX") < 0.1)
+                {
+                    anim.SetBool("NegativeDirection", true);
+                }
+                else
+                {
+                    anim.SetBool("NegativeDirection", false);
+                }
+            }
+            else
+            {
+                anim.SetFloat("Speed", 0);
+            }
         }
+        
         
     }
 
@@ -102,11 +111,7 @@ public class Movement : MonoBehaviour {
         rightMovement = right * movespeed * Time.deltaTime * Input.GetAxis("NagiX");
         heading = Vector3.Normalize(rightMovement + upMovement);
 
-        if (Input.GetButton("BButton"))
-        {
-            anim.SetTrigger("Roll");
-            StartCoroutine("roll");
-        }
+        
 
         transform.forward = heading;
         transform.position += upMovement;
@@ -174,6 +179,7 @@ public class Movement : MonoBehaviour {
 
     IEnumerator Die()
     {
+        dead = true;
         anim.SetTrigger("Die");
         yield return new WaitForSeconds(1f);
         StartCoroutine("Respawn");
@@ -194,6 +200,8 @@ public class Movement : MonoBehaviour {
             }
         }
 		StartCoroutine (FadeIn ());
+        yield return new WaitForSeconds(2f);
+        dead = false;
         //animation for respawn
     }
 

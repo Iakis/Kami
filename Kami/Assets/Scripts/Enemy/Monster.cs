@@ -11,6 +11,7 @@ public class Monster : MonoBehaviour {
     protected float movespeed;
     protected float combatRange;
     protected float attackRange;
+    protected Vector3 spawn;
 
     protected GameObject target;
     protected GameObject weapon;
@@ -37,6 +38,7 @@ public class Monster : MonoBehaviour {
         anim = gameObject.GetComponent<Animator>();
         fallSound = GameObject.Find("OniFallSound").GetComponent<AudioSource>();
         c = SideChar.Get();
+        
     }
 
     protected void alive()
@@ -49,10 +51,10 @@ public class Monster : MonoBehaviour {
         //gravity();
         //Get the current animation state
         currentBaseState = anim.GetCurrentAnimatorStateInfo(0);
-        if (health > 0 && target != null)
+        if (health > 0 && target != null && !attacking)
         {
             //Look at player
-            transform.LookAt(target.transform);
+            look(transform, transform.position, target.transform.position);
             //Distance between me and the player
             dNagi = Vector3.Distance(target.transform.position, transform.position);
             detect(movespeed, combatRange, attackRange, attk);
@@ -65,13 +67,17 @@ public class Monster : MonoBehaviour {
                 dead = true;
                 die();
                 //Set the player to out of combat
-                SideChar.outCombat();
+                
             }
             else
             {
 
                 return;
             }
+        } else if (target == null)
+        {
+            anim.SetFloat("Speed", 0);
+            this.GetComponent<SphereCollider>().enabled = true;
         }
     }
 
@@ -111,6 +117,7 @@ public class Monster : MonoBehaviour {
     public void die()
     {
         //Set layer to corpse layer
+        SideChar.outCombat();
         this.gameObject.layer = 10;
         //Disable collision with corpse
         this.GetComponent<CapsuleCollider>().isTrigger = true;
@@ -118,7 +125,11 @@ public class Monster : MonoBehaviour {
         anim.SetTrigger("die");
         StartCoroutine("playFalling");
         //Disable weapon collider
-        weapon.GetComponent<BoxCollider>().enabled = false;
+        if (weapon != null)
+        {
+            weapon.GetComponent<BoxCollider>().enabled = false;
+        }
+        
     }
 
     void OnTriggerEnter(Collider col)
@@ -135,5 +146,15 @@ public class Monster : MonoBehaviour {
         Debug.Log("sound");
         Debug.Log(fallSound);
         fallSound.Play();
+    }
+
+    public static void look(Transform i, Vector3 me, Vector3 obj)
+    {
+        Quaternion rot;
+        Vector3 a = new Vector3(me.x, 0, me.z);
+        Vector3 b = new Vector3(obj.x, 0, obj.z);
+        Vector3 relativePos = b - a;
+        rot = Quaternion.LookRotation(relativePos);
+        i.rotation = rot;
     }
 }

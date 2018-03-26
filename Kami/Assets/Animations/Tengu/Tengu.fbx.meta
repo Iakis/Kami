@@ -84,7 +84,32 @@ ModelImporter:
     7400000: trun
     9500000: //RootNode
     13700000: Cube
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Base
+    second: {fileID: 2100000, guid: 4b4b2a86354cfde47a863a5ed8769932, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Belt
+    second: {fileID: 2100000, guid: f7fe489478bc2a840b1448eb25810a75, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Kimono
+    second: {fileID: 2100000, guid: 1dbc61d4485c9c046b3b4fd76eb23b66, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pants
+    second: {fileID: 2100000, guid: eee7590dda67e724ba7df04624d0c8b2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Skin
+    second: {fileID: 2100000, guid: 1788de073f7832948b01abe09dd7219f, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
