@@ -98,17 +98,6 @@ public class IzaOni : MonoBehaviour {
         anim.SetFloat("Speed", 0);
         transform.position = transform.position;
         anim.SetTrigger("Attack");
-        StartCoroutine("smash");
-    }
-
-    IEnumerator smash()
-    {
-        //Enable/disable weapon collider depending on animation
-        yield return new WaitForSeconds(0.5f);
-        m_axe.GetComponent<BoxCollider>().enabled = true;
-        //axeSound.Play();
-        yield return new WaitForSeconds(0.7f);
-        m_axe.GetComponent<BoxCollider>().enabled = false;
     }
 
 }

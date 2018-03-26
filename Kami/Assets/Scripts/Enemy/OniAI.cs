@@ -20,7 +20,6 @@ public class OniAI : Monster
         attackRange = (float)5.5;
         weapon = Axe;
         attk = hit;
-        
     }
 
     // Update is called once per frame

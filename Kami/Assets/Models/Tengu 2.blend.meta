@@ -32,7 +32,47 @@ ModelImporter:
     4300004: Cube_001
     7400000: Default Take
     9500000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Base
+    second: {fileID: 2100000, guid: dedab708f3512544692d1857b1112a55, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Base_002
+    second: {fileID: 2100000, guid: 9f8923c1c6302c14cac1690f6fbd775a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Belt
+    second: {fileID: 2100000, guid: 399900cccefcdca418f098d75544b53c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Blade_001
+    second: {fileID: 2100000, guid: f4034fa99224f8d43880e68458fee5a3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Gold_001
+    second: {fileID: 2100000, guid: 959c95b7e837ee54796a867e3fb594a4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Kimono
+    second: {fileID: 2100000, guid: 0c46dea2887c8ec438a90516dfb42819, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pants
+    second: {fileID: 2100000, guid: 6a15389eabced854595284d309b42d47, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Skin
+    second: {fileID: 2100000, guid: 49bb4f26d452d5e46bfbcf12c8f54fba, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

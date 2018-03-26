@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SideChar : MonoBehaviour {
+public class SideChar : MonoBehaviour
+{
 
     static SideChar c;
     float movespeed = 10f;
@@ -14,6 +15,7 @@ public class SideChar : MonoBehaviour {
     static Movement m_izanagi;
     static Nami m_izanami;
     static CameraFollow cam;
+    public static bool dead;
     bool poss;
     public static bool inCombat;
     Rigidbody s_RigidBody;
@@ -40,7 +42,8 @@ public class SideChar : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         //Gets and setsinitial character objects
         m_izanagi = Movement.Get();
         m_izanami = Nami.Get();
@@ -56,6 +59,7 @@ public class SideChar : MonoBehaviour {
         grounded = true;
         startingMusic = GameObject.Find("StartingMusic").GetComponent<AudioSource>();
         combatMusic = GameObject.Find("CombatMusic").GetComponent<AudioSource>();
+        dead = false;
     }
 
     //Swap main character and side character (when izanami possesses)
@@ -70,7 +74,8 @@ public class SideChar : MonoBehaviour {
             anim = sideChar.GetComponent<Animator>();
             poss = true;
             cam.setTarget(mainChar);
-        } else
+        }
+        else
         {
             mainChar = m_izanagi.gameObject;
             sideChar = m_izanami.gameObject;
@@ -81,10 +86,12 @@ public class SideChar : MonoBehaviour {
             cam.setTarget(mainChar);
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         gravity();
+        dead = m_izanagi.GetComponent<Movement>().dead;
         //Distance between main and side character
         dis = Vector3.Distance(mainChar.transform.position, sideChar.transform.position);
         dis = (float)System.Math.Round(dis);
@@ -92,10 +99,11 @@ public class SideChar : MonoBehaviour {
         if (!inCombat)
         {
             meet();
-            if (Input.GetButton("AButton"))
+            if (Input.GetButtonUp("AButton"))
             {
                 if (grounded)
                 {
+                    grounded = false;
                     StartCoroutine("Jump");
                 }
             }
@@ -124,13 +132,15 @@ public class SideChar : MonoBehaviour {
             {
                 anim.SetFloat("Speed", 0f);
                 sideChar.transform.position = sideChar.transform.position;
-            } else if (dis == 5)
+            }
+            else if (dis == 5)
             {
                 if ((System.Math.Abs(Input.GetAxis("NagiY"))) + (System.Math.Abs(Input.GetAxis("NagiX"))) > 0)
                 {
                     anim.SetFloat("Speed", 0.2f);
-                    sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, mainChar.transform.position, pmovespeed/2 * Time.deltaTime);
-                } else
+                    sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, mainChar.transform.position, pmovespeed / 2 * Time.deltaTime);
+                }
+                else
                 {
                     anim.SetFloat("Speed", 0f);
                     sideChar.transform.position = sideChar.transform.position;
@@ -167,7 +177,7 @@ public class SideChar : MonoBehaviour {
                 anim.SetFloat("Speed", 0f);
             }
         }
-        
+
     }
 
     //Get the nearest safe spot
@@ -194,7 +204,7 @@ public class SideChar : MonoBehaviour {
 
     IEnumerator Jump()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.2f);
         jump();
     }
 
@@ -212,5 +222,13 @@ public class SideChar : MonoBehaviour {
         Vector3 relativePos = b - a;
         rot = Quaternion.LookRotation(relativePos);
         sideChar.transform.rotation = rot;
+    }
+
+    void OnCollisionEnter(Collision collide)
+    {
+        if (collide.gameObject.layer == 8)
+        {
+            grounded = true;
+        }
     }
 }

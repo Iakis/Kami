@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,10 +11,11 @@ public class Possess : MonoBehaviour {
 
     public AnimatorStateInfo mainState;
     public AnimatorStateInfo sideState;
-
+    public ParticleSystem ps;
     static SideChar c;
 
 	public bool possed;
+
 
     public static int reviveState = Animator.StringToHash("Base Layer.orevive");
     public static int attackState = Animator.StringToHash("Base Layer.oattack");
@@ -60,8 +62,8 @@ public class Possess : MonoBehaviour {
 
     void targets()
     {
-        int layerMask = 1 << 9;
-        Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, 10, layerMask);
+        int layerMask = 1 << 10;
+        Collider[] hitColliders = Physics.OverlapSphere(this.transform.position, 5f, layerMask);
         int i = 0;
         float mindist = 99;
         float dis = 0;
@@ -70,10 +72,14 @@ public class Possess : MonoBehaviour {
             dis = Vector3.Distance(gameObject.transform.position, hitColliders[i].gameObject.transform.position);
             if (dis < mindist)
             {
-                if (hitColliders[i].gameObject.GetComponent<OniAI>().health <= 0)
+                if (hitColliders[i].gameObject.GetComponent<Monster>().health <= 0)
                 {
-                    target = hitColliders[i].gameObject;
+                    if (Vector3.Distance(hitColliders[i].gameObject.transform.position, transform.position) < 3)
+                    {
+                        target = hitColliders[i].gameObject;
+                    }
                 }
+                    
             }
             i++;
         }
@@ -88,18 +94,22 @@ public class Possess : MonoBehaviour {
         m_izanami.setPoss(target);
         c.swap();
         this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        ps.Emit(1);
     }
 
     void unposs()
     {
+        
         m_izanagi.GetComponent<Movement>().enabled = true;
         m_izanagi.GetComponent<Slash>().enabled = true;
         target.GetComponent<IzaOni>().enabled = false;
-        target.GetComponent<OniAI>().die();
+        target.GetComponent<Monster>().die();
         possed = false;
         m_izanami.setPoss(null);
         m_izanami.transform.position = target.transform.position;
         c.swap();
         this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        ps.Emit(1);
+        target = null;
     }
 }
