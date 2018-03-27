@@ -10,6 +10,7 @@ public class Nami : MonoBehaviour {
     float dNagi;
     float movespeed = 10f;
     bool met;
+    private Rigidbody s_RigidBody;
 
     public static Nami s_izanami;
 
@@ -26,6 +27,7 @@ public class Nami : MonoBehaviour {
     void Start () {
         m_izanagi = Movement.Get();
         target = m_izanagi.gameObject;
+        s_RigidBody = GetComponent<Rigidbody>();
     }
 	
 	// Update is called once per frame
@@ -57,7 +59,17 @@ public class Nami : MonoBehaviour {
         possesse = p;
     }
 
-    
+    void OnCollisionEnter(Collision collide)
+    {
+        if (collide.gameObject.layer == 15)
+        {
+            s_RigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+        }
+        else
+        {
+            s_RigidBody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+        }
+    }
 
-    
+
 }
