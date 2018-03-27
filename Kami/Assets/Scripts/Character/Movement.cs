@@ -20,6 +20,7 @@ public class Movement : MonoBehaviour {
 
 	public Image fade;
 	public Animator fadeAnim;
+    public GameObject model;
     public bool dead;
     static SideChar c;
 
@@ -70,6 +71,7 @@ public class Movement : MonoBehaviour {
             if (Input.GetButtonUp("BButton"))
             {
                 anim.SetTrigger("Roll");
+                StopCoroutine("roll");
                 StartCoroutine("roll");
             }
             if (rolling)
@@ -155,19 +157,25 @@ public class Movement : MonoBehaviour {
 
     void OnCollisionEnter(Collision collide)
     {
-        if (collide.gameObject.layer == 15)
-        {
-            s_RigidBody.constraints = RigidbodyConstraints.FreezeRotation;
-        } else
-        {
-            s_RigidBody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-        }
-        if (collide.gameObject.layer == 8)
+        //if (collide.gameObject.layer == 15)
+        //{
+        //    s_RigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+        //} else
+        //{
+        //    s_RigidBody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+        //}
+        if (collide.gameObject.tag == "ground")
         {
             grounded = true;
         } else if (collide.gameObject.tag == "death")
         {
             die();
+        }
+
+        if (collide.gameObject.layer == 15 || collide.gameObject.layer == 16)
+        {
+            this.gameObject.layer = collide.gameObject.layer;
+            model.layer = collide.gameObject.layer;
         }
     }
 

@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - safeSpot
   - death
+  - ground
   layers:
   - Default
   - TransparentFX
@@ -25,8 +26,8 @@ TagManager:
   - Izanagi
   - Izanami
   - Destroy
-  - Collider
-  - 
+  - level2
+  - level3
   - 
   - 
   - 
