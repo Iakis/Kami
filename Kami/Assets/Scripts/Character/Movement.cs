@@ -157,13 +157,13 @@ public class Movement : MonoBehaviour {
 
     void OnCollisionEnter(Collision collide)
     {
-        //if (collide.gameObject.layer == 15)
-        //{
-        //    s_RigidBody.constraints = RigidbodyConstraints.FreezeRotation;
-        //} else
-        //{
-        //    s_RigidBody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
-        //}
+        if (collide.gameObject.layer == 17)
+        {
+            s_RigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+        } else
+        {
+            s_RigidBody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+        }
         if (collide.gameObject.tag == "ground")
         {
             grounded = true;

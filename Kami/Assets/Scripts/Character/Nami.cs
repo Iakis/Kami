@@ -61,7 +61,7 @@ public class Nami : MonoBehaviour {
 
     void OnCollisionEnter(Collision collide)
     {
-        if (collide.gameObject.layer == 15)
+        if (collide.gameObject.layer == 17)
         {
             s_RigidBody.constraints = RigidbodyConstraints.FreezeRotation;
         }
