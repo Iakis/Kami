@@ -81,7 +81,12 @@ ModelImporter:
     4300022: Icosphere.001
     4300024: Icosphere
     4300026: Cube
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: 1c024e2de82cba6489ae4511aa533f40, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

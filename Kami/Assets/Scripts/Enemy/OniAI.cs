@@ -11,7 +11,7 @@ public class OniAI : Monster
 
     void Start()
     {
-        health = 2;
+        health = 30;
         anim = gameObject.GetComponent<Animator>();
         attacking = false;
         axeSound = GameObject.Find("AxeSound").GetComponent<AudioSource>();
