@@ -143,8 +143,6 @@ public class Monster : MonoBehaviour {
     IEnumerator playFalling()
     {
         yield return new WaitForSeconds(2f);
-        Debug.Log("sound");
-        Debug.Log(fallSound);
         fallSound.Play();
     }
 

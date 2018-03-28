@@ -57,8 +57,12 @@ public class IzaOni : MonoBehaviour {
         }
         if (Input.GetButtonUp("XButton"))
         {
-            attack();
-            return;
+            if (currentBaseState.fullPathHash != attackState)
+            {
+                attack();
+                return;
+            }
+            
         }
         if (Input.GetAxis("NagiY") != 0 || Input.GetAxis("NagiX") != 0)
         {
@@ -98,6 +102,22 @@ public class IzaOni : MonoBehaviour {
         anim.SetFloat("Speed", 0);
         transform.position = transform.position;
         anim.SetTrigger("Attack");
+        StopCoroutine("smash");
+        StartCoroutine("smash");
+    }
+
+    IEnumerator smash()
+    {
+        //Enable/disable weapon collider depending on animation
+        yield return new WaitForSeconds(0.5f);
+        // For tutorial
+        m_axe.GetComponent<BoxCollider>().enabled = true;
+        m_axe.GetComponent<BoxCollider>().isTrigger = false;
+        StartCoroutine("playAxe");
+        yield return new WaitForSeconds(0.6f);
+        // For tutorial
+        m_axe.GetComponent<BoxCollider>().isTrigger = true;
+        m_axe.GetComponent<BoxCollider>().enabled = false;
     }
 
 }

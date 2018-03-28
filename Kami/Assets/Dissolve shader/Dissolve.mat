@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Dissolve
+  m_Shader: {fileID: 4800000, guid: 9804ca852c8487546a086029af8b0dbd, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture_45C36CB2:
+        m_Texture: {fileID: 2800000, guid: aae86eaf59d4ee641a96ab0b4a540166, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture_CF508EC9:
+        m_Texture: {fileID: 2800000, guid: 7296f51323ae9485a9c834c4e3d722ed, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture_D8245DA3:
+        m_Texture: {fileID: 2800000, guid: f4b3aa5f6862fc04f8b3ee0d494ef3d6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DissolveSrc:
+        m_Texture: {fileID: 2800000, guid: d124c4da4851fb7499a22ca10cb8cd0b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DissolveSrcBump:
+        m_Texture: {fileID: 2800000, guid: d124c4da4851fb7499a22ca10cb8cd0b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: b796b31558ee4334298dd0fd10aa674f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Float_5172ACEC: 0
+    - Float_73027337: 0.7
+    - Float_8620138F: 1
+    - Float_A82E044E: 2
+    - Float_CF9B0D05: 0
+    - _Amount: 0
+    - _Illuminate: 0.5
+    - _Shininess: 0.08
+    - _StartAmount: 0.1
+    - _Tile: 1
+    m_Colors:
+    - Vector2_2BB002BB: {r: 3, g: 2, b: 0, a: 0}
+    - _Color: {r: 0.8014706, g: 0.9671399, b: 1, a: 1}
+    - _ColorAnimate: {r: 1, g: 1, b: 1, a: 1}
+    - _DissColor: {r: 0.97058815, g: 0.97058815, b: 0.97058815, a: 1}
+    - _SpecColor: {r: 0.9411765, g: 0.96348876, b: 1, a: 1}
