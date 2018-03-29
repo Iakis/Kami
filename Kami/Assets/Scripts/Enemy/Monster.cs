@@ -121,6 +121,7 @@ public class Monster : MonoBehaviour {
         this.gameObject.layer = 10;
         //Disable collision with corpse
         this.GetComponent<CapsuleCollider>().isTrigger = true;
+        this.GetComponent<SphereCollider>().enabled = false;
         //Start death animation
         anim.SetTrigger("die");
         StartCoroutine("playFalling");

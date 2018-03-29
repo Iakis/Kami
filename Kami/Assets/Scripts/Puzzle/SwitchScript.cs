@@ -8,11 +8,16 @@ public class SwitchScript : MonoBehaviour {
     public Transform bridge;
     public bool isTriggered;
     public Vector3 originPosition;
-    public bool isUp;
+    public static bool isUp;
     public bool isDown;
     public Transform River;
     private float rangeMin, rangeMax;
 	private Rigidbody rb;
+
+    private Vector3 up;
+    private Vector3 down;
+    private Vector3 lerp;
+    private float t;
 
     // Use this for initialization
     void Start () {
@@ -21,6 +26,8 @@ public class SwitchScript : MonoBehaviour {
         originPosition = bridge.transform.position;
         isUp = false;
         isDown = true;
+        up = new Vector3(3, 0.4f, 3);
+        down = new Vector3(3, 0.1f, 3);
         //UnityEditor.AI.NavMeshBuilder.BuildNavMesh();
     }
 	
@@ -29,14 +36,16 @@ public class SwitchScript : MonoBehaviour {
         rb.WakeUp();
 		if (isTriggered)
         {
-            if (bridge.transform.position.y < originPosition.y+5f)
+            t += 0.01f * Time.deltaTime;
+            lerp = Vector3.Lerp(this.transform.localScale, down, t);
+            this.transform.localScale = lerp;
+            if (bridge.transform.position.y < originPosition.y+2.5f)
             {
                 bridge.transform.Translate(Vector3.up * Time.deltaTime);
             } else
             {
                 if (!isUp)
                 {
-                    //UnityEditor.AI.NavMeshBuilder.BuildNavMesh();
                     isUp = true;
                     isDown = false;
                 }
@@ -44,25 +53,27 @@ public class SwitchScript : MonoBehaviour {
         }
         else
         {
-            //if (bridge.transform.position.y > originPosition.y)
-            //{
-            //    bridge.transform.Translate(Vector3.down * Time.deltaTime);
-
-            //} else
-            //{
-            //    if (!isDown)
-            //    {
-            //        //UnityEditor.AI.NavMeshBuilder.BuildNavMesh();
-            //        isDown = true;
-            //        isUp = false;
-            //    }
-            //}
+            t += 0.1f * Time.deltaTime;
+            lerp = Vector3.Lerp(this.transform.localScale, up, t);
+            this.transform.localScale = lerp;
+            if (bridge.transform.position.y >= originPosition.y)
+            {
+                bridge.transform.Translate(Vector3.down * Time.deltaTime);
+            }
+            else
+            {
+                if (isUp)
+                {
+                    isUp = false;
+                    isDown = true;
+                }
+            }
         }
 	}
 
     void OnTriggerStay(Collider col)
     {
-        if (col.gameObject.layer == 12 || col.gameObject.layer == 13)
+        if (col.gameObject.tag == "Player" || col.gameObject.layer == 10 && col.gameObject.tag != "Enemy")
         {
             Debug.Log(string.Format("being stepped by {0}", col.gameObject.name));
             isTriggered = true;
@@ -72,7 +83,7 @@ public class SwitchScript : MonoBehaviour {
 
     private void OnTriggerExit(Collider col)
     {
-        if (col.gameObject.layer == 12 || col.gameObject.layer == 13)
+        if (col.gameObject.tag == "Player" || col.gameObject.layer == 10 && col.gameObject.tag != "Enemy")
         {
             Debug.Log(string.Format("{0} just left", col.gameObject.name));
             isTriggered = false;

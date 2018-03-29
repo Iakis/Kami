@@ -30,6 +30,7 @@ public class IzaOni : MonoBehaviour {
         right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
         anim = GetComponent<Animator>();
         revive();
+        this.GetComponent<CapsuleCollider>().isTrigger = false;
     }
 
     void OnEnable()

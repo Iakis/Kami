@@ -11,11 +11,11 @@ public class OniAI : Monster
 
     void Start()
     {
-        health = 30;
+        health = 2;
         anim = gameObject.GetComponent<Animator>();
         attacking = false;
         axeSound = GameObject.Find("AxeSound").GetComponent<AudioSource>();
-        movespeed = 6;
+        movespeed = 8;
         combatRange = 20;
         attackRange = (float)5.5;
         weapon = Axe;
