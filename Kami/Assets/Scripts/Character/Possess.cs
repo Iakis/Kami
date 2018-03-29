@@ -74,7 +74,7 @@ public class Possess : MonoBehaviour {
             {
                 if (hitColliders[i].gameObject.GetComponent<Monster>().health <= 0)
                 {
-                    if (Vector3.Distance(hitColliders[i].gameObject.transform.position, transform.position) < 3)
+                    if (Vector3.Distance(hitColliders[i].gameObject.transform.position, transform.position) < 5)
                     {
                         target = hitColliders[i].gameObject;
                     }
