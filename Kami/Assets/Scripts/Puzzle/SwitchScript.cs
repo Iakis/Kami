@@ -9,7 +9,6 @@ public class SwitchScript : MonoBehaviour {
     public bool isTriggered;
     public Vector3 originPosition;
     public static bool isUp;
-    public bool isDown;
     public Transform River;
     private float rangeMin, rangeMax;
 	private Rigidbody rb;
@@ -25,7 +24,6 @@ public class SwitchScript : MonoBehaviour {
         isTriggered = false;
         originPosition = bridge.transform.position;
         isUp = false;
-        isDown = true;
         up = new Vector3(3, 0.4f, 3);
         down = new Vector3(3, 0.1f, 3);
         //UnityEditor.AI.NavMeshBuilder.BuildNavMesh();
@@ -47,7 +45,6 @@ public class SwitchScript : MonoBehaviour {
                 if (!isUp)
                 {
                     isUp = true;
-                    isDown = false;
                 }
             }
         }
@@ -60,14 +57,8 @@ public class SwitchScript : MonoBehaviour {
             {
                 bridge.transform.Translate(Vector3.down * Time.deltaTime);
             }
-            else
-            {
-                if (isUp)
-                {
-                    isUp = false;
-                    isDown = true;
-                }
-            }
+
+            isUp = false;
         }
 	}
 
