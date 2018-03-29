@@ -12,6 +12,9 @@ public class spear : MonoBehaviour {
 
     public AnimatorStateInfo currentBaseState;
     public static int attackState = Animator.StringToHash("Base Layer.oattack");
+
+    static Possess p;
+
     spear()
     {
         s_spear = this;
@@ -26,6 +29,7 @@ public class spear : MonoBehaviour {
     {
         parent = transform.root;
         tengu = parent.GetComponent<TenguAI>();
+        p = Possess.Get();
     }
 
     // Update is called once per frame
@@ -48,5 +52,28 @@ public class spear : MonoBehaviour {
         {
             col.gameObject.GetComponent<Movement>().die();
         }
+    }
+
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "shield")
+        {
+            GameObject go = (GameObject)Instantiate(Resources.Load("light", typeof(GameObject)), parent.transform.position, transform.rotation);
+            Destroy(go, 2f);
+            StartCoroutine("shock");
+            if (col.gameObject.GetComponent<Barrier>().breakk == false)
+            {
+                col.gameObject.GetComponent<Barrier>().breakB();
+            }
+
+        }
+    }
+
+    IEnumerator shock()
+    {
+        yield return new WaitForSeconds(1f);
+        p.unposs();
+        Destroy(parent.gameObject);
+        Destroy(this.gameObject);
     }
 }

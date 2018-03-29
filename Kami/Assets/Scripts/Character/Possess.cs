@@ -23,6 +23,18 @@ public class Possess : MonoBehaviour {
     public static int idleState = Animator.StringToHash("Base Layer.idle");
     public static int locomotion = Animator.StringToHash("Base Layer.Locomotion");
     // Use this for initialization
+
+    static Possess p;
+
+    Possess()
+    {
+        p = this;
+    }
+
+    public static Possess Get()
+    {
+        return p;
+    }
     void Start () {
         c = SideChar.Get();
         m_izanagi = Movement.Get().gameObject;
@@ -97,7 +109,7 @@ public class Possess : MonoBehaviour {
         ps.Emit(1);
     }
 
-    void unposs()
+    public void unposs()
     {
         
         m_izanagi.GetComponent<Movement>().enabled = true;

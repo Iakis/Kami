@@ -14,7 +14,7 @@ public class TenguAI : Monster {
     // Use this for initialization
     void Start()
     {
-        health = 25;
+        health = 30;
         anim = gameObject.GetComponent<Animator>();
         attacking = false;
         axeSound = GameObject.Find("AxeSound").GetComponent<AudioSource>();
