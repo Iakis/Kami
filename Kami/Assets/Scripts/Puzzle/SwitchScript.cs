@@ -69,6 +69,11 @@ public class SwitchScript : MonoBehaviour {
             Debug.Log(string.Format("being stepped by {0}", col.gameObject.name));
             isTriggered = true;
             //transform.Translate(Vector3.down * 0.1f);
+        } else if(col.gameObject.tag != "Player" && col.gameObject.layer == 10 && isUp)
+        {
+            isTriggered = true;
+            this.enabled = false;
+            this.gameObject.GetComponent<CapsuleCollider>().enabled = false;
         }
     }
 

@@ -41,6 +41,7 @@ public class CameraFollow : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        //(34.25)
         y = target.transform.position.y - 34.25f;
         transform.rotation = rotation;
         noY = new Vector3(target.position.x - 27 + offset.x + (1.1f * y), transform.position.y, target.position.z - 22 + offset.z + (1.3f * y));

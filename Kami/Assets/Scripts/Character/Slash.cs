@@ -42,11 +42,7 @@ public class Slash : MonoBehaviour {
     {
         if (target.gameObject.tag == "shield")
         {
-            if (target.GetComponent<Barrier>().breakk == false)
-            {
-                slice();
-                target.GetComponent<Barrier>().breakB();
-            }
+            
             
 
         } else

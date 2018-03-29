@@ -8,15 +8,19 @@ public class waterfall : MonoBehaviour {
     ParticleSystem splash;
     ParticleSystem icebreak;
     public bool isFreezed;
+    public bool freezing;
     public float breakSpeed = 10f;
+
+    float t;
+    float lerpedspeed;
 
     // Use this for initialization
     void Start () {
         water = GameObject.Find("PSWater").GetComponent<ParticleSystem>();
-        splash = GameObject.Find("splashes").GetComponent<ParticleSystem>();
         icebreak = GameObject.Find("iceBreak").GetComponent<ParticleSystem>();
         isFreezed = water.isPaused;
         icebreak.playbackSpeed = breakSpeed;
+        freezing = false;
     }
 	
 	// Update is called once per frame
@@ -25,23 +29,35 @@ public class waterfall : MonoBehaviour {
         {
             isFreezed = water.isPaused;
         }
+        if (freezing && water.playbackSpeed > 0.1)
+        {
+            freeze();
+        } else if (water.playbackSpeed <= 0.1)
+        {
+            isFreezed = true;
+            water.Pause();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name.Contains("ice"))
+        if (other.gameObject.tag == "ice")
         {
-            water.Pause();
-            splash.Pause();
+            freezing = true;
         }
-        if (other.name == "Axe")
-        {
-            if (isFreezed)
-            {
-                Destroy(water);
-                Destroy(splash);
-                icebreak.Play();
-            }
-        }
+    }
+
+    void freeze()
+    {
+        t += Time.deltaTime * 0.5f;
+        lerpedspeed = Mathf.Lerp(1, 0.01f, t);
+        water.playbackSpeed = lerpedspeed;
+    }
+
+    void smash()
+    {
+        Destroy(water);
+        Destroy(splash);
+        icebreak.Play();
     }
 }

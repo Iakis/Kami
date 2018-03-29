@@ -16,6 +16,8 @@ public class IzaOni : MonoBehaviour {
 
     public AnimatorStateInfo currentBaseState;
 
+    Rigidbody rb;
+
     public static int reviveState = Animator.StringToHash("Base Layer.orevive");
     public static int attackState = Animator.StringToHash("Base Layer.oattack");
     public static int deadState = Animator.StringToHash("Base Layer.odie");
@@ -29,6 +31,7 @@ public class IzaOni : MonoBehaviour {
         forward = Vector3.Normalize(forward);
         right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
         anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void OnEnable()
@@ -40,7 +43,7 @@ public class IzaOni : MonoBehaviour {
         anim = GetComponent<Animator>();
         revive();
         this.GetComponent<CapsuleCollider>().isTrigger = false;
-        this.GetComponent<Rigidbody>().isKinematic = false;
+        
     }
 
     void Update()
@@ -56,6 +59,7 @@ public class IzaOni : MonoBehaviour {
         {
             return;
         }
+        
         if (Input.GetButtonUp("XButton"))
         {
             if (currentBaseState.fullPathHash != attackState)
@@ -73,6 +77,7 @@ public class IzaOni : MonoBehaviour {
         {
             anim.SetFloat("Speed", 0);
         }
+        this.GetComponent<Rigidbody>().isKinematic = false;
     }
 
     protected void move(float movespeed)
@@ -100,11 +105,22 @@ public class IzaOni : MonoBehaviour {
 
     void attack()
     {
+        rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
         anim.SetFloat("Speed", 0);
         transform.position = transform.position;
         anim.SetTrigger("Attack");
-        StopCoroutine("smash");
-        StartCoroutine("smash");
+        if (gameObject.name == "Oni")
+        {
+            StopCoroutine("smash");
+            StartCoroutine("smash");
+        } else if (gameObject.name == "Tengu")
+        {
+            StopCoroutine("stab");
+            StartCoroutine("stab");
+        } else if (gameObject.name == "Yuki"){
+            StopCoroutine("ice");
+            StartCoroutine("ice");
+        }
     }
 
     IEnumerator smash()
@@ -119,6 +135,31 @@ public class IzaOni : MonoBehaviour {
         // For tutorial
         m_axe.GetComponent<BoxCollider>().isTrigger = true;
         m_axe.GetComponent<BoxCollider>().enabled = false;
+        rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
+    }
+
+    IEnumerator stab()
+    {
+        yield return new WaitForSeconds(0.7f);
+        m_axe.GetComponent<BoxCollider>().enabled = true;
+        m_axe.GetComponent<BoxCollider>().isTrigger = false;
+        yield return new WaitForSeconds(0.5f);
+        m_axe.GetComponent<BoxCollider>().isTrigger = true;
+        m_axe.GetComponent<BoxCollider>().enabled = false;
+        rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
+    }
+
+    IEnumerator ice()
+    {
+        if (Vector3.Distance(this.gameObject.transform.position, m_axe.transform.position) < 20)
+        {
+            yield return new WaitForSeconds(1.55f);
+            Quaternion rot = Quaternion.LookRotation(Vector3.up);
+            Vector3 pos = new Vector3(m_axe.transform.position.x, transform.position.y, m_axe.transform.position.z);
+            GameObject go = (GameObject)Instantiate(Resources.Load("bigice", typeof(GameObject)), pos, rot);
+            Destroy(go, 2f);
+        }
+        yield break;
     }
 
 }

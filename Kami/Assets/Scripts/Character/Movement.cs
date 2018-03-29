@@ -62,10 +62,6 @@ public class Movement : MonoBehaviour {
     {
         
 		walkSound.mute = !(anim.GetFloat("Speed") != 0 && (!anim.GetBool("Jump")) && (!rolling) && (!dead));
-    }
-
-    void FixedUpdate () {
-        gravity();
         if (!dead && !PauseMenu.isPaused)
         {
             if (Input.GetButtonUp("BButton"))
@@ -74,6 +70,13 @@ public class Movement : MonoBehaviour {
                 StopCoroutine("roll");
                 StartCoroutine("roll");
             }
+        }
+    }
+
+    void FixedUpdate () {
+        gravity();
+        if (!dead && !PauseMenu.isPaused)
+        {
             if (rolling)
             {
                 Roll(heading, upMovement, rightMovement);

@@ -71,15 +71,18 @@ public class SideChar : MonoBehaviour
             sideChar = m_izanagi.gameObject;
             mainChar.tag = "Player";
             sideChar.tag = "Untagged";
+            sideChar.GetComponent<Rigidbody>().isKinematic = true;
             anim = sideChar.GetComponent<Animator>();
             poss = true;
             cam.setTarget(mainChar);
         }
         else
         {
+            mainChar.tag = "untagged";
             mainChar = m_izanagi.gameObject;
             sideChar = m_izanami.gameObject;
             mainChar.tag = "Player";
+            mainChar.GetComponent<Rigidbody>().isKinematic = false;
             sideChar.tag = "Untagged";
             poss = false;
             anim = sideChar.GetComponent<Animator>();
