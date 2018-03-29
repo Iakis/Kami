@@ -10,7 +10,6 @@ public class PauseMenu : MonoBehaviour {
 
 	public GameObject pauseMenu;
 	public GameObject Restart;
-	public GameObject Quit;
 	public GameObject Nagi;
 	Movement NagiScript;
 
@@ -59,6 +58,7 @@ public class PauseMenu : MonoBehaviour {
 		Time.timeScale = 1f;
 		StartCoroutine (FadeRestart ());
 		isPaused = false;
+		AudioListener.pause = false;
 		//SceneManager.LoadScene ("test", LoadSceneMode.Single);
 	}
 
@@ -76,7 +76,7 @@ public class PauseMenu : MonoBehaviour {
 		pauseMenu.SetActive (false);
 		Time.timeScale = 1f;
 		StartCoroutine (NagiScript.Respawn());
-		AudioListener.pause = true;
+		AudioListener.pause = false;
 		isPaused = false;
 	}
 
