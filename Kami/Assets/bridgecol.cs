@@ -11,6 +11,12 @@ public class bridgecol : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (SwitchScript.isUp)
+        {
+            this.GetComponent<MeshCollider>().enabled = false;
+        } else
+        {
+            this.GetComponent<MeshCollider>().enabled = true;
+        }
 	}
 }
