@@ -40,8 +40,27 @@ public class Slash : MonoBehaviour {
 
     void attack()
     {
+        if (target.gameObject.tag == "shield")
+        {
+            if (target.GetComponent<Barrier>().breakk == false)
+            {
+                slice();
+                target.GetComponent<Barrier>().breakB();
+            }
+            
+
+        } else
+        {
+            slice();
+            target.GetComponent<Monster>().damage(1);
+        }
+        
+        
+    }
+
+    void slice()
+    {
         swordSound.Play();
-        target.GetComponent<Monster>().damage(1);
         ps.Emit(1);
         var heading = target.transform.position - gameObject.transform.position;
         heading.y = 0;
@@ -54,15 +73,17 @@ public class Slash : MonoBehaviour {
         {
             slash1(pos2);
             return;
-        } else if (a == 1) 
+        }
+        else if (a == 1)
         {
             slash2(pos2);
             return;
-        } else if (a == 2)
+        }
+        else if (a == 2)
         {
             slash3(pos2);
             return;
-        }    
+        }
     }
 
     void targets(Vector3 center, float radius)

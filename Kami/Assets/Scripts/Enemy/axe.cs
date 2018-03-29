@@ -35,9 +35,20 @@ public class axe : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
+        Debug.Log(col.gameObject);
         if (col.gameObject.tag == "Player" && currentBaseState.fullPathHash == attackState && SideChar.dead == false)
         {
             col.gameObject.GetComponent<Movement>().die();
+        }
+        
+    }
+    
+    void OnCollisionEnter(Collision col)
+    {
+        Debug.Log(col.gameObject);
+        if (col.gameObject.tag == "wall")
+        {
+            col.gameObject.GetComponent<Rigidbody>().isKinematic = false;
         }
     }
 }
