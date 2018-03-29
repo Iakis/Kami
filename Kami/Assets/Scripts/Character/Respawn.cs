@@ -22,7 +22,7 @@ public class Respawn : MonoBehaviour {
 
     private void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.layer == 12 || col.gameObject.layer == 13)
+        if (col.gameObject.layer == 12 || col.gameObject.layer == 13 || col.gameObject.layer == 15 || col.gameObject.layer == 16)
         {
             isActivated = true;
 			light.enabled = true;
