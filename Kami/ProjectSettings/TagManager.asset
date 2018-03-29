@@ -10,6 +10,8 @@ TagManager:
   - safeSpot
   - death
   - ground
+  - shield
+  - wall
   - story
   layers:
   - Default
@@ -29,7 +31,7 @@ TagManager:
   - Destroy
   - level2
   - level3
-  - Collider
+  - Colliders
   - 
   - 
   - 

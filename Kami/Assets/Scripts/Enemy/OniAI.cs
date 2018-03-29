@@ -11,15 +11,17 @@ public class OniAI : Monster
 
     void Start()
     {
-        health = 30;
+        health = 2;
         anim = gameObject.GetComponent<Animator>();
         attacking = false;
         axeSound = GameObject.Find("AxeSound").GetComponent<AudioSource>();
-        movespeed = 4;
+        movespeed = 8;
         combatRange = 20;
         attackRange = (float)5.5;
         weapon = Axe;
         attk = hit;
+        spawn = this.transform.position;
+        fallSound = GameObject.Find("OniFallSound").GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -41,13 +43,14 @@ public class OniAI : Monster
     IEnumerator smash()
     {
         //Enable/disable weapon collider depending on animation
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.7f);
         // For tutorial
         isAttacking = true;
         weapon.GetComponent<BoxCollider>().enabled = true;
         StartCoroutine("playAxe");
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.8f);
         isAttacking = false;
+        attacking = false;
         // For tutorial
         weapon.GetComponent<BoxCollider>().enabled = false;
     }

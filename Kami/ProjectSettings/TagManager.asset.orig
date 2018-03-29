@@ -6,9 +6,15 @@ TagManager:
   tags:
   - attack
   - Fire
-<<<<<<< HEAD
   - Enemy
+  - safeSpot
+  - death
+  - ground
+<<<<<<< HEAD
+  - story
 =======
+  - shield
+  - wall
 >>>>>>> master
   layers:
   - Default
@@ -25,10 +31,10 @@ TagManager:
   - Respawn
   - Izanagi
   - Izanami
-  - 
-  - 
-  - 
-  - 
+  - Destroy
+  - level2
+  - level3
+  - Colliders
   - 
   - 
   - 

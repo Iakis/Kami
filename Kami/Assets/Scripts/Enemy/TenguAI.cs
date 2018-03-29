@@ -18,7 +18,7 @@ public class TenguAI : Monster {
         anim = gameObject.GetComponent<Animator>();
         attacking = false;
         axeSound = GameObject.Find("AxeSound").GetComponent<AudioSource>();
-        movespeed = 6;
+        movespeed = 8;
         combatRange = 20;
         attackRange = (float)15;
         weapon = Spear;
