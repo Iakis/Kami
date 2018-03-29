@@ -19,6 +19,7 @@ public class StartIntro : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		startGame = GetComponent<Text> ();
+		AudioListener.pause = false;
 		StartCoroutine (BlinkText ());
 	}
 	//function to blink the text 
