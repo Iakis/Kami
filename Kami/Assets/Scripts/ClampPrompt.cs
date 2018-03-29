@@ -60,7 +60,9 @@ public class ClampPrompt : MonoBehaviour {
 		// If Oni is visible and alive, show prompt
 		if (IsInView (Oni) && oniScript.health > 0 && !oniScript.isAttacking) {
 			Debug.Log ("Is in view and Oni health > 0");
-			timemanager.NormalSpeed ();
+			if (!PauseMenu.isPaused) {
+				timemanager.NormalSpeed ();
+			}
 			currentPrompt.enabled = true;
 			currentPrompt.sprite = prompt;
 			Vector3 PromptPos = Camera.main.WorldToScreenPoint (this.transform.position);
@@ -69,7 +71,9 @@ public class ClampPrompt : MonoBehaviour {
 			Debug.Log ("Oni is attacking");
 			currentPrompt.enabled = true;
 			currentPrompt.sprite = rollprompt;
-			timemanager.DoSlowMotion ();
+			if (!PauseMenu.isPaused) {
+				timemanager.DoSlowMotion ();
+			}
 			Vector3 PromptPos = Camera.main.WorldToScreenPoint (this.transform.position);
 			currentPrompt.GetComponent<RectTransform> ().position = PromptPos;
 			if (Input.GetButtonUp ("BButton")) {
@@ -79,14 +83,18 @@ public class ClampPrompt : MonoBehaviour {
 		}
 		else if (IsInView (Oni) && oniScript.health <= 0 && !Nami.GetComponent<Possess>().possed) {
 			Debug.Log ("Is in view and Oni dead");
-			timemanager.NormalSpeed ();
+			if (!PauseMenu.isPaused) {
+				timemanager.NormalSpeed ();
+			}
 			currentPrompt.enabled = true;
 			currentPrompt.sprite = possessprompt;
 			Vector3 PromptPos = Camera.main.WorldToScreenPoint (this.transform.position);
 			currentPrompt.GetComponent<RectTransform> ().position = PromptPos;
 		}
 		else {
-			timemanager.NormalSpeed ();
+			if (!PauseMenu.isPaused) {
+				timemanager.NormalSpeed ();
+			}
 			currentPrompt.enabled = false;
 		}
 	}
