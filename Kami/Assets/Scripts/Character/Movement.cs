@@ -61,12 +61,12 @@ public class Movement : MonoBehaviour {
     void Update()
     {
         
-        walkSound.mute = !(anim.GetFloat("Speed") != 0 && (!anim.GetBool("Jump")) && (!rolling));
+		walkSound.mute = !(anim.GetFloat("Speed") != 0 && (!anim.GetBool("Jump")) && (!rolling) && (!dead));
     }
 
     void FixedUpdate () {
         gravity();
-        if (!dead)
+        if (!dead && !PauseMenu.isPaused)
         {
             if (Input.GetButtonUp("BButton"))
             {
