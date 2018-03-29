@@ -6,9 +6,7 @@ using UnityEngine;
 public class SwitchScript : MonoBehaviour {
 
     public Transform bridge;
-    public Transform otherSwitch;
     public bool isTriggered;
-    public bool otherTriggered;
     public Vector3 originPosition;
     public bool isUp;
     public bool isDown;
@@ -29,8 +27,7 @@ public class SwitchScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         rb.WakeUp();
-        otherTriggered = otherSwitch.GetComponent<SwitchScript>().isTriggered;
-		if (isTriggered || otherTriggered)
+		if (isTriggered)
         {
             if (bridge.transform.position.y < originPosition.y+5f)
             {
