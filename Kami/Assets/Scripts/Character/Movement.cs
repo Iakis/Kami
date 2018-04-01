@@ -32,6 +32,9 @@ public class Movement : MonoBehaviour {
     public bool grounded;
     public bool rolling;
 
+    protected static int rollState = Animator.StringToHash("Base Layer.roll");
+    public AnimatorStateInfo currentBaseState;
+
     Movement()
     {
         s_izanagi = this;
@@ -60,11 +63,11 @@ public class Movement : MonoBehaviour {
 
     void Update()
     {
-        
-		walkSound.mute = !(anim.GetFloat("Speed") != 0 && (!anim.GetBool("Jump")) && (!rolling) && (!dead));
+        currentBaseState = anim.GetCurrentAnimatorStateInfo(0);
+        walkSound.mute = !(anim.GetFloat("Speed") != 0 && (!anim.GetBool("Jump")) && (!rolling) && (!dead));
         if (!dead && !PauseMenu.isPaused)
         {
-            if (Input.GetButtonUp("BButton"))
+            if (Input.GetButtonUp("BButton") && currentBaseState.fullPathHash != rollState)
             {
                 anim.SetTrigger("Roll");
                 StopCoroutine("roll");

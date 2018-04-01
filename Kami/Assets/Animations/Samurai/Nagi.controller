@@ -618,7 +618,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: roll 0
+  m_Name: roll
   m_Speed: 2
   m_CycleOffset: 0
   m_Transitions:
