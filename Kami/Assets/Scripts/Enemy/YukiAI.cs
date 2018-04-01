@@ -9,7 +9,7 @@ public class YukiAI : Monster
 
     void Start()
     {
-        health = 35;
+        health = 1;
         anim = gameObject.GetComponent<Animator>();
         attacking = false;
         movespeed = 6;

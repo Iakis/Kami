@@ -27,7 +27,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _OutlineWidth: 0.08
+    - _OutlineWidth: 0.14
     - _RedrawRate: 0
     - _Scribbliness: 0
     m_Colors:

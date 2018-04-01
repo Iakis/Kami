@@ -193,16 +193,17 @@ public class Movement : MonoBehaviour {
         if (collide.gameObject.tag == "ground")
         {
             grounded = true;
+            model.layer = collide.gameObject.layer;
         } else if (collide.gameObject.tag == "death")
         {
             die();
         }
 
-        if (collide.gameObject.layer == 15 || collide.gameObject.layer == 16)
-        {
-            this.gameObject.layer = collide.gameObject.layer;
-            model.layer = collide.gameObject.layer;
-        }
+        //if (collide.gameObject.layer == 15 || collide.gameObject.layer == 16)
+        //{
+        //    this.gameObject.layer = collide.gameObject.layer;
+        //    model.layer = collide.gameObject.layer;
+        //}
     }
 
     public void die()

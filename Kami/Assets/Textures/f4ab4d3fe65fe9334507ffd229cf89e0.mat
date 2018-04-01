@@ -32,7 +32,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _Outline: 0.002
-    - _OutlineWidth: 0.37
+    - _OutlineWidth: 0.35
     - _RedrawRate: 0
     - _Scribbliness: 0
     m_Colors:

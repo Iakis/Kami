@@ -4,38 +4,54 @@ using UnityEngine;
 
 public class waterfall : MonoBehaviour {
 
-    ParticleSystem water;
-    ParticleSystem splash;
-    ParticleSystem icebreak;
+    public ParticleSystem top,left,right;
     public bool isFreezed;
     public bool freezing;
     public float breakSpeed = 10f;
 
     float t;
     float lerpedspeed;
+    Color lerpedcolor;
+
+    public static waterfall w;
+
+    public static waterfall Get()
+    {
+        return w;
+    }
+
+    waterfall()
+    {
+        w = this;
+    }
 
     // Use this for initialization
     void Start () {
-        water = GameObject.Find("PSWater").GetComponent<ParticleSystem>();
-        icebreak = GameObject.Find("iceBreak").GetComponent<ParticleSystem>();
-        isFreezed = water.isPaused;
-        icebreak.playbackSpeed = breakSpeed;
+        isFreezed = top.isPaused;
         freezing = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (water != null)
+        if (top != null)
         {
-            isFreezed = water.isPaused;
+            isFreezed = top.isPaused;
         }
-        if (freezing && water.playbackSpeed > 0.1)
+        if (freezing && top.playbackSpeed > 0.1)
         {
             freeze();
-        } else if (water.playbackSpeed <= 0.1)
+        } else if (top.playbackSpeed <= 0.1)
         {
-            isFreezed = true;
-            water.Pause();
+            if (!isFreezed)
+            {
+                isFreezed = true;
+                top.Pause();
+                left.Pause();
+                right.Pause();
+                left.tag = "fall";
+                right.tag = "fall";
+            }
+            
         }
     }
 
@@ -51,13 +67,19 @@ public class waterfall : MonoBehaviour {
     {
         t += Time.deltaTime * 0.5f;
         lerpedspeed = Mathf.Lerp(1, 0.01f, t);
-        water.playbackSpeed = lerpedspeed;
+        lerpedcolor = Color.Lerp(top.startColor, Color.white, t);
+        top.playbackSpeed = lerpedspeed;
+        left.playbackSpeed = lerpedspeed;
+        right.playbackSpeed = lerpedspeed;
+
+        top.startColor = lerpedcolor;
+        left.startColor = lerpedcolor;
+        right.startColor = lerpedcolor;
     }
 
-    void smash()
+    public void smash()
     {
-        Destroy(water);
-        Destroy(splash);
-        icebreak.Play();
+        Destroy(left);
+        Destroy(right);
     }
 }
