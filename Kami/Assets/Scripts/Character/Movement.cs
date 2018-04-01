@@ -11,6 +11,8 @@ public class Movement : MonoBehaviour {
     float gravityScale = 1.0f;
     [SerializeField]
     float jumpheight = 5f;
+    [SerializeField]
+    bool canMove = true;
     private Animator anim;
     Vector3 forward, right, heading, upMovement, rightMovement;
     private GameObject[] respawns;
@@ -112,15 +114,18 @@ public class Movement : MonoBehaviour {
 
     protected void move(float movespeed)
     {
-        upMovement = forward * movespeed * Time.deltaTime * -(Input.GetAxis("NagiY"));
-        rightMovement = right * movespeed * Time.deltaTime * Input.GetAxis("NagiX");
-        heading = Vector3.Normalize(rightMovement + upMovement);
+        if (canMove)
+        {
+            upMovement = forward * movespeed * Time.deltaTime * -(Input.GetAxis("NagiY"));
+            rightMovement = right * movespeed * Time.deltaTime * Input.GetAxis("NagiX");
+            heading = Vector3.Normalize(rightMovement + upMovement);
 
-        
 
-        transform.forward = heading;
-        transform.position += upMovement;
-        transform.position += rightMovement;
+
+            transform.forward = heading;
+            transform.position += upMovement;
+            transform.position += rightMovement;
+        }
     }
 
     void jump()
@@ -158,12 +163,27 @@ public class Movement : MonoBehaviour {
         s_RigidBody.AddForce(gravity, ForceMode.Acceleration);
     }
 
+    IEnumerator KnockBack()
+    {
+        yield return new WaitForSeconds(0.5f);
+        canMove = true;
+    }
+
     void OnCollisionEnter(Collision collide)
     {
         if (collide.gameObject.layer == 17)
         {
             s_RigidBody.constraints = RigidbodyConstraints.FreezeRotation;
-        } else
+            StartCoroutine("KnockBack");
+            canMove = false;
+
+            Vector3 dir = collide.contacts[0].point - transform.position;
+            dir = new Vector3(dir.x, 0f, dir.z);
+            dir = -dir.normalized;
+            transform.position += dir * 1f;
+            StartCoroutine("KnockBack");
+        }
+        else
         {
             s_RigidBody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
         }

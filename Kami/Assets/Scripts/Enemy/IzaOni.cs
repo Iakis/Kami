@@ -10,6 +10,8 @@ public class IzaOni : MonoBehaviour {
     float gravityScale = 1.0f;
     [SerializeField]
     float jumpheight = 5f;
+    [SerializeField]
+    bool canMove = true;
     Animator anim;
     Vector3 forward, right, heading;
     static float globalGravity = -9.81f;
@@ -80,16 +82,40 @@ public class IzaOni : MonoBehaviour {
         this.GetComponent<Rigidbody>().isKinematic = false;
     }
 
+    IEnumerator KnockBack()
+    {
+        yield return new WaitForSeconds(0.5f);
+        canMove = true;
+    }
+
+    void OnCollisionEnter(Collision collide)
+    {
+        if (collide.gameObject.layer == 17)
+        {
+            StartCoroutine("KnockBack");
+            canMove = false;
+
+            Vector3 dir = collide.contacts[0].point - transform.position;
+            dir = new Vector3(dir.x, 0f, dir.z);
+            dir = -dir.normalized;
+            transform.position += dir * 1f;
+            StartCoroutine("KnockBack");
+        }
+    }
+
     protected void move(float movespeed)
     {
-        Vector3 upMovement = forward * movespeed * Time.deltaTime * -(Input.GetAxis("NagiY"));
-        Vector3 rightMovement = right * movespeed * Time.deltaTime * Input.GetAxis("NagiX");
+        if (canMove)
+        {
+            Vector3 upMovement = forward * movespeed * Time.deltaTime * -(Input.GetAxis("NagiY"));
+            Vector3 rightMovement = right * movespeed * Time.deltaTime * Input.GetAxis("NagiX");
 
-        heading = Vector3.Normalize(rightMovement + upMovement);
+            heading = Vector3.Normalize(rightMovement + upMovement);
 
-        transform.forward = heading;
-        transform.position += upMovement;
-        transform.position += rightMovement;
+            transform.forward = heading;
+            transform.position += upMovement;
+            transform.position += rightMovement;
+        }
     }
 
     protected void gravity()
