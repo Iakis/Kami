@@ -25,6 +25,7 @@ public class TenguAI : Monster {
         attk = hit;
         spawn = this.transform.position;
         fallSound = GameObject.Find("OniFallSound").GetComponent<AudioSource>();
+        startPosition = transform.position;
     }
 
     // Update is called once per frame

@@ -18,6 +18,7 @@ public class YukiAI : Monster
         attk = hit;
         CD = false;
         fallSound = GameObject.Find("OniFallSound").GetComponent<AudioSource>();
+        startPosition = transform.position;
     }
 
     // Update is called once per frame
