@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Nami : MonoBehaviour {
 
+    [SerializeField]
+    bool canMove = true;
     GameObject target;
     public GameObject possesse;
     static Movement m_izanagi;
@@ -59,11 +61,25 @@ public class Nami : MonoBehaviour {
         possesse = p;
     }
 
+    IEnumerator KnockBack()
+    {
+        yield return new WaitForSeconds(0.5f);
+        canMove = true;
+    }
+
     void OnCollisionEnter(Collision collide)
     {
         if (collide.gameObject.layer == 17)
         {
             s_RigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+            StartCoroutine("KnockBack");
+            canMove = false;
+
+            Vector3 dir = collide.contacts[0].point - transform.position;
+            dir = new Vector3(dir.x, 0f, dir.z);
+            dir = -dir.normalized;
+            transform.position += dir * 1f;
+            StartCoroutine("KnockBack");
         }
         else
         {

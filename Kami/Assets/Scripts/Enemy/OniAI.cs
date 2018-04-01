@@ -24,6 +24,7 @@ public class OniAI : Monster
         spawn = this.transform.position;
         fallSound = GameObject.Find("OniFallSound").GetComponent<AudioSource>();
         rb = gameObject.GetComponent<Rigidbody>();
+        startPosition = transform.position;
     }
 
     // Update is called once per frame

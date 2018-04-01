@@ -8,7 +8,9 @@ public class Monster : MonoBehaviour {
     public int health;
     protected bool attacking;
     protected float dNagi;
+    protected float dDetect;
     protected float movespeed;
+    protected Vector3 startPosition;
     protected float combatRange;
     protected float attackRange;
     protected Vector3 spawn;
@@ -38,7 +40,6 @@ public class Monster : MonoBehaviour {
         anim = gameObject.GetComponent<Animator>();
         fallSound = GameObject.Find("OniFallSound").GetComponent<AudioSource>();
         c = SideChar.Get();
-        
     }
 
     protected void alive()
@@ -57,6 +58,7 @@ public class Monster : MonoBehaviour {
             look(transform, transform.position, target.transform.position);
             //Distance between me and the player
             dNagi = Vector3.Distance(target.transform.position, transform.position);
+            dDetect = Vector3.Distance(target.transform.position, startPosition);
             detect(movespeed, combatRange, attackRange, attk);
         }
         else if (health <= 0 && !dead)
@@ -105,8 +107,27 @@ public class Monster : MonoBehaviour {
                     atk();
                     
                 }
+            } else if (dDetect >= cRange && health > 0)
+            {
+                attacking = false;
+                StartCoroutine("Back");
             }
         }
+    }
+
+    IEnumerator Back ()
+    {
+        look(transform, transform.position, startPosition);
+        //This enables the walk animation
+        anim.SetFloat("Speed", 1);
+        //Set speed and walk back to start position
+        float step = movespeed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards(transform.position, startPosition, step);
+        while (transform.position != startPosition)
+        {
+            yield return null;
+        }
+        anim.SetFloat("Speed", 0);
     }
 
     public void damage(int x)
