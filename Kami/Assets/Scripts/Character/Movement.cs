@@ -128,7 +128,7 @@ public class Movement : MonoBehaviour {
             transform.forward = heading;
             transform.position += upMovement;
             transform.position += rightMovement;
-        }
+        }   
     }
 
     void jump()
