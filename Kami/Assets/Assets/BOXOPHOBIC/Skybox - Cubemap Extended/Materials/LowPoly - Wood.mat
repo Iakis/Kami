@@ -66,7 +66,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _OutlineWidth: 0.07
+    - _OutlineWidth: 0.25
     - _Parallax: 0.02
     - _QuantizationLevels: 3
     - _RedrawRate: 6
@@ -79,4 +79,4 @@ Material:
     m_Colors:
     - _Color: {r: 0.71323526, g: 0.3899645, b: 0.14159818, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _OutlineColour: {r: 0, g: 0, b: 0, a: 0.5}
+    - _OutlineColour: {r: 0, g: 0, b: 0, a: 1}

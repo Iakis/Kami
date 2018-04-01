@@ -16,8 +16,10 @@ public class Slash : MonoBehaviour {
     Transform obj;
     ParticleSystem ps;
     AudioSource swordSound;
+    waterfall w;
 	void Start()
     {
+        w = waterfall.Get();
         obj = transform.GetChild(0);
         ps = obj.gameObject.GetComponent<ParticleSystem>();
         swordSound = GameObject.Find("SwordSound").GetComponent<AudioSource>();
@@ -40,10 +42,18 @@ public class Slash : MonoBehaviour {
 
     void attack()
     {
-        if (target.gameObject.tag == "shield")
+        if (target.gameObject.tag == "fall")
         {
-            
-            
+            Debug.Log("not frozen");
+            if (w.isFreezed)
+            {
+                Debug.Log("hit");
+                w.smash();
+                slice();
+            } else
+            {
+                return;
+            }
 
         } else
         {
@@ -96,7 +106,7 @@ public class Slash : MonoBehaviour {
             {
                 target = hitColliders[i].gameObject;
             }
-            return;
+            i++;
         }
     }
 

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 199937086877631108}
   - component: {fileID: 136942525856308582}
   - component: {fileID: 114023487146529526}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: ice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 4418770970951786}
   - component: {fileID: 198839623041805108}
   - component: {fileID: 199242550607340872}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: SpikesGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 4045649722215372}
   - component: {fileID: 198574111989617546}
   - component: {fileID: 199570438210502116}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: Snow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

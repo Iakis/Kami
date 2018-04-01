@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4555096487891882}
   - component: {fileID: 198053664964237280}
   - component: {fileID: 199273928445295616}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: SpikesGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 136957873705898120}
   - component: {fileID: 114457537110097938}
   - component: {fileID: 54364764710629976}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: bigice
   m_TagString: ice
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 4678216052964048}
   - component: {fileID: 198474138360192364}
   - component: {fileID: 199885138721647872}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: Snow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

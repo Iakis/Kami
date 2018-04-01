@@ -34,6 +34,9 @@ public class Movement : MonoBehaviour {
     public bool grounded;
     public bool rolling;
 
+    protected static int rollState = Animator.StringToHash("Base Layer.roll");
+    public AnimatorStateInfo currentBaseState;
+
     Movement()
     {
         s_izanagi = this;
@@ -62,11 +65,11 @@ public class Movement : MonoBehaviour {
 
     void Update()
     {
-        
-		walkSound.mute = !(anim.GetFloat("Speed") != 0 && (!anim.GetBool("Jump")) && (!rolling) && (!dead));
+        currentBaseState = anim.GetCurrentAnimatorStateInfo(0);
+        walkSound.mute = !(anim.GetFloat("Speed") != 0 && (!anim.GetBool("Jump")) && (!rolling) && (!dead));
         if (!dead && !PauseMenu.isPaused)
         {
-            if (Input.GetButtonUp("BButton"))
+            if (Input.GetButtonUp("BButton") && currentBaseState.fullPathHash != rollState)
             {
                 anim.SetTrigger("Roll");
                 StopCoroutine("roll");
@@ -125,7 +128,7 @@ public class Movement : MonoBehaviour {
             transform.forward = heading;
             transform.position += upMovement;
             transform.position += rightMovement;
-        }
+        }   
     }
 
     void jump()
@@ -190,16 +193,17 @@ public class Movement : MonoBehaviour {
         if (collide.gameObject.tag == "ground")
         {
             grounded = true;
+            model.layer = collide.gameObject.layer;
         } else if (collide.gameObject.tag == "death")
         {
             die();
         }
 
-        if (collide.gameObject.layer == 15 || collide.gameObject.layer == 16)
-        {
-            this.gameObject.layer = collide.gameObject.layer;
-            model.layer = collide.gameObject.layer;
-        }
+        //if (collide.gameObject.layer == 15 || collide.gameObject.layer == 16)
+        //{
+        //    this.gameObject.layer = collide.gameObject.layer;
+        //    model.layer = collide.gameObject.layer;
+        //}
     }
 
     public void die()

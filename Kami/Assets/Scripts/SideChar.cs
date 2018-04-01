@@ -78,7 +78,7 @@ public class SideChar : MonoBehaviour
         }
         else
         {
-            mainChar.tag = "untagged";
+            mainChar.tag = "Untagged";
             mainChar = m_izanagi.gameObject;
             sideChar = m_izanami.gameObject;
             mainChar.tag = "Player";
