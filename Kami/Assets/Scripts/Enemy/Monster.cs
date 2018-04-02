@@ -143,7 +143,7 @@ public class Monster : MonoBehaviour {
         //Disable collision with corpse
         this.GetComponent<CapsuleCollider>().isTrigger = true;
         this.GetComponent<SphereCollider>().enabled = false;
-        this.GetComponent<Rigidbody>().isKinematic = true;
+        //this.GetComponent<Rigidbody>().isKinematic = true;
         //Start death animation
         anim.SetTrigger("die");
         StartCoroutine("playFalling");
@@ -152,7 +152,7 @@ public class Monster : MonoBehaviour {
         {
             weapon.GetComponent<BoxCollider>().enabled = false;
         }
-        
+        this.enabled = false;
     }
 
     void OnTriggerEnter(Collider col)

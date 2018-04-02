@@ -16,6 +16,8 @@ public class IzaOni : MonoBehaviour {
     Vector3 forward, right, heading;
     static float globalGravity = -9.81f;
 
+    AudioSource fallSound;
+
     public AnimatorStateInfo currentBaseState;
 
     Rigidbody rb;
@@ -34,6 +36,7 @@ public class IzaOni : MonoBehaviour {
         right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        fallSound = GameObject.Find("OniFallSound").GetComponent<AudioSource>();
     }
 
     void OnEnable()
@@ -79,7 +82,7 @@ public class IzaOni : MonoBehaviour {
         {
             anim.SetFloat("Speed", 0);
         }
-        this.GetComponent<Rigidbody>().isKinematic = false;
+        //this.GetComponent<Rigidbody>().isKinematic = false;
     }
 
     IEnumerator KnockBack()
@@ -186,6 +189,32 @@ public class IzaOni : MonoBehaviour {
             Destroy(go, 2f);
         }
         yield break;
+    }
+
+    public void die()
+    {
+        //Set layer to corpse layer
+        SideChar.outCombat();
+        this.gameObject.layer = 10;
+        //Disable collision with corpse
+        this.GetComponent<CapsuleCollider>().isTrigger = true;
+        this.GetComponent<SphereCollider>().enabled = false;
+        this.GetComponent<Rigidbody>().isKinematic = true;
+        //Start death animation
+        anim.SetTrigger("die");
+        StartCoroutine("playFalling");
+        //Disable weapon collider
+        if (m_axe != null)
+        {
+            m_axe.GetComponent<BoxCollider>().enabled = false;
+        }
+        this.enabled = false;
+    }
+
+    IEnumerator playFalling()
+    {
+        yield return new WaitForSeconds(2f);
+        fallSound.Play();
     }
 
 }

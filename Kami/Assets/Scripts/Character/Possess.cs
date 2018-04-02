@@ -51,7 +51,7 @@ public class Possess : MonoBehaviour {
 	void LateUpdate () {
         if (Input.GetButtonUp("YButton"))
         {
-            if (!possed)
+            if (!possed && c.follow)
             {
                 targets();
                 if (target != null)
@@ -84,14 +84,10 @@ public class Possess : MonoBehaviour {
             dis = Vector3.Distance(gameObject.transform.position, hitColliders[i].gameObject.transform.position);
             if (dis < mindist)
             {
-                if (hitColliders[i].gameObject.GetComponent<Monster>().health <= 0)
+                if (Vector3.Distance(hitColliders[i].gameObject.transform.position, transform.position) < 5)
                 {
-                    if (Vector3.Distance(hitColliders[i].gameObject.transform.position, transform.position) < 5)
-                    {
-                        target = hitColliders[i].gameObject;
-                    }
+                    target = hitColliders[i].gameObject;
                 }
-                    
             }
             i++;
         }
@@ -114,8 +110,7 @@ public class Possess : MonoBehaviour {
         
         m_izanagi.GetComponent<Movement>().enabled = true;
         m_izanagi.GetComponent<Slash>().enabled = true;
-        target.GetComponent<IzaOni>().enabled = false;
-        target.GetComponent<Monster>().die();
+        target.GetComponent<IzaOni>().die();
         possed = false;
         m_izanami.setPoss(null);
         m_izanami.transform.position = target.transform.position;
