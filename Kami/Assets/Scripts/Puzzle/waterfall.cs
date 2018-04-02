@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class waterfall : MonoBehaviour {
 
@@ -14,6 +15,9 @@ public class waterfall : MonoBehaviour {
     Color lerpedcolor;
 
     public static waterfall w;
+    public CanvasGroup flashWhite;
+    private bool flash = false;
+    //private CanvasRenderer flashPanel;
 
     public static waterfall Get()
     {
@@ -29,6 +33,9 @@ public class waterfall : MonoBehaviour {
     void Start () {
         isFreezed = top.isPaused;
         freezing = false;
+        flashWhite = GameObject.Find("Canvas").GetComponent<CanvasGroup>();
+        //flashPanel = GameObject.Find("Panel").GetComponent<CanvasRenderer>();
+        //flashPanel.SetAlpha(200);
     }
 	
 	// Update is called once per frame
@@ -52,6 +59,15 @@ public class waterfall : MonoBehaviour {
                 right.tag = "fall";
             }
             
+        }
+        if (flash)
+        {
+            flashWhite.alpha = flashWhite.alpha - Time.deltaTime*0.5f;
+            if (flashWhite.alpha <= 0)
+            {
+                flashWhite.alpha = 0;
+                flash = false;
+            }
         }
     }
 
@@ -79,6 +95,11 @@ public class waterfall : MonoBehaviour {
 
     public void smash()
     {
+        if (left != null && right != null)
+        {
+            flash = true;
+            flashWhite.alpha = 1;
+        }
         Destroy(left);
         Destroy(right);
     }
