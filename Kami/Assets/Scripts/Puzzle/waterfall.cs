@@ -33,8 +33,8 @@ public class waterfall : MonoBehaviour {
     void Start () {
         isFreezed = top.isPaused;
         freezing = false;
-        flashWhite = GameObject.Find("Canvas").GetComponent<CanvasGroup>();
-        //flashPanel = GameObject.Find("Panel").GetComponent<CanvasRenderer>();
+        flashWhite = GameObject.Find("FlashCanvas").GetComponent<CanvasGroup>();
+        //flashPanel = GameObject.Find("FlashPanel").GetComponent<CanvasRenderer>();
         //flashPanel.SetAlpha(200);
     }
 	
