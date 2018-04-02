@@ -30,6 +30,7 @@ public class SideChar : MonoBehaviour
 
     static AudioSource startingMusic;
     static AudioSource combatMusic;
+    public bool follow;
 
     SideChar()
     {
@@ -60,6 +61,7 @@ public class SideChar : MonoBehaviour
         startingMusic = GameObject.Find("StartingMusic").GetComponent<AudioSource>();
         combatMusic = GameObject.Find("CombatMusic").GetComponent<AudioSource>();
         dead = false;
+        follow = false;
     }
 
     //Swap main character and side character (when izanami possesses)
@@ -122,6 +124,7 @@ public class SideChar : MonoBehaviour
     {
         if (dis < 15)
         {
+            follow = true;
             look(mainChar.transform);
             if (dis > 5)
             {
@@ -149,6 +152,9 @@ public class SideChar : MonoBehaviour
                     sideChar.transform.position = sideChar.transform.position;
                 }
             }
+        } else
+        {
+            follow = false;
         }
     }
 
