@@ -13,6 +13,9 @@ public class ClampPrompt : MonoBehaviour {
 	private OniAI oniScript;
 	public GameObject Sphere;
 	public GameObject Nami;
+	bool FadedSpeech;
+	bool FadedPossessSpeech;
+	public Text story;
 
 	public TimeManager timemanager;
 
@@ -78,10 +81,9 @@ public class ClampPrompt : MonoBehaviour {
 			currentPrompt.GetComponent<RectTransform> ().position = PromptPos;
 			if (Input.GetButton ("BButton")) {
 				timemanager.NormalSpeed ();
-                oniScript.isAttacking = false;
-            }
-		}
-		else if (IsInView (Oni) && oniScript.health <= 0 && !Nami.GetComponent<Possess>().possed) {
+				oniScript.isAttacking = false;
+			}
+		} else if (IsInView (Oni) && oniScript.health <= 0 && !Nami.GetComponent<Possess> ().possed) {
 			Debug.Log ("Is in view and Oni dead");
 			if (!PauseMenu.isPaused) {
 				timemanager.NormalSpeed ();
@@ -90,6 +92,16 @@ public class ClampPrompt : MonoBehaviour {
 			currentPrompt.sprite = possessprompt;
 			Vector3 PromptPos = Camera.main.WorldToScreenPoint (this.transform.position);
 			currentPrompt.GetComponent<RectTransform> ().position = PromptPos;
+			if (!FadedSpeech) {
+				FadedSpeech = true;
+				StartCoroutine (story.GetComponent<StoryText> ().FadeText ("What do we do with this body, my love?"));
+			}
+		} else if (IsInView (Oni) && oniScript.health <= 0 && Nami.GetComponent<Possess> ().possed) {
+			currentPrompt.enabled = false;
+			if (!FadedPossessSpeech) {
+				FadedPossessSpeech = true;
+				StartCoroutine (story.GetComponent<StoryText> ().FadeText ("Wait...you can possess it?"));
+			}
 		}
 		else {
 			if (!PauseMenu.isPaused) {
