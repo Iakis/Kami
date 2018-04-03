@@ -132,7 +132,7 @@ public class SideChar : MonoBehaviour
                 {
                     anim.SetFloat("Speed", 0.2f);
                 }
-                sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, mainChar.transform.position, movespeed * Time.deltaTime);
+                sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, mainChar.transform.position, movespeed * 1.2f * Time.deltaTime);
             }
             else if (dis < 5)
             {
@@ -178,13 +178,17 @@ public class SideChar : MonoBehaviour
         safeSpots();
         if (safeSpot != null)
         {
-            sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, safeSpot.transform.position, movespeed * Time.deltaTime);
-            look(safeSpot.transform);
-            if (sideChar.transform.position == safeSpot.transform.position)
+            if ((Vector3.Distance(sideChar.transform.position, safeSpot.transform.position) <= 3f))
             {
                 look(mainChar.transform);
                 anim.SetFloat("Speed", 0f);
+            } else
+            {
+                sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, safeSpot.transform.position, movespeed * Time.deltaTime);
+                look(safeSpot.transform);
             }
+            
+            
         }
 
     }
