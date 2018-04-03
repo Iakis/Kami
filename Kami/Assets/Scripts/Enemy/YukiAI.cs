@@ -58,6 +58,7 @@ public class YukiAI : Monster
         yield return new WaitForSeconds(1.55f);
         Quaternion rot = Quaternion.LookRotation(Vector3.up);
         Vector3 pos = new Vector3(tar.position.x, transform.position.y, tar.position.z);
+		GameObject.Find("IceAttack").GetComponent<AudioSource>().Play();
         GameObject go = (GameObject)Instantiate(Resources.Load("ice", typeof(GameObject)), pos, rot);
         Destroy(go, 2f);
         attacking = false;

@@ -8,6 +8,8 @@ public class waterfall : MonoBehaviour {
     public ParticleSystem top,left,right;
     public bool isFreezed;
     public bool freezing;
+	bool freezingSound;
+	bool breakingSound;
     public float breakSpeed = 10f;
 
     float t;
@@ -81,6 +83,10 @@ public class waterfall : MonoBehaviour {
 
     void freeze()
     {
+		if (!freezingSound) {
+			GameObject.Find("FreezingWaterfall").GetComponent<AudioSource>().Play();
+			freezingSound = true;
+		}
         t += Time.deltaTime * 0.5f;
         lerpedspeed = Mathf.Lerp(1, 0.01f, t);
         lerpedcolor = Color.Lerp(top.startColor, Color.white, t);
@@ -95,6 +101,10 @@ public class waterfall : MonoBehaviour {
 
     public void smash()
     {
+		if (!breakingSound) {
+			GameObject.Find("BreakWaterfall").GetComponent<AudioSource>().Play();;
+			breakingSound = true;
+		}
         if (left != null && right != null)
         {
             flash = true;

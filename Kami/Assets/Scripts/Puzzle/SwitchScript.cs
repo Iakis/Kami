@@ -17,6 +17,7 @@ public class SwitchScript : MonoBehaviour {
     private Vector3 down;
     private Vector3 lerp;
     private float t;
+	bool switchStep;
 
     // Use this for initialization
     void Start () {
@@ -34,6 +35,11 @@ public class SwitchScript : MonoBehaviour {
         rb.WakeUp();
 		if (isTriggered)
         {
+			if (!switchStep) {
+				GameObject.Find("Switch").GetComponent<AudioSource>().Play();
+				GameObject.Find("BridgeRise").GetComponent<AudioSource>().Play();
+				switchStep = true;
+			}
             t += 0.01f * Time.deltaTime;
             lerp = Vector3.Lerp(this.transform.localScale, down, t);
             this.transform.localScale = lerp;
@@ -50,7 +56,9 @@ public class SwitchScript : MonoBehaviour {
         }
         else
         {
+			GameObject.Find("BridgeRise").GetComponent<AudioSource>().Stop();
             t += 0.1f * Time.deltaTime;
+			switchStep = false;
             lerp = Vector3.Lerp(this.transform.localScale, up, t);
             this.transform.localScale = lerp;
             if (bridge.transform.position.y >= originPosition.y)
