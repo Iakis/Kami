@@ -9,6 +9,7 @@ public class Barrier : MonoBehaviour {
     Color lerpedColor;
     Material m_Material;
     float t = 0.0f;
+	bool breaking;
     // Use this for initialization
     void Start () {
         m_Material = GetComponent<Renderer>().material;
@@ -19,6 +20,10 @@ public class Barrier : MonoBehaviour {
 		if (breakk)
         {
             t += Time.deltaTime;
+			if (!breaking) {
+				GameObject.Find("SpearCollide").GetComponent<AudioSource>().Play();
+				breaking = true;
+			}
             lerpedColor = Color.Lerp(m_Material.color, Color.black, t);
             m_Material.SetColor("_Depthcolor", lerpedColor);
         }
