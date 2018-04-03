@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class StoryText : MonoBehaviour {
 
 	private float fadeTime = 2f;
+	private Image panel;
 
 	// Use this for initialization
 	void Start () {
@@ -39,11 +40,33 @@ public class StoryText : MonoBehaviour {
         }
     }
 
+	public IEnumerator FadePanelToZero(float t, Image i){
+		i.color = new Color(i.color.r, i.color.g, i.color.b, 0.9f);
+		while (i.color.a > 0.0f)
+		{
+			i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t));
+			yield return null;
+		}
+	}
+
+	public IEnumerator FadePanelToFullAlpha(float t, Image i)
+	{
+		i.color = new Color(i.color.r, i.color.g, i.color.b, 0);
+		while (i.color.a < 0.9f)
+		{
+			i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a + (Time.deltaTime / t));
+			yield return null;
+		}
+	}
+
 	public IEnumerator FadeText(string storyText){
 		GetComponent<Text>().text = storyText;
+		panel = this.gameObject.transform.parent.gameObject.GetComponent<Image> ();
 		Debug.Log("Fading story text");
+		StartCoroutine (FadePanelToFullAlpha(2f, panel));
 		StartCoroutine(FadeTextToFullAlpha(2f, GetComponent<Text>()));
 		yield return new WaitForSeconds(3);
 		StartCoroutine (FadeTextToZeroAlpha(2f, GetComponent<Text>()));
+		StartCoroutine (FadePanelToZero(2f, panel));
 	}
 }
