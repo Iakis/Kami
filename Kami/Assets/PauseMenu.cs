@@ -17,11 +17,15 @@ public class PauseMenu : MonoBehaviour {
 	public Animator anim;
 
 	GameObject eventSystem;
+	GameObject selected;
+	private AudioSource selectSound;
 	// Update is called once per frame
 
 	void Start(){
 		eventSystem = GameObject.Find("EventSystem");
 		NagiScript = Nagi.GetComponent<Movement> ();
+		selectSound = GameObject.Find("TaikoDrumSound").GetComponent<AudioSource>();
+
 	}
 	void Update () {
 		if(Input.GetButtonUp("StartButton")) {
@@ -32,12 +36,18 @@ public class PauseMenu : MonoBehaviour {
 				Pause();
 			}
 		}
+		if (isPaused) {
+			if (eventSystem.GetComponent<UnityEngine.EventSystems.EventSystem> ().currentSelectedGameObject != selected) {
+				selected = eventSystem.GetComponent<UnityEngine.EventSystems.EventSystem> ().currentSelectedGameObject;
+				selectSound.Play ();
+			}
+		}
 	}
 
 	void Resume(){
 		pauseMenu.SetActive (false);
 		Time.timeScale = 1f;
-		AudioListener.pause = false;
+		GameObject.Find ("StartingMusic").GetComponent<AudioSource> ().Play ();
 		Debug.Log (Time.timeScale);
 		isPaused = false;
 		eventSystem .GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(null);
@@ -48,7 +58,7 @@ public class PauseMenu : MonoBehaviour {
 		eventSystem .GetComponent<UnityEngine.EventSystems.EventSystem>().SetSelectedGameObject(Restart);
 		Time.timeScale = 0f;
 		isPaused = true;
-		AudioListener.pause = true;
+		GameObject.Find ("StartingMusic").GetComponent<AudioSource> ().Pause ();
 		Debug.Log (Time.timeScale);
 	}
 
@@ -58,7 +68,6 @@ public class PauseMenu : MonoBehaviour {
 		Time.timeScale = 1f;
 		StartCoroutine (FadeRestart ());
 		isPaused = false;
-		AudioListener.pause = false;
 		//SceneManager.LoadScene ("test", LoadSceneMode.Single);
 	}
 
@@ -76,7 +85,7 @@ public class PauseMenu : MonoBehaviour {
 		pauseMenu.SetActive (false);
 		Time.timeScale = 1f;
 		StartCoroutine (NagiScript.Respawn());
-		AudioListener.pause = false;
+		GameObject.Find ("StartingMusic").GetComponent<AudioSource> ().Play ();
 		isPaused = false;
 	}
 

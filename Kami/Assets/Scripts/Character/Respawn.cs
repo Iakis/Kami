@@ -6,6 +6,8 @@ public class Respawn : MonoBehaviour {
 
     public bool isActivated;
 	public GameObject lightObject;
+	private AudioSource respawnSound;
+	bool lit;
 	Light light;
     private GameObject[] respawns;
 
@@ -13,6 +15,7 @@ public class Respawn : MonoBehaviour {
 	void Start () {
         isActivated = false;
 		light = lightObject.GetComponent<Light>();
+		respawnSound = GameObject.Find("RespawnSound").GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -23,9 +26,13 @@ public class Respawn : MonoBehaviour {
     private void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Player")
-        {
+        {	
             isActivated = true;
 			light.enabled = true;
+			if (!lit) {
+				respawnSound.Play();
+				lit = true;
+			}
             respawns = GameObject.FindGameObjectsWithTag("Respawn");
             foreach (GameObject respawn in respawns)
             {
