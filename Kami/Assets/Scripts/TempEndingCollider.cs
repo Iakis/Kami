@@ -33,12 +33,8 @@ public class TempEndingCollider : MonoBehaviour {
 	IEnumerator FadeEnd(){
 		anim.SetBool ("Fade", true);
 		yield return new WaitUntil (() => fade.color.a == 1);
-		StartCoroutine(story.GetComponent<StoryText> ().FadeText ("Wait where are you?"));
-		yield return new WaitForSeconds(7f);
-		StartCoroutine(story.GetComponent<StoryText> ().FadeText ("Don't leave me!"));
-		yield return new WaitForSeconds(7f);
-		StartCoroutine(story.GetComponent<StoryText> ().FadeText ("I could've saved you..."));
-		yield return new WaitForSeconds(7f);
-		SceneManager.LoadScene ("TitleScreen", LoadSceneMode.Single);
+		StartCoroutine(story.GetComponent<StoryText> ().FadeText ("I think this tunnel is the way out!"));
+		yield return new WaitForSeconds(3f);
+		SceneManager.LoadScene ("End", LoadSceneMode.Single);
 	}
 }
