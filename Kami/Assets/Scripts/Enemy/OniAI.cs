@@ -12,7 +12,7 @@ public class OniAI : Monster
 
     void Start()
     {
-        health = 1;
+        health = 30;
         anim = gameObject.GetComponent<Animator>();
         attacking = false;
         axeSound = GameObject.Find("AxeSound").GetComponent<AudioSource>();
@@ -45,7 +45,7 @@ public class OniAI : Monster
 
     IEnumerator smash()
     {
-        rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+        //rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
         //Enable/disable weapon collider depending on animation
         yield return new WaitForSeconds(0.7f);
         // For tutorial
@@ -57,7 +57,7 @@ public class OniAI : Monster
         attacking = false;
         // For tutorial
         weapon.GetComponent<BoxCollider>().enabled = false;
-        rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
+        //rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
     }
 
     IEnumerator playAxe()

@@ -168,8 +168,9 @@ public class Movement : MonoBehaviour {
 
     IEnumerator KnockBack()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         canMove = true;
+        s_RigidBody.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
     }
 
     void OnCollisionEnter(Collision collide)

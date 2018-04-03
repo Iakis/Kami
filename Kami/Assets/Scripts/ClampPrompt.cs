@@ -79,7 +79,7 @@ public class ClampPrompt : MonoBehaviour {
 			}
 			Vector3 PromptPos = Camera.main.WorldToScreenPoint (this.transform.position);
 			currentPrompt.GetComponent<RectTransform> ().position = PromptPos;
-			if (Input.GetButtonUp ("BButton")) {
+			if (Input.GetButton ("BButton")) {
 				timemanager.NormalSpeed ();
 				oniScript.isAttacking = false;
 			}

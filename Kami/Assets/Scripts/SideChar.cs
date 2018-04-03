@@ -6,9 +6,13 @@ public class SideChar : MonoBehaviour
 {
 
     static SideChar c;
-    float movespeed = 10f;
-    float pmovespeed = 4f;
-    float dis;
+    [SerializeField]
+    float movespeed = 7.5f;
+    [SerializeField]
+    float pmovespeed = 10f;
+    [SerializeField]
+    float mult = 1.5f;
+    float dis, dist;
     public GameObject mainChar;
     public GameObject sideChar;
     GameObject safeSpot;
@@ -95,23 +99,23 @@ public class SideChar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gravity();
+        //gravity();
         dead = m_izanagi.GetComponent<Movement>().dead;
         //Distance between main and side character
-        dis = Vector3.Distance(mainChar.transform.position, sideChar.transform.position);
-        dis = (float)System.Math.Round(dis);
+        dist = Vector3.Distance(mainChar.transform.position, sideChar.transform.position);
+        dis = (float)System.Math.Round(dist);
         //When not in combat - meet, else run
         if (!inCombat)
         {
             meet();
-            if (Input.GetButtonUp("AButton"))
-            {
-                if (grounded)
-                {
-                    grounded = false;
-                    StartCoroutine("Jump");
-                }
-            }
+            //if (Input.GetButtonUp("AButton"))
+            //{
+            //    if (grounded)
+            //    {
+            //        grounded = false;
+            //        StartCoroutine("Jump");
+            //    }
+            //}
         }
         else
         {
@@ -128,11 +132,14 @@ public class SideChar : MonoBehaviour
             look(mainChar.transform);
             if (dis > 5)
             {
-                if (anim)
+                if (poss)
                 {
                     anim.SetFloat("Speed", 0.2f);
+                } else
+                {
+                    anim.SetFloat("Speed", dist - 4.9f);
                 }
-                sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, mainChar.transform.position, movespeed * Time.deltaTime);
+                sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, mainChar.transform.position, movespeed * (mult * dis) * Time.deltaTime);
             }
             else if (dis < 5)
             {
@@ -143,8 +150,17 @@ public class SideChar : MonoBehaviour
             {
                 if ((System.Math.Abs(Input.GetAxis("NagiY"))) + (System.Math.Abs(Input.GetAxis("NagiX"))) > 0)
                 {
-                    anim.SetFloat("Speed", 0.2f);
-                    sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, mainChar.transform.position, pmovespeed / 2 * Time.deltaTime);
+                    
+                    if (poss)
+                    {
+                        anim.SetFloat("Speed", 0.2f);
+                        sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, mainChar.transform.position, pmovespeed / 2 * Time.deltaTime);
+                    } else
+                    {
+                        anim.SetFloat("Speed", dist - 4.9f);
+                        sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, mainChar.transform.position, movespeed / 2 * Time.deltaTime);
+                    }
+                    
                 }
                 else
                 {
@@ -158,18 +174,37 @@ public class SideChar : MonoBehaviour
         }
     }
 
-    public static void combat()
+    public static IEnumerator combat()
     {
-        startingMusic.mute = true;
-        combatMusic.mute = false;
         inCombat = true;
+        while (startingMusic.volume > 0)
+        {
+            startingMusic.volume -= 0.3f;
+            combatMusic.volume += 0.3f;
+            yield return new WaitForSeconds(1f);
+        }
+        startingMusic.Pause();
+        if (!combatMusic.isPlaying)
+        {
+            combatMusic.Play();
+        }
     }
 
-    public static void outCombat()
+    public static IEnumerator outCombat()
     {
-        startingMusic.mute = false;
-        combatMusic.mute = true;
         inCombat = false;
+        while (combatMusic.volume > 0)
+        {
+            combatMusic.volume -= 0.3f;
+            yield return new WaitForSeconds(1f);
+        }
+        combatMusic.Stop();
+        startingMusic.UnPause();
+        while (startingMusic.volume < 1)
+        {
+            startingMusic.volume += 0.1f;
+            yield return new WaitForSeconds(1f);
+        }
     }
 
     //Run to the nearest designated safe spot when main character enters combat
@@ -178,13 +213,17 @@ public class SideChar : MonoBehaviour
         safeSpots();
         if (safeSpot != null)
         {
-            sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, safeSpot.transform.position, movespeed * Time.deltaTime);
-            look(safeSpot.transform);
-            if (sideChar.transform.position == safeSpot.transform.position)
+            if ((Vector3.Distance(sideChar.transform.position, safeSpot.transform.position) <= 3f))
             {
                 look(mainChar.transform);
                 anim.SetFloat("Speed", 0f);
+            } else
+            {
+                sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, safeSpot.transform.position, movespeed * Time.deltaTime);
+                look(safeSpot.transform);
             }
+            
+            
         }
 
     }

@@ -55,11 +55,12 @@ public class IzaOni : MonoBehaviour {
     {
         gravity();
         
-        currentBaseState = anim.GetCurrentAnimatorStateInfo(0);
+        
     }
 
     void FixedUpdate()
     {
+        currentBaseState = anim.GetCurrentAnimatorStateInfo(0);
         if (currentBaseState.fullPathHash == reviveState || currentBaseState.fullPathHash == attackState || currentBaseState.fullPathHash == deadState)
         {
             return;
@@ -67,7 +68,7 @@ public class IzaOni : MonoBehaviour {
         
         if (Input.GetButtonUp("XButton"))
         {
-            if (currentBaseState.fullPathHash != attackState)
+            if (currentBaseState.fullPathHash != attackState && currentBaseState.fullPathHash != Animator.StringToHash("Base Layer.Locomotion"))
             {
                 attack();
                 return;
@@ -134,10 +135,10 @@ public class IzaOni : MonoBehaviour {
 
     void attack()
     {
-        rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
+        //rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotation;
         anim.SetFloat("Speed", 0);
         transform.position = transform.position;
-        anim.SetTrigger("Attack");
+        
         if (gameObject.name == "Oni")
         {
             StopCoroutine("smash");
@@ -154,6 +155,7 @@ public class IzaOni : MonoBehaviour {
 
     IEnumerator smash()
     {
+        anim.SetTrigger("Attack");
         //Enable/disable weapon collider depending on animation
         yield return new WaitForSeconds(0.5f);
         // For tutorial
@@ -164,22 +166,24 @@ public class IzaOni : MonoBehaviour {
         // For tutorial
         m_axe.GetComponent<BoxCollider>().isTrigger = true;
         m_axe.GetComponent<BoxCollider>().enabled = false;
-        rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
+        //rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
     }
 
     IEnumerator stab()
     {
+        anim.SetTrigger("Attack");
         yield return new WaitForSeconds(0.7f);
         m_axe.GetComponent<BoxCollider>().enabled = true;
         m_axe.GetComponent<BoxCollider>().isTrigger = false;
         yield return new WaitForSeconds(0.5f);
         m_axe.GetComponent<BoxCollider>().isTrigger = true;
         m_axe.GetComponent<BoxCollider>().enabled = false;
-        rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
+        //rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
     }
 
     IEnumerator ice()
     {
+        anim.SetTrigger("Attack");
         if (Vector3.Distance(this.gameObject.transform.position, m_axe.transform.position) < 20)
         {
             yield return new WaitForSeconds(1.55f);
@@ -206,7 +210,11 @@ public class IzaOni : MonoBehaviour {
         //Disable weapon collider
         if (m_axe != null)
         {
-            m_axe.GetComponent<BoxCollider>().enabled = false;
+            if (gameObject.name != "Yuki")
+            {
+                m_axe.GetComponent<BoxCollider>().enabled = false;
+            }
+            
         }
         this.enabled = false;
     }
