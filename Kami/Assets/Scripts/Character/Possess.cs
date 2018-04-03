@@ -56,12 +56,14 @@ public class Possess : MonoBehaviour {
                 targets();
                 if (target != null)
                 {
+                    
                     poss();
                 }
             } else
             {
                 if (mainState.fullPathHash == locomotion || mainState.fullPathHash == idleState)
                 {
+                    
                     unposs();
                 } else
                 {
@@ -95,6 +97,7 @@ public class Possess : MonoBehaviour {
 
     void poss()
     {
+        smo(transform.position);
         m_izanagi.GetComponent<Movement>().enabled = false;
         m_izanagi.GetComponent<Slash>().enabled = false;
         target.GetComponent<IzaOni>().enabled = true;
@@ -102,12 +105,12 @@ public class Possess : MonoBehaviour {
         m_izanami.setPoss(target);
         c.swap();
         this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        ps.Emit(1);
+        
     }
 
     public void unposs()
     {
-        
+        smo(target.transform.position);
         m_izanagi.GetComponent<Movement>().enabled = true;
         m_izanagi.GetComponent<Slash>().enabled = true;
         target.GetComponent<IzaOni>().die();
@@ -116,7 +119,15 @@ public class Possess : MonoBehaviour {
         m_izanami.transform.position = target.transform.position;
         c.swap();
         this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-        ps.Emit(1);
+        
         target = null;
+    }
+
+    void smo(Vector3 p)
+    {
+        Vector3 t = new Vector3(p.x, p.y + 5, p.z);
+        Quaternion rot = Quaternion.LookRotation(Vector3.up);
+        GameObject go = (GameObject)Instantiate(Resources.Load("Smoke", typeof(GameObject)), t, rot);
+        Destroy(go, 2f);
     }
 }

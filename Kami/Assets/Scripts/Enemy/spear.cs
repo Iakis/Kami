@@ -58,8 +58,8 @@ public class spear : MonoBehaviour {
     {
         if (col.gameObject.tag == "shield")
         {
-            GameObject go = (GameObject)Instantiate(Resources.Load("light", typeof(GameObject)), parent.transform.position, transform.rotation);
-            Destroy(go, 2f);
+            //GameObject go = (GameObject)Instantiate(Resources.Load("light", typeof(GameObject)), parent.transform.position, transform.rotation);
+            //Destroy(go, 2f);
             StartCoroutine("shock");
             if (col.gameObject.GetComponent<Barrier>().breakk == false)
             {
@@ -72,6 +72,9 @@ public class spear : MonoBehaviour {
     IEnumerator shock()
     {
         yield return new WaitForSeconds(1f);
+        Quaternion rot = Quaternion.LookRotation(Vector3.up);
+        GameObject go = (GameObject)Instantiate(Resources.Load("light", typeof(GameObject)), tengu.transform.position, rot);
+        Destroy(go, 2f);
         p.unposs();
         Destroy(parent.gameObject);
         Destroy(this.gameObject);
