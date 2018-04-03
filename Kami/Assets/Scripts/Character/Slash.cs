@@ -94,6 +94,7 @@ public class Slash : MonoBehaviour {
 
     void targets(Vector3 center, float radius)
     {
+        target = null;
         int layerMask = 1 << 9;
         Collider[] hitColliders = Physics.OverlapSphere(center, radius, layerMask);
         int i = 0;
