@@ -178,7 +178,7 @@ public class IzaOni : MonoBehaviour {
         yield return new WaitForSeconds(0.5f);
         m_axe.GetComponent<BoxCollider>().isTrigger = true;
         m_axe.GetComponent<BoxCollider>().enabled = false;
-        rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
+        //rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
     }
 
     IEnumerator ice()
@@ -210,7 +210,11 @@ public class IzaOni : MonoBehaviour {
         //Disable weapon collider
         if (m_axe != null)
         {
-            m_axe.GetComponent<BoxCollider>().enabled = false;
+            if (gameObject.name != "Yuki")
+            {
+                m_axe.GetComponent<BoxCollider>().enabled = false;
+            }
+            
         }
         this.enabled = false;
     }

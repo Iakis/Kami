@@ -6,9 +6,13 @@ public class SideChar : MonoBehaviour
 {
 
     static SideChar c;
-    float movespeed = 10f;
-    float pmovespeed = 4f;
-    float dis;
+    [SerializeField]
+    float movespeed = 7.5f;
+    [SerializeField]
+    float pmovespeed = 10f;
+    [SerializeField]
+    float mult = 1.5f;
+    float dis, dist;
     public GameObject mainChar;
     public GameObject sideChar;
     GameObject safeSpot;
@@ -95,23 +99,23 @@ public class SideChar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gravity();
+        //gravity();
         dead = m_izanagi.GetComponent<Movement>().dead;
         //Distance between main and side character
-        dis = Vector3.Distance(mainChar.transform.position, sideChar.transform.position);
-        dis = (float)System.Math.Round(dis);
+        dist = Vector3.Distance(mainChar.transform.position, sideChar.transform.position);
+        dis = (float)System.Math.Round(dist);
         //When not in combat - meet, else run
         if (!inCombat)
         {
             meet();
-            if (Input.GetButtonUp("AButton"))
-            {
-                if (grounded)
-                {
-                    grounded = false;
-                    StartCoroutine("Jump");
-                }
-            }
+            //if (Input.GetButtonUp("AButton"))
+            //{
+            //    if (grounded)
+            //    {
+            //        grounded = false;
+            //        StartCoroutine("Jump");
+            //    }
+            //}
         }
         else
         {
@@ -128,11 +132,14 @@ public class SideChar : MonoBehaviour
             look(mainChar.transform);
             if (dis > 5)
             {
-                if (anim)
+                if (poss)
                 {
                     anim.SetFloat("Speed", 0.2f);
+                } else
+                {
+                    anim.SetFloat("Speed", dist - 4.9f);
                 }
-                sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, mainChar.transform.position, movespeed * 1.2f * Time.deltaTime);
+                sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, mainChar.transform.position, movespeed * (mult * dis) * Time.deltaTime);
             }
             else if (dis < 5)
             {
@@ -143,8 +150,17 @@ public class SideChar : MonoBehaviour
             {
                 if ((System.Math.Abs(Input.GetAxis("NagiY"))) + (System.Math.Abs(Input.GetAxis("NagiX"))) > 0)
                 {
-                    anim.SetFloat("Speed", 0.2f);
-                    sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, mainChar.transform.position, pmovespeed / 2 * Time.deltaTime);
+                    
+                    if (poss)
+                    {
+                        anim.SetFloat("Speed", 0.2f);
+                        sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, mainChar.transform.position, pmovespeed / 2 * Time.deltaTime);
+                    } else
+                    {
+                        anim.SetFloat("Speed", dist - 4.9f);
+                        sideChar.transform.position = Vector3.MoveTowards(sideChar.transform.position, mainChar.transform.position, movespeed / 2 * Time.deltaTime);
+                    }
+                    
                 }
                 else
                 {

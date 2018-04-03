@@ -13,8 +13,11 @@ public class Nami : MonoBehaviour {
     float movespeed = 10f;
     bool met;
     private Rigidbody s_RigidBody;
-
+    Animator anim;
+    public AnimatorStateInfo currentBaseState;
     public static Nami s_izanami;
+
+    static int waveState = Animator.StringToHash("Base Layer.nwave");
 
     Nami()
     {
@@ -30,29 +33,30 @@ public class Nami : MonoBehaviour {
         m_izanagi = Movement.Get();
         target = m_izanagi.gameObject;
         s_RigidBody = GetComponent<Rigidbody>();
-    }
-	
-	// Update is called once per frame
-	void Update () {
-        //dNagi = Vector3.Distance(target.transform.position, transform.position);
-        //meet();
+        anim = GetComponent<Animator>();
     }
 
-    void meet()
+    // Update is called once per frame
+    void Update()
     {
+        
+        currentBaseState = anim.GetCurrentAnimatorStateInfo(0);
+        if (met == false)
         {
-            if (dNagi < 15)
+            dNagi = Vector3.Distance(this.transform.position, m_izanagi.transform.position);
+            dNagi = (float)System.Math.Round(dNagi);
+            if (dNagi < 35)
             {
                 transform.LookAt(m_izanagi.transform);
-                if (dNagi > 4)
-                {
-                    transform.position = Vector3.MoveTowards(transform.position, target.transform.position, movespeed * Time.deltaTime);
-                }
-                else
-                {
-                    transform.position = transform.position;
-                }
+                anim.SetTrigger("wave");
+                met = true;
+                this.GetComponent<SideChar>().enabled = true;
+                this.GetComponent<Possess>().enabled = true;
             }
+        }
+        else if (met == true && currentBaseState.fullPathHash != waveState)
+        {
+            return;
         }
     }
 
