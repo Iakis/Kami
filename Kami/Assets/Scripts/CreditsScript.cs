@@ -14,6 +14,8 @@ public class CreditsScript : MonoBehaviour {
 	public AudioSource source;
 	public AudioClip start;
 
+	public AudioClip GraveMusic;
+
 	// Use this for initialization
 	void Start () {
 		AudioListener.pause = false;
@@ -35,6 +37,11 @@ public class CreditsScript : MonoBehaviour {
 		yield return new WaitForSeconds(7f);
 		StartCoroutine(story.GetComponent<CreditsScript> ().FadeText ("\"But I'm glad we could share one more adventure together, my love\""));
 		yield return new WaitForSeconds(7f);
+		StartCoroutine (FadeVolume ());
+		yield return new WaitForSeconds(3f);
+		source.clip = GraveMusic;
+		source.volume = 1;
+		source.Play ();
 		StartCoroutine(story.GetComponent<CreditsScript> ().FadeText ("This game was created as part of a Video Game Design Project"));
 		yield return new WaitForSeconds(7f);
 		StartCoroutine(story.GetComponent<CreditsScript> ().FadeText ("University of Toronto Students (Computer Science): "));
@@ -71,7 +78,7 @@ public class CreditsScript : MonoBehaviour {
 	IEnumerator FadeVolume(){
 		float startVolume = source.volume;
 		while (source.volume > 0) {
-			source.volume -= startVolume * Time.deltaTime / 6.0f;
+			source.volume -= startVolume * Time.deltaTime / 3.0f;
 
 			yield return null;
 		}
