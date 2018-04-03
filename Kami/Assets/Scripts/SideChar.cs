@@ -174,18 +174,37 @@ public class SideChar : MonoBehaviour
         }
     }
 
-    public static void combat()
+    public static IEnumerator combat()
     {
-        startingMusic.mute = true;
-        combatMusic.mute = false;
         inCombat = true;
+        while (startingMusic.volume > 0)
+        {
+            startingMusic.volume -= 0.3f;
+            combatMusic.volume += 0.3f;
+            yield return new WaitForSeconds(1f);
+        }
+        startingMusic.Pause();
+        if (!combatMusic.isPlaying)
+        {
+            combatMusic.Play();
+        }
     }
 
-    public static void outCombat()
+    public static IEnumerator outCombat()
     {
-        startingMusic.mute = false;
-        combatMusic.mute = true;
         inCombat = false;
+        while (combatMusic.volume > 0)
+        {
+            combatMusic.volume -= 0.3f;
+            yield return new WaitForSeconds(1f);
+        }
+        combatMusic.Stop();
+        startingMusic.UnPause();
+        while (startingMusic.volume < 1)
+        {
+            startingMusic.volume += 0.1f;
+            yield return new WaitForSeconds(1f);
+        }
     }
 
     //Run to the nearest designated safe spot when main character enters combat

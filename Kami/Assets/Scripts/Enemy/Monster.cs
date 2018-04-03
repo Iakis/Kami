@@ -92,7 +92,7 @@ public class Monster : MonoBehaviour {
             if (dNagi < cRange && health > 0)
             {
                 //Set player to in combat
-                SideChar.combat();
+                StartCoroutine(SideChar.combat());
                 if (dNagi > aRange)
                 {
                     //This enables the walk animation
@@ -138,7 +138,7 @@ public class Monster : MonoBehaviour {
     public void die()
     {
         //Set layer to corpse layer
-        SideChar.outCombat();
+        StartCoroutine(SideChar.outCombat());
         this.gameObject.layer = 10;
         //Disable collision with corpse
         this.GetComponent<CapsuleCollider>().isTrigger = true;
