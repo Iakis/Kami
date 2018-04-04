@@ -83,7 +83,7 @@ public class IzaOni : MonoBehaviour {
         {
             anim.SetFloat("Speed", 0);
         }
-        //this.GetComponent<Rigidbody>().isKinematic = false;
+        this.GetComponent<Rigidbody>().isKinematic = false;
     }
 
     IEnumerator KnockBack()

@@ -35,7 +35,7 @@ public class CreditsScript : MonoBehaviour {
 		yield return new WaitForSeconds(2f);
 		StartCoroutine(story.GetComponent<CreditsScript> ().FadeText ("\"I'm sorry I couldn't save you...\""));
 		yield return new WaitForSeconds(7f);
-		StartCoroutine(story.GetComponent<CreditsScript> ().FadeText ("\"But I'm glad we could share one more adventure together, my love\""));
+		StartCoroutine(story.GetComponent<CreditsScript> ().FadeText ("\"But I'm glad we could share one more adventure together, goodbye\""));
 		yield return new WaitForSeconds(7f);
 		StartCoroutine (FadeVolume ());
 		yield return new WaitForSeconds(3f);
