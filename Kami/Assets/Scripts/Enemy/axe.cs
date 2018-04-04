@@ -48,6 +48,7 @@ public class axe : MonoBehaviour {
         Debug.Log(col.gameObject);
         if (col.gameObject.tag == "wall")
         {
+			GameObject.Find("RockSmash").GetComponent<AudioSource>().Play();
             col.gameObject.GetComponent<Rigidbody>().isKinematic = false;
         }
     }
