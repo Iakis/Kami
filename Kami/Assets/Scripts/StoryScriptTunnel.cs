@@ -12,7 +12,7 @@ public class StoryScriptTunnel : MonoBehaviour {
 	void Start () {
 		//Story.color = new Color (255, 255, 255, 0);
 		//Debug.Log (Story.color.a);
-		StartCoroutine(FadeText("What is this place?"));
+		StartCoroutine(FadeText("We're almost there"));
 	}
 
 	// Update is called once per frame

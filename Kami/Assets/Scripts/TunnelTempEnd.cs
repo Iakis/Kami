@@ -34,9 +34,9 @@ public class TunnelTempEnd : MonoBehaviour {
 		yield return new WaitUntil (() => fade.color.a == 1);
 		StartCoroutine(story.GetComponent<StoryScriptTunnel> ().FadeText ("Wait where are you?"));
 		yield return new WaitForSeconds(7f);
-		StartCoroutine(story.GetComponent<StoryScriptTunnel> ().FadeText ("Don't leave me!"));
+		StartCoroutine(story.GetComponent<StoryScriptTunnel> ().FadeText ("What do you mean you can't come back?"));
 		yield return new WaitForSeconds(7f);
-		StartCoroutine(story.GetComponent<StoryScriptTunnel> ().FadeText ("I could've saved you..."));
+		StartCoroutine(story.GetComponent<StoryScriptTunnel> ().FadeText ("Don't leave me!"));
 		yield return new WaitForSeconds(7f);
 		SceneManager.LoadScene ("credits", LoadSceneMode.Single);
 	}

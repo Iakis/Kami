@@ -33,7 +33,7 @@ public class TempEndingCollider : MonoBehaviour {
 	IEnumerator FadeEnd(){
 		anim.SetBool ("Fade", true);
 		yield return new WaitUntil (() => fade.color.a == 1);
-		StartCoroutine(story.GetComponent<StoryText> ().FadeText ("I think this tunnel is the way out!"));
+		StartCoroutine(story.GetComponent<StoryText> ().FadeText ("This is the way out!"));
 		yield return new WaitForSeconds(3f);
 		SceneManager.LoadScene ("End", LoadSceneMode.Single);
 	}

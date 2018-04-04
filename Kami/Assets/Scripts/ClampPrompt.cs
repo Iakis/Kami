@@ -94,13 +94,13 @@ public class ClampPrompt : MonoBehaviour {
 			currentPrompt.GetComponent<RectTransform> ().position = PromptPos;
 			if (!FadedSpeech) {
 				FadedSpeech = true;
-				StartCoroutine (story.GetComponent<StoryText> ().FadeText ("What do we do with this body, my love?"));
+				StartCoroutine (story.GetComponent<StoryText> ().FadeText ("You want me to bring you to this body?"));
 			}
 		} else if (IsInView (Oni) && oniScript.health <= 0 && Nami.GetComponent<Possess> ().possed) {
 			currentPrompt.enabled = false;
 			if (!FadedPossessSpeech) {
 				FadedPossessSpeech = true;
-				StartCoroutine (story.GetComponent<StoryText> ().FadeText ("Wait...you can possess it?"));
+				StartCoroutine (story.GetComponent<StoryText> ().FadeText ("Well...thats new"));
 			}
 		}
 		else {
