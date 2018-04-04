@@ -28,7 +28,7 @@ public class Respawn : MonoBehaviour {
         if (col.gameObject.tag == "Player")
         {	
             isActivated = true;
-			light.enabled = true;
+            StartCoroutine("lightlamp");
 			if (!lit) {
 				respawnSound.Play();
 				lit = true;
@@ -41,6 +41,16 @@ public class Respawn : MonoBehaviour {
                     respawn.GetComponent<Respawn>().isActivated = false;
                 }
             }
+        }
+    }
+
+    IEnumerator lightlamp()
+    {
+        light.enabled = true;
+        while (light.intensity < 11.78)
+        {
+            light.intensity += 0.1f;
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }
