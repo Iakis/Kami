@@ -38,7 +38,6 @@ GameObject:
   - component: {fileID: 4420316372679580}
   - component: {fileID: 33766243952312448}
   - component: {fileID: 23839431878436050}
-  - component: {fileID: 95666085945341796}
   m_Layer: 0
   m_Name: higanbana 1
   m_TagString: Untagged
@@ -146,23 +145,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1822308710554392}
   m_Mesh: {fileID: 4300000, guid: 5776a545849c9e445b4d7370929b2a42, type: 3}
---- !u!95 &95666085945341796
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1822308710554392}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 5776a545849c9e445b4d7370929b2a42, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!108 &108192827201103630
 Light:
   m_ObjectHideFlags: 1
@@ -173,8 +155,8 @@ Light:
   serializedVersion: 8
   m_Type: 2
   m_Color: {r: 1, g: 0, b: 0, a: 1}
-  m_Intensity: 8
-  m_Range: 1.71
+  m_Intensity: 7.05
+  m_Range: 1.01
   m_SpotAngle: 80
   m_CookieSize: 10
   m_Shadows:
@@ -191,10 +173,10 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
-  m_Lightmapping: 1
+    m_Bits: 1
+  m_Lightmapping: 4
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1.03
+  m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_ShadowRadius: 0

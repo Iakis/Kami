@@ -102,8 +102,18 @@ public class endmovement : MonoBehaviour
     {
         if (canMove)
         {
-            upMovement = forward * movespeed * Time.deltaTime * (-(Input.GetAxis("NagiY")) / 2);
-            rightMovement = right * movespeed * Time.deltaTime * (Input.GetAxis("NagiX") / 2);
+            float s = Input.GetAxis("NagiY") / 2;
+            if (s > 0)
+            {
+                s = 0;
+            }
+            upMovement = forward * movespeed * Time.deltaTime * (-(s));
+            float t = Input.GetAxis("NagiX") / 2;
+            if (t < 0)
+            {
+                t = 0;
+            }
+            rightMovement = right * movespeed * Time.deltaTime * t;
             heading = Vector3.Normalize(rightMovement + upMovement);
 
 

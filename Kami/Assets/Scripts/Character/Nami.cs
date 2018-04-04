@@ -17,6 +17,9 @@ public class Nami : MonoBehaviour {
     public AnimatorStateInfo currentBaseState;
     public static Nami s_izanami;
 
+    public GameObject model;
+    public GameObject model2;
+
     static int waveState = Animator.StringToHash("Base Layer.nwave");
 
     Nami()
@@ -39,7 +42,7 @@ public class Nami : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        
+        model.layer = model2.layer;
         currentBaseState = anim.GetCurrentAnimatorStateInfo(0);
         if (met == false)
         {
