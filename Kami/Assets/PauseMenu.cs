@@ -23,7 +23,7 @@ public class PauseMenu : MonoBehaviour {
 
 	void Start(){
 		eventSystem = GameObject.Find("EventSystem");
-		NagiScript = Nagi.GetComponent<Movement> ();
+        NagiScript = Movement.Get();
 		selectSound = GameObject.Find("TaikoDrumSound").GetComponent<AudioSource>();
 
 	}
