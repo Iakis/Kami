@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class spear : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class spear : MonoBehaviour {
     Animator anim;
     BoxCollider col;
     static spear s_spear;
+	public Text story;
 
     public AnimatorStateInfo currentBaseState;
     public static int attackState = Animator.StringToHash("Base Layer.oattack");

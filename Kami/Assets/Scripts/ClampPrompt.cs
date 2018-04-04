@@ -74,7 +74,7 @@ public class ClampPrompt : MonoBehaviour {
 			Debug.Log ("Oni is attacking");
 			currentPrompt.enabled = true;
 			currentPrompt.sprite = rollprompt;
-			if (!PauseMenu.isPaused) {
+			if (!PauseMenu.isPaused && !GameObject.Find ("Nagi").GetComponent<Movement> ().dead) {
 				timemanager.DoSlowMotion ();
 			}
 			Vector3 PromptPos = Camera.main.WorldToScreenPoint (this.transform.position);
