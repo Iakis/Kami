@@ -50,6 +50,7 @@ public class axe : MonoBehaviour {
         {
 			GameObject.Find("RockSmash").GetComponent<AudioSource>().Play();
             col.gameObject.GetComponent<Rigidbody>().isKinematic = false;
+            col.gameObject.layer = 0;
         }
     }
 }
