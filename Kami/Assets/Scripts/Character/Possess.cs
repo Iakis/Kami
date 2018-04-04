@@ -98,6 +98,7 @@ public class Possess : MonoBehaviour {
     void poss()
     {
         smo(transform.position);
+		GameObject.Find("PossessSound").GetComponent<AudioSource>().Play();
         m_izanagi.GetComponent<Movement>().enabled = false;
         m_izanagi.GetComponent<Slash>().enabled = false;
         target.GetComponent<IzaOni>().enabled = true;
@@ -111,6 +112,7 @@ public class Possess : MonoBehaviour {
     public void unposs()
     {
         smo(target.transform.position);
+		GameObject.Find("PossessSound").GetComponent<AudioSource>().Play();
         m_izanagi.GetComponent<Movement>().enabled = true;
         m_izanagi.GetComponent<Slash>().enabled = true;
         target.GetComponent<IzaOni>().die();

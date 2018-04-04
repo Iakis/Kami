@@ -64,6 +64,7 @@ public class TenguAI : Monster {
     {
         CD = true;
         yield return new WaitForSeconds(0.7f);
+		GameObject.Find("TenguAttack").GetComponent<AudioSource>().Play();;
         pos = target.transform.position;
         weapon.GetComponent<BoxCollider>().enabled = true;
         dashing = true;

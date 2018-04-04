@@ -211,6 +211,7 @@ public class Movement : MonoBehaviour {
     {
         if (!rolling)
         {
+			GameObject.Find("PaperHit").GetComponent<AudioSource>().Play();
             StartCoroutine("Die");
         }
     }
