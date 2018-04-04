@@ -47,7 +47,7 @@ public class Respawn : MonoBehaviour {
     IEnumerator lightlamp()
     {
         light.enabled = true;
-        while (light.intensity < 11.78)
+        while (light.intensity < 1.5)
         {
             light.intensity += 0.1f;
             yield return new WaitForSeconds(0.1f);

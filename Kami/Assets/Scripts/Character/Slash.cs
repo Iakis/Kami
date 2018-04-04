@@ -57,8 +57,12 @@ public class Slash : MonoBehaviour {
 
         } else
         {
-            slice();
-            target.GetComponent<Monster>().damage(1);
+            if (!SideChar.dead)
+            {
+                slice();
+                target.GetComponent<Monster>().damage(1);
+            }
+            
         }
         
         
