@@ -7,10 +7,13 @@ public class endnami : MonoBehaviour {
     float dis, dist;
     float movespeed = 4;
     static endmovement m_izanagi;
+    public GameObject model;
+    SkinnedMeshRenderer sk;
     Animator anim;
     // Use this for initialization
     void Start () {
         m_izanagi = endmovement.Get();
+        sk = model.GetComponent<SkinnedMeshRenderer>();
     }
 
     // Update is called once per frame
@@ -20,6 +23,8 @@ public class endnami : MonoBehaviour {
         dis = (float)System.Math.Round(dist);
         meet();
         anim = GetComponent<Animator>();
+        fade();
+        
     }
 
     void meet()
@@ -36,7 +41,11 @@ public class endnami : MonoBehaviour {
         }
         else if (dis < 5)
         {
-            anim.SetFloat("Speed", 0f);
+            if (anim)
+            {
+                anim.SetFloat("Speed", 0f);
+            }
+            
             this.transform.position = this.transform.position;
         }
     }
@@ -49,5 +58,24 @@ public class endnami : MonoBehaviour {
         Vector3 relativePos = b - a;
         rot = Quaternion.LookRotation(relativePos);
         this.transform.rotation = rot;
+    }
+
+    void fade()
+    {
+        foreach (Material m in sk.materials)
+        {
+            Color c = m.GetColor("_Color");
+            c.a = (28 - transform.position.x) / 35;
+            if (c.a >= 1)
+            {
+                c.a = 1;
+            }
+            else if (c.a <= 0)
+            {
+                c.a = 0;
+            }
+            Debug.Log(c.a);
+            m.SetColor("_Color", c);
+        }
     }
 }

@@ -75,8 +75,12 @@ public class spear : MonoBehaviour {
     {
         yield return new WaitForSeconds(1f);
         Quaternion rot = Quaternion.LookRotation(Vector3.up);
-        GameObject go = (GameObject)Instantiate(Resources.Load("light", typeof(GameObject)), tengu.transform.position, rot);
-        Destroy(go, 2f);
+        Vector3 pos = new Vector3(tengu.transform.position.x, tengu.transform.position.y + 1, tengu.transform.position.z);
+        GameObject go = (GameObject)Instantiate(Resources.Load("light", typeof(GameObject)), pos, rot);
+        //GameObject go2 = (GameObject)Instantiate(Resources.Load("bolt", typeof(GameObject)), pos, rot);
+        Destroy(go, 1.5f);
+        //Destroy(go2, 1.5f);
+        yield return new WaitForSeconds(1.5f);
         p.unposs();
         Destroy(parent.gameObject);
         Destroy(this.gameObject);
