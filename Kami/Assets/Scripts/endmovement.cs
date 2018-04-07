@@ -15,9 +15,6 @@ public class endmovement : MonoBehaviour
     private Animator anim;
     Vector3 forward, right, heading, upMovement, rightMovement;
     private GameObject[] respawns;
-    private AudioSource jumpSound;
-    private AudioSource walkSound;
-    private AudioSource rollSound;
 
     public Image fade;
     public Animator fadeAnim;
@@ -56,16 +53,12 @@ public class endmovement : MonoBehaviour
         s_RigidBody = GetComponent<Rigidbody>();
         c = SideChar.Get();
         grounded = true;
-        jumpSound = GameObject.Find("JumpSound").GetComponent<AudioSource>();
-        walkSound = GameObject.Find("WalkSound").GetComponent<AudioSource>();
-        //rollSound = GameObject.Find("RollSound").GetComponent<AudioSource>();
         dead = false;
     }
 
     void Update()
     {
         currentBaseState = anim.GetCurrentAnimatorStateInfo(0);
-        walkSound.mute = !(anim.GetFloat("Speed") != 0 && (!anim.GetBool("Jump")) && (!rolling) && (!dead));
         if (!dead && !PauseMenu.isPaused)
         {
             return;
